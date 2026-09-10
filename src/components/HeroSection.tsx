@@ -2,13 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { SectionId } from '../types';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { Terminal, Gamepad2, Palette, Activity, ArrowRight, Github, Linkedin, Award, Code, Sparkles } from 'lucide-react';
+import { Terminal, Gamepad2, Palette, Activity, ArrowRight, Github, Linkedin, Award, Code, Sparkles, FileText } from 'lucide-react';
 
 interface HeroSectionProps {
   onNavigate: (section: SectionId) => void;
+  onOpenResume?: () => void;
 }
 
-export function HeroSection({ onNavigate }: HeroSectionProps) {
+export function HeroSection({ onNavigate, onOpenResume }: HeroSectionProps) {
   const [roleIndex, setRoleIndex] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
@@ -163,11 +164,11 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
           </p>
 
           {/* Primary Action Buttons */}
-          <div className="flex flex-wrap items-center gap-4 mb-16">
+          <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-16">
             <button
               id="hero-explore-work-btn"
               onClick={() => onNavigate('engineering')}
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-orange-600 hover:bg-orange-500 shadow-lg shadow-orange-600/25 transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
+              className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-orange-600 hover:bg-orange-500 shadow-lg shadow-orange-600/25 transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
             >
               <Code className="w-4 h-4" />
               <span>Explore Technical Work</span>
@@ -177,11 +178,22 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             <button
               id="hero-play-games-btn"
               onClick={() => onNavigate('gamedev')}
-              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-sm border theme-border theme-card hover:border-orange-500/50 shadow-sm transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 sm:px-6 py-3.5 rounded-xl font-bold text-sm border theme-border theme-card hover:border-orange-500/50 shadow-sm transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
             >
               <Gamepad2 className="w-4 h-4 text-purple-500" />
-              <span>Play Game Prototypes</span>
+              <span>Play Games</span>
             </button>
+
+            {onOpenResume && (
+              <button
+                id="hero-view-resume-btn"
+                onClick={onOpenResume}
+                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm font-mono border border-orange-500/30 theme-card text-orange-600 dark:text-orange-400 hover:border-orange-500 hover:bg-orange-500/10 shadow-sm transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
+              >
+                <FileText className="w-4 h-4 text-orange-500" />
+                <span>Resume / CV</span>
+              </button>
+            )}
 
             <div className="flex items-center gap-2 ml-auto sm:ml-2">
               <a

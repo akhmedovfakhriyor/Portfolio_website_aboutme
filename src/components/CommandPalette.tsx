@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
-import { Terminal, X } from 'lucide-react';
-import { PERSONAL_INFO } from '../data/portfolioData';
+import { Terminal, X, FileText } from 'lucide-react';
+import { PERSONAL_INFO, RESUME_DATA } from '../data/portfolioData';
 import { ColorMode } from '../types';
 
 interface CommandPaletteProps {
   colorMode?: ColorMode;
   onToggleColorMode?: () => void;
+  onOpenResume?: () => void;
 }
 
-export function CommandPalette({ colorMode, onToggleColorMode }: CommandPaletteProps) {
+export function CommandPalette({ colorMode, onToggleColorMode, onOpenResume }: CommandPaletteProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [history, setHistory] = useState<{ id: string; command: string; response: React.ReactNode }[]>([]);
@@ -98,8 +99,34 @@ export function CommandPalette({ colorMode, onToggleColorMode }: CommandPaletteP
         );
         break;
       case 'resume':
+      case 'cv':
       case 'run resume.exe':
-        response = <div className="text-amber-400">Resume link will be updated upon portfolio launch. Contact directly at {PERSONAL_INFO.email}.</div>;
+        response = (
+          <div className="flex flex-col gap-2 mt-1 p-3 rounded-xl bg-slate-900 border border-slate-700/80">
+            <div className="flex items-center justify-between">
+              <span className="font-bold text-orange-400 font-mono text-sm">{RESUME_DATA.name} — {RESUME_DATA.title}</span>
+              <span className="text-xs text-slate-400 font-mono">{RESUME_DATA.location}</span>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">{RESUME_DATA.careerObjective}</p>
+            <div className="text-xs text-slate-400 font-mono">
+              <strong>Skills:</strong> {RESUME_DATA.skills.programming.join(', ')} • {RESUME_DATA.skills.enginesAndTools.join(', ')}
+            </div>
+            <div className="flex items-center gap-2 pt-2 border-t border-slate-800">
+              {onOpenResume && (
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    onOpenResume();
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white font-mono text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+                >
+                  <FileText className="w-3.5 h-3.5" />
+                  <span>Open Interactive Resume / PDF</span>
+                </button>
+              )}
+            </div>
+          </div>
+        );
         break;
       case 'clear':
         setHistory([]);

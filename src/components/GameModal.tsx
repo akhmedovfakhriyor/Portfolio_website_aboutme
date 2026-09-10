@@ -133,7 +133,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
           </div>
 
           {/* Modal Navigation Tabs */}
-          <div className="flex shrink-0 border-b border-white/10 bg-black/20 px-6 gap-6 text-sm font-semibold overflow-x-auto whitespace-nowrap">
+          <div className="flex shrink-0 border-b border-white/10 bg-black/20 px-6 gap-6 text-sm font-semibold overflow-x-auto whitespace-nowrap no-scrollbar">
           <button
             onClick={() => setActiveTab('overview')}
             className={`py-3.5 border-b-2 transition-all cursor-pointer ${
@@ -168,7 +168,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
         </div>
 
         {/* Tab Content */}
-        <div className="p-6 overflow-y-auto flex-1 min-h-0 custom-scrollbar">
+        <div className="p-6 overflow-y-auto flex-1 min-h-0 no-scrollbar">
           {/* Tab 1: Overview */}
           {activeTab === 'overview' && (
             <div className="space-y-6">

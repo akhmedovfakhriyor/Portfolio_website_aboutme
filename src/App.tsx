@@ -18,6 +18,7 @@ import { SportsSection } from './components/SportsSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { GlobalConstellationCanvas } from './components/GlobalConstellationCanvas';
+import { ResumeModal } from './components/ResumeModal';
 import { ArrowUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { CommandPalette } from './components/CommandPalette';
@@ -26,6 +27,7 @@ import { startBackgroundAssetPreloading } from './utils/assetPreloader';
 export default function App() {
   const { activeSection, scrollToSection, colorMode, toggleColorMode } = useThemeObserver();
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   useEffect(() => {
     // Start idle preloading for all media assets so they load seamlessly as user scrolls
@@ -50,33 +52,40 @@ export default function App() {
         onNavigate={scrollToSection}
         colorMode={colorMode}
         onToggleColorMode={toggleColorMode}
+        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* Main Sections */}
       <main className="relative z-10 overflow-x-clip">
-        {/* 1. Home / Hero Section (Clean White with Vibrant Orange #FF5722) */}
-        <HeroSection onNavigate={scrollToSection} />
+        {/* 1. Home / Hero Section */}
+        <HeroSection
+          onNavigate={scrollToSection}
+          onOpenResume={() => setIsResumeOpen(true)}
+        />
 
-        {/* 2. Technical & Software Engineering Section (Dark Charcoal #0F172A with Rust/Neon Orange) */}
+        {/* 2. Technical & Software Engineering Section */}
         <RustCodeExplorer />
 
-        {/* 3. Game Development Section (Deep Indigo/Dark with Neon Purple/Orange) */}
+        {/* 3. Game Development Section */}
         <GameSection />
 
-        {/* 4. Art Gallery Section (Neutral Minimalist Soft Cream #FAF8F5) */}
+        {/* 4. Art Gallery Section */}
         <ArtSection />
 
-        {/* 5. Personal Life & Sports Section (Fresh White & Athletic Blue #2563EB) */}
+        {/* 5. Personal Life & Sports Section */}
         <SportsSection />
 
-        {/* 6. Contact Section (Dark Slate with Vibrant Orange Accents) */}
-        <ContactSection />
+        {/* 6. Contact Section */}
+        <ContactSection
+          onOpenResume={() => setIsResumeOpen(true)}
+        />
       </main>
 
       {/* Footer */}
       <Footer
         activeSection={activeSection}
         onNavigate={scrollToSection}
+        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* Floating Go to Top Round Button (Bottom Right) */}
@@ -98,7 +107,17 @@ export default function App() {
         </button>
       </div>
 
-      <CommandPalette colorMode={colorMode} onToggleColorMode={toggleColorMode} />
+      <CommandPalette
+        colorMode={colorMode}
+        onToggleColorMode={toggleColorMode}
+        onOpenResume={() => setIsResumeOpen(true)}
+      />
+
+      {/* Interactive Printable & Downloadable Resume Modal */}
+      <ResumeModal
+        isOpen={isResumeOpen}
+        onClose={() => setIsResumeOpen(false)}
+      />
     </div>
   );
 }

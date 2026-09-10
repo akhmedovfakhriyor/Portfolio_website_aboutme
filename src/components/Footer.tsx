@@ -5,9 +5,10 @@ import { PERSONAL_INFO } from '../data/portfolioData';
 interface FooterProps {
   activeSection: SectionId;
   onNavigate?: (section: SectionId) => void;
+  onOpenResume?: () => void;
 }
 
-export function Footer({ activeSection }: FooterProps) {
+export function Footer({ activeSection, onOpenResume }: FooterProps) {
   const currentTheme = SECTION_THEMES[activeSection];
 
   const initials = PERSONAL_INFO.name
@@ -40,6 +41,14 @@ export function Footer({ activeSection }: FooterProps) {
 
           {/* Connect Across Networks */}
           <div className="flex-1 flex flex-wrap items-center justify-center gap-6 text-sm font-mono">
+            {onOpenResume && (
+              <button
+                onClick={onOpenResume}
+                className="text-orange-500 font-bold hover:underline cursor-pointer transition-colors"
+              >
+                Resume / CV
+              </button>
+            )}
             <a
               href={PERSONAL_INFO.socials.github}
               target="_blank"
@@ -48,6 +57,24 @@ export function Footer({ activeSection }: FooterProps) {
             >
               GitHub
             </a>
+            <a
+              href={PERSONAL_INFO.socials.telegram}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sky-500 hover:text-sky-400 transition-colors"
+            >
+              Telegram
+            </a>
+            {PERSONAL_INFO.socials.itch && (
+              <a
+                href={PERSONAL_INFO.socials.itch}
+                target="_blank"
+                rel="noreferrer"
+                className="theme-text-secondary hover:text-[var(--accent-primary)] transition-colors"
+              >
+                Itch.io
+              </a>
+            )}
             <a
               href={PERSONAL_INFO.socials.linkedin}
               target="_blank"

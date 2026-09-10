@@ -3,21 +3,26 @@ import { GameProject, Artwork } from '../types';
 export const PERSONAL_INFO = {
   name: 'Fakhriyor Akhmedov',
   email: 'akhmedovfakhriyor@gmail.com',
-  location: 'Astana, UTC+5 • Remote Worldwide',
+  telegram: 'https://t.me/HardstuckIron',
+  telegramHandle: '@HardstuckIron',
+  location: 'Astana, Kazakhstan • Remote Worldwide',
   titles: [
+    'Junior Game Developer (C#/Unity)',
     'Systems & Software Engineer',
-    'Indie Game Developer',
     '3D & Concept Artist',
     'Life enjoyer',
   ],
-  bio: 'Bridging the gap between low-level systems, game mechanics, visual aesthetics, and physical endurance. I treat code as architecture, game development as narrative sculpture, and athletics as cognitive discipline.',
+  bio: 'Junior game developer (C#/Unity) building projects in procedural animation, camera and shader systems, and gameplay prototyping. Passionate about procedural physics, rendering pipelines, and game architectures.',
   socials: {
     github: 'https://github.com/akhmedovfakhriyor',
+    telegram: 'https://t.me/HardstuckIron',
+    itch: 'https://s0far.itch.io',
     linkedin: 'https://www.linkedin.com/in/fakhriyor-akhmedov-457181362',
     cara: 'https://cara.app/sofar',
     instagram: 'https://www.instagram.com/3_sofar_3?stkn=MTdvc2ZwMW5ia3J4dw==',
     leetcode: 'https://leetcode.com/u/s0Far/',
     strava: 'https://strava.app.link/NLloluISj6b',
+    website: 'https://akhmedovfakhriyor-aboutme.vercel.app',
   },
   stats: {
     githubCommits: '0',
@@ -26,6 +31,128 @@ export const PERSONAL_INFO = {
     leetcodeRating: 'Problem Solver',
     marathonPB: '15 km (5:20 / km)',
     speedcubePB: '17.42s (3x3)',
+  }
+};
+
+export const RESUME_DATA = {
+  name: 'Fakhriyor Akhmedov',
+  title: 'Junior Game Developer (C#/Unity)',
+  email: 'akhmedovfakhriyor@gmail.com',
+  telegram: 'https://t.me/HardstuckIron',
+  telegramDisplay: 't.me/HardstuckIron',
+  telegramHandle: '@HardstuckIron',
+  location: 'Kazakhstan',
+  github: 'https://github.com/akhmedovfakhriyor',
+  githubDisplay: 'github.com/akhmedovfakhriyor',
+  itch: 'https://s0far.itch.io',
+  itchDisplay: 's0far.itch.io',
+  website: 'https://akhmedovfakhriyor-aboutme.vercel.app',
+  websiteDisplay: 'akhmedovfakhriyor-aboutme.vercel.app',
+  careerObjective: 'Junior game developer (C#/Unity) building projects in procedural animation, camera and shader systems, and gameplay prototyping. Currently works full-time as a 1C developer; the projects below are independent work done outside that job, with the goal of moving into game development full-time.',
+  skills: {
+    programming: ['C#', 'Rust', 'SQL'],
+    enginesAndTools: ['Unity Engine', 'Unity ML-Agents', 'Shader Programming'],
+    artAndDesign: ['3D Modeling (Blender)', 'Pixel Art (Aseprite)', 'Concept Art (traditional/paper)'],
+  },
+  projects: [
+    {
+      title: 'Procedural Creature Animation & AI Locomotion',
+      period: 'Feb 2026 – May 2026',
+      engine: 'Unity',
+      bullets: [
+        "Trained a four-legged creature's walking gait with reinforcement learning in Unity ML-Agents — about 12 million steps over 2 days of training.",
+        'Creature moves using physics-driven procedural animation instead of hand-authored animation clips, including a separate rope/snake-like creature.',
+        'Procedural physics reactions trigger when an enemy enters the creature\'s detection radius.'
+      ],
+      links: [
+        { label: 'Procedural_animation_4legs', url: 'https://github.com/akhmedovfakhriyor/Procedural_animation_4legs' },
+        { label: 'Umbra_proceduraly_generated_arm', url: 'https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm' }
+      ]
+    },
+    {
+      title: 'Pixel-Perfect Pixelated Camera',
+      period: 'Jun 2025 – Jul 2025',
+      engine: 'Unity',
+      bullets: [
+        'Pixels stay visually stable at any camera angle, with no shimmer during movement — the problem this demo was built to solve.',
+        'Camera renders at a lower resolution and upscales for the pixelated look; trigonometry snaps movement to pixel boundaries to prevent shimmer.',
+        'Implemented with custom shaders. Standalone tech demo, not tied to a specific game.'
+      ],
+      links: [
+        { label: 'SandScappers_pixelPerfect_camera', url: 'https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera' }
+      ]
+    },
+    {
+      title: 'Vae-mond — Shadow & Reality Puzzle',
+      period: 'Oct 2025 – Nov 2025',
+      engine: 'Unity',
+      bullets: [
+        'Player swaps control between two characters at once: a girl exploring a 3D room and her shadow, which navigates the walls as a 2D platformer.',
+        'Shadows cast by the 3D objects double as platform geometry on the 2D side.'
+      ],
+      links: [
+        { label: 's0far.itch.io/vae-mond', url: 'https://s0far.itch.io/vae-mond' }
+      ]
+    },
+    {
+      title: '3D Tetris',
+      period: 'Dec 2025',
+      engine: 'WebGL',
+      bullets: [
+        'Classic Tetris mechanics — rotation, collision, line clears (WebGL).'
+      ],
+      links: []
+    },
+    {
+      title: 'File Explorer in Rust',
+      period: 'Mar 2025 – May 2025',
+      engine: 'Rust / Tauri',
+      bullets: [
+        'Search returns results in under 0.1 ms across a local test set of roughly 7 million files — built in Rust to replace Windows\' slow native file search.'
+      ],
+      links: [
+        { label: 'file-explorer', url: 'https://github.com/akhmedovfakhriyor/file-explorer' }
+      ]
+    },
+    {
+      title: 'Personal portfolio Website',
+      period: 'Sep 2026',
+      bullets: [
+        'Fast, responsive portfolio showcasing systems engineering, game development prototypes, and 3D artwork.'
+      ],
+      links: [
+        { label: 'akhmedovfakhriyor-aboutme.vercel.app', url: 'https://akhmedovfakhriyor-aboutme.vercel.app' }
+      ]
+    }
+  ],
+  gameJams: [
+    '1st place (solo), Astana IT University internal game jam — against ~8 teams of 1–4 people.',
+    'Participant, GMTK Game Jam.'
+  ],
+  experience: [
+    {
+      role: '1C Developer-Implementer',
+      company: 'LLP First Bit',
+      location: 'Astana',
+      period: 'Apr 2026 – Present',
+      bullets: [
+        'Works with Microsoft SQL Server as the database backend for 1C:Accounting deployments.'
+      ]
+    },
+    {
+      role: '1C Intern',
+      company: 'LLP Office Expert',
+      location: 'Almaty',
+      period: 'May 2025 – Aug 2025',
+      bullets: [
+        'Basic analytical work related to the implementation of 1C ERP systems.'
+      ]
+    }
+  ],
+  education: {
+    degree: 'Bachelor of Computer Science',
+    institution: 'Astana IT University',
+    period: 'Sep 2023 – June 2026'
   }
 };
 

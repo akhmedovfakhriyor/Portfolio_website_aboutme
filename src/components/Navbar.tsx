@@ -9,6 +9,7 @@ interface NavbarProps {
   onNavigate: (section: SectionId) => void;
   colorMode: ColorMode;
   onToggleColorMode: () => void;
+  onOpenResume?: () => void;
 }
 
 export function Navbar({ activeSection, onNavigate, colorMode, onToggleColorMode }: NavbarProps) {
@@ -111,7 +112,7 @@ export function Navbar({ activeSection, onNavigate, colorMode, onToggleColorMode
             })}
           </nav>
 
-          {/* Quick Action Button & Theme Mode Toggle */}
+          {/* Theme Mode Toggle */}
           <div className="hidden md:flex items-center gap-2.5 shrink-0">
             {/* Dark / Light Mode Toggle Button */}
             <button
@@ -193,28 +194,6 @@ export function Navbar({ activeSection, onNavigate, colorMode, onToggleColorMode
               </button>
             );
           })}
-
-          {/* Drawer Color Mode Switcher */}
-          <div className="pt-2 border-t theme-border flex items-center justify-between px-2 text-xs font-mono theme-text-secondary">
-            <span>Atmosphere Mode</span>
-            <button
-              id="drawer-theme-toggle-btn"
-              onClick={onToggleColorMode}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg border theme-border theme-card font-medium cursor-pointer"
-            >
-              {colorMode === 'dark' ? (
-                <>
-                  <Sun className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Light Mode</span>
-                </>
-              ) : (
-                <>
-                  <Moon className="w-3.5 h-3.5 text-slate-700" />
-                  <span>Dark Mode</span>
-                </>
-              )}
-            </button>
-          </div>
         </div>
       )}
     </header>

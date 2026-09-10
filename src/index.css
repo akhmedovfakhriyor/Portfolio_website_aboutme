@@ -314,6 +314,20 @@ section.theme-canvas {
   transition-timing-function: var(--theme-transition-timing);
 }
 
+/* Hide scrollbar utility for clean game windows, modals, and tab bars */
+.no-scrollbar::-webkit-scrollbar,
+.no-scrollbar *::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar,
+.no-scrollbar * {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important; /* Firefox */
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -339,6 +353,27 @@ section.theme-canvas {
 .section-tint-contact {
   background-color: transparent !important;
   background-image: none !important;
+}
+
+/* Dedicated Print Styles for Resume */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-resume-paper,
+  #printable-resume-paper * {
+    visibility: visible;
+  }
+  #printable-resume-paper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none !important;
+    border: none !important;
+  }
 }
 
 

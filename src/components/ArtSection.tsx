@@ -1,11 +1,10 @@
-import { useState , useRef} from 'react';
+import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ARTWORKS } from '../data/portfolioData';
 import { Artwork } from '../types';
-import { Art3DViewer } from './Art3DViewer';
 import { ArtworkLightbox } from './ArtworkLightbox';
 import { SmartImage } from './SmartImage';
-import { Palette, Box, ZoomIn, Eye, Sparkles, Filter, Layers, LayoutGrid, Rows } from 'lucide-react';
+import { Palette, ZoomIn, LayoutGrid, Rows } from 'lucide-react';
 
 function parseYearToDate(yearStr: string): number {
   const str = yearStr.trim();
@@ -68,7 +67,6 @@ export function ArtSection() {
     if (exit > 0) return 1 - (0.15 * exit);
     return 1;
   });
-  const sectionY = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [200, 0, 0, -200], { clamp: true });
   const sectionOpacity = useTransform(() => {
     const enter = enterProgress.get();
     const exit = exitProgress.get();
@@ -80,7 +78,6 @@ export function ArtSection() {
   // Differential parallax depth
   const bgY = useTransform(scrollYProgress, [0, 1], [-120, 120]);
   const headerY = useTransform(scrollYProgress, [0, 1], [0, 0]);
-  const viewerY = useTransform(scrollYProgress, [0, 1], [0, 0]);
   const galleryY = useTransform(scrollYProgress, [0, 1], [0, 0]);
   
   const [activeTab, setActiveTab] = useState<string>('All');
@@ -101,7 +98,7 @@ export function ArtSection() {
     : sortedArtworks.filter((art) => art.category === activeTab);
 
   return (
-    <section id="art" className="relative py-4 sm:py-6 theme-canvas overflow-x-clip" ref={sectionRef}>
+    <section id="art" className="relative py-8 sm:py-12 theme-canvas overflow-x-clip" ref={sectionRef}>
       {/* Ambient Radial Glow with Aquamarine Seafoam */}
       <motion.div
         style={{ y: bgY }}
@@ -112,9 +109,9 @@ export function ArtSection() {
         style={{ scale: sectionScale, opacity: sectionOpacity }}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
       >
-        {/* Section Header */}
-        <motion.div style={{ y: headerY }} className="flex flex-col md:flex-row md:items-end justify-between mb-4 gap-6">
-          <div>
+        {/* Section Header with In-Line Filter Pills */}
+        <motion.div style={{ y: headerY }} className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
+          <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold theme-badge mb-3">
               <Palette className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
               <span>Discipline 03 // 3D & Visual Atelier</span>
@@ -122,19 +119,19 @@ export function ArtSection() {
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight theme-text-primary">
               Form, Lighting & Hard-Surface Aesthetics
             </h2>
-            <p className="mt-3 text-sm sm:text-base theme-text-secondary max-w-2xl leading-relaxed">
+            <p className="mt-3 text-sm sm:text-base theme-text-secondary leading-relaxed">
               3D modeling, hard-surface assets, and digital artwork created with Blender.
             </p>
           </div>
 
-          {/* Filterable Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5">
+          {/* Filterable Tabs: Wrap cleanly to second row if exceeding screen width */}
+          <div className="flex flex-wrap items-center gap-2 max-w-full">
             {categories.map((cat) => (
               <button
                 key={cat}
                 id={`art-tab-${cat.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                 onClick={() => setActiveTab(cat)}
-                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+                className={`whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
                   activeTab === cat
                     ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-md shadow-teal-400/25'
                     : 'border theme-border theme-card theme-text-secondary hover:theme-text-primary'
@@ -144,20 +141,6 @@ export function ArtSection() {
               </button>
             ))}
           </div>
-        </motion.div>
-
-        {/* Dedicated 3D Interactive Model Viewer */}
-        <motion.div style={{ y: viewerY }} className="mb-6">
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-lg font-bold theme-text-primary flex items-center gap-2">
-              <Box className="w-5 h-5 text-teal-600 dark:text-teal-400" />
-              <span>Interactive 3D Hard-Surface Studio Asset</span>
-            </h3>
-            <span className="text-xs font-mono theme-text-muted">
-              Real-time WebGL Shader Engine
-            </span>
-          </div>
-          <Art3DViewer />
         </motion.div>
 
         {/* Curated Gallery Grid */}
