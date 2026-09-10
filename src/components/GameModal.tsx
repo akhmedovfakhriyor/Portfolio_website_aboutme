@@ -172,7 +172,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
           {activeTab === 'overview' && (
             <div className="space-y-6">
               {/* Featured Video Player */}
-              {game.previewVideo && (
+              {game.previewVideo && game.id !== 'pixel-perfect-weather' && game.id !== 'vae-mond' && (
                 <div className="rounded-2xl overflow-hidden border border-purple-500/30 bg-black/60 shadow-lg">
                   <video
                     src={game.previewVideo}
@@ -287,7 +287,6 @@ export function GameModal({ game, onClose }: GameModalProps) {
         {/* Footer info */}
         <div className="p-4 shrink-0 bg-black/40 border-t border-white/5 flex items-center justify-between text-xs text-slate-400 font-mono">
           <span>Engine: {game.engine}</span>
-          <span className="text-purple-400">Available on Steam & Itch.io</span>
         </div>
         </div> {/* End of Content Container */}
       </div>

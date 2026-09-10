@@ -1,7 +1,6 @@
 import { SectionId } from '../types';
 import { SECTION_THEMES } from '../hooks/useThemeObserver';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { ArrowUp } from 'lucide-react';
 
 interface FooterProps {
   activeSection: SectionId;
@@ -18,10 +17,6 @@ export function Footer({ activeSection }: FooterProps) {
     .join('')
     .slice(0, 2)
     .toUpperCase();
-
-  const handleBackToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   return (
     <footer
@@ -106,16 +101,6 @@ export function Footer({ activeSection }: FooterProps) {
             <span>© {new Date().getFullYear()} {PERSONAL_INFO.name}.</span>
             <span>All rights reserved.</span>
           </div>
-
-          {/* Back to top link */}
-          <button
-            id="back-to-top-btn"
-            onClick={handleBackToTop}
-            className="flex items-center gap-1.5 theme-text-secondary hover:text-[var(--accent-primary)] transition-colors cursor-pointer"
-          >
-            <span>Back to top</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
     </footer>

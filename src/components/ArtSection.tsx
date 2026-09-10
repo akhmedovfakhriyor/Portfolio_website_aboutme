@@ -6,6 +6,44 @@ import { Art3DViewer } from './Art3DViewer';
 import { ArtworkLightbox } from './ArtworkLightbox';
 import { Palette, Box, ZoomIn, Eye, Sparkles, Filter, Layers, LayoutGrid, Rows } from 'lucide-react';
 
+function parseYearToDate(yearStr: string): number {
+  const str = yearStr.trim();
+  
+  // Try to find any 4-digit numbers (years)
+  const years = str.match(/\b\d{4}\b/g);
+  let year = 2025; // default fallback
+  if (years && years.length > 0) {
+    // Pick the highest year found in the string (for ranges like '2025 - 2026')
+    year = Math.max(...years.map(Number));
+  }
+  
+  // Find month names
+  const months: { [key: string]: number } = {
+    jan: 1, january: 1,
+    feb: 2, february: 2,
+    mar: 3, march: 3,
+    apr: 4, april: 4,
+    may: 5,
+    jun: 6, june: 6,
+    jul: 7, july: 7,
+    aug: 8, august: 8,
+    sep: 9, september: 9, sept: 9,
+    oct: 10, october: 10,
+    nov: 11, november: 11,
+    dec: 12, december: 12
+  };
+  
+  let month = 0; // default to 0 if no month specified
+  const words = str.toLowerCase().split(/[^a-z0-9]/);
+  for (const word of words) {
+    if (months[word] !== undefined) {
+      month = months[word];
+    }
+  }
+  
+  return year * 100 + month;
+}
+
 export function ArtSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -55,9 +93,11 @@ export function ArtSection() {
     '3D Models',
   ];
 
+  const sortedArtworks = [...ARTWORKS].sort((a, b) => parseYearToDate(b.year) - parseYearToDate(a.year));
+
   const filteredArtworks = activeTab === 'All'
-    ? ARTWORKS
-    : ARTWORKS.filter((art) => art.category === activeTab);
+    ? sortedArtworks
+    : sortedArtworks.filter((art) => art.category === activeTab);
 
   return (
     <section id="art" className="relative py-4 sm:py-6 theme-canvas overflow-x-clip" ref={sectionRef}>

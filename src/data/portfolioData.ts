@@ -209,13 +209,12 @@ export const GAME_PROJECTS: GameProject[] = [
       'Dynamic wetness shaders with surface ripple distortion buffers',
       'Dynamic day/night and atmospheric storm lighting system',
     ],
-    thumbnail: '/assets/media/game-2-camera/{2398519E-2F81-436C-8D5B-F8F7BD2FAC1C}.png',
+    thumbnail: '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.png',
     previewGif: '/assets/media/game-2-camera/sandscappers_preview.gif',
     previewVideo: '/assets/media/game-2-camera/2_1sandscapper.mov',
-    banner: '/assets/media/game-2-camera/{2398519E-2F81-436C-8D5B-F8F7BD2FAC1C}.png',
+    banner: '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.png',
     screenshots: [
       '/assets/media/game-2-camera/sandscappers_preview.gif',
-      '/assets/media/game-2-camera/{2398519E-2F81-436C-8D5B-F8F7BD2FAC1C}.png',
       '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.png',
       '/assets/media/game-2-camera/{0DEDFE0A-F61C-42C8-AFB2-A2C33E6CC57C}.png',
     ],
@@ -329,50 +328,49 @@ export const ARTWORKS: Artwork[] = [
       'Pencil & Paper',
       'Traditional Media'
     ],
-    description: 'A collection of expressive free-hand sketches and traditional character illustrations.',
+    description: 'A collection of expressive free-hand sketches, fabric drapery studies, and traditional character illustrations.',
     imageUrl: '/assets/media/Art Gallery/sad woman.jpg',
     gallery: [
       '/assets/media/Art Gallery/sad woman.jpg',
       '/assets/media/Art Gallery/woman looking up.jpg',
       '/assets/media/Art Gallery/samurai oni.jpg',
-      '/assets/media/Art Gallery/anime girl.jpg'
+      '/assets/media/Art Gallery/anime girl.jpg',
+      '/assets/media/Art Gallery/cloth.jpg'
     ],
     featured: false
   },
   {
-    id: 'art-generated-3',
-    title: 'Cloth',
+    id: 'art-gaze-nothingness-group',
+    title: 'Gaze into the Nothingness',
     category: 'Traditional Art',
-    year: 'Dec 2025',
+    year: 'Apr 2025',
     tools: [
       'Pencil & Paper'
     ],
-    description: 'Fabric drapery and shadow study.',
-    imageUrl: '/assets/media/Art Gallery/cloth.jpg',
+    description: 'Portrait studies capturing deep and introspective expressions.',
+    imageUrl: '/assets/media/Art Gallery/woman in a cap.jpg',
+    gallery: [
+      '/assets/media/Art Gallery/woman in a cap.jpg',
+      '/assets/media/Art Gallery/woman looking away.jpg'
+    ],
     featured: false
   },
   {
-    id: 'art-generated-23',
-    title: 'Hooded Study',
+    id: 'art-shading-study-group',
+    title: 'Added More Shading',
     category: 'Traditional Art',
     year: 'Dec 2025',
     tools: [
-      'Pencil & Paper'
+      'Pencil & Paper',
+      'Traditional Sketching'
     ],
-    description: 'Expressive portrait study with directional light.',
+    description: 'A dedicated group of portrait and concept sketches emphasizing advanced pencil shading, directional contrast, and form.',
     imageUrl: '/assets/media/Art Gallery/woman in a hood.jpg',
-    featured: false
-  },
-  {
-    id: 'art-generated-25',
-    title: 'Profile Study',
-    category: 'Traditional Art',
-    year: 'Dec 2025',
-    tools: [
-      'Pencil & Paper'
+    gallery: [
+      '/assets/media/Art Gallery/woman in a hood.jpg',
+      '/assets/media/Art Gallery/magic.jpg',
+      '/assets/media/Art Gallery/king baldwin.jpg'
     ],
-    description: 'Profile portrait and shading practice.',
-    imageUrl: '/assets/media/Art Gallery/woman looking away.jpg',
     featured: false
   },
   {
@@ -388,18 +386,6 @@ export const ARTWORKS: Artwork[] = [
     featured: false
   },
   {
-    id: 'art-generated-12',
-    title: 'Magic',
-    category: 'Traditional Art',
-    year: 'Oct 2025',
-    tools: [
-      'Traditional Sketching'
-    ],
-    description: 'Concept sketch focusing on gesture and composition.',
-    imageUrl: '/assets/media/Art Gallery/magic.jpg',
-    featured: false
-  },
-  {
     id: 'art-generated-4',
     title: 'Despair',
     category: 'Traditional Art',
@@ -409,18 +395,6 @@ export const ARTWORKS: Artwork[] = [
     ],
     description: 'Emotional portrait study exploring deep contrast.',
     imageUrl: '/assets/media/Art Gallery/despair.jpg',
-    featured: false
-  },
-  {
-    id: 'art-generated-22',
-    title: 'Street Portrait',
-    category: 'Traditional Art',
-    year: 'Apr 2025',
-    tools: [
-      'Pencil & Paper'
-    ],
-    description: 'Casual character portrait sketch.',
-    imageUrl: '/assets/media/Art Gallery/woman in a cap.jpg',
     featured: false
   },
   {
@@ -477,18 +451,6 @@ export const ARTWORKS: Artwork[] = [
     featured: true
   },
   {
-    id: 'art-generated-11',
-    title: 'King Baldwin',
-    category: 'Traditional Art',
-    year: 'Jan 2025',
-    tools: [
-      'Traditional Sketching'
-    ],
-    description: 'Historical portrait study of King Baldwin IV.',
-    imageUrl: '/assets/media/Art Gallery/king baldwin.jpg',
-    featured: false
-  },
-  {
     id: 'art-generated-17',
     title: 'Umbra Character Concept Sketches',
     category: 'Digital Art',
@@ -521,6 +483,19 @@ export const ARTWORKS: Artwork[] = [
     featured: false
   },
   {
+    id: 'art-generated-sandscappers-env',
+    title: 'Sand-Scappers Atmospheric Study',
+    category: 'Digital Art',
+    year: '2024',
+    tools: [
+      'Pixel Art',
+      'Digital Art'
+    ],
+    description: 'Atmospheric 2D environment study showcasing rain-slicked platforms, dynamic pixel lighting, and volumetric mist.',
+    imageUrl: '/assets/media/game-2-camera/{0DEDFE0A-F61C-42C8-AFB2-A2C33E6CC57C}.png',
+    featured: false
+  },
+  {
     id: 'art-animations-group',
     title: 'Animations & GIFs',
     category: 'Digital Art',
@@ -533,7 +508,8 @@ export const ARTWORKS: Artwork[] = [
     imageUrl: '/assets/media/Art Gallery/Voda_GIF.gif',
     gallery: [
       '/assets/media/Art Gallery/Voda_GIF.gif',
-      '/assets/media/game-3-umbra/UmbraRun_GIF.gif'
+      '/assets/media/game-3-umbra/UmbraRun_GIF.gif',
+      '/assets/media/game-2-camera/sandscappers_preview.gif'
     ],
     featured: false
   }
