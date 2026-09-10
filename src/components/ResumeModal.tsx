@@ -132,11 +132,11 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             </div>
 
             {/* Scrollable Printable Document Paper */}
-            <div className="p-4 sm:p-8 overflow-y-auto flex-1 bg-slate-950/40 no-scrollbar">
+            <div className="p-3 sm:p-8 overflow-y-auto flex-1 bg-slate-950/40 no-scrollbar">
               <div
                 ref={resumePaperRef}
                 id="printable-resume-paper"
-                className="max-w-3xl mx-auto bg-white text-slate-900 p-6 sm:p-10 rounded-xl shadow-lg font-sans leading-relaxed text-sm"
+                className="max-w-3xl mx-auto bg-white text-slate-900 p-4 sm:p-10 rounded-xl shadow-lg font-sans leading-relaxed text-sm overflow-hidden break-words [overflow-wrap:anywhere]"
               >
                 {/* Header info */}
                 <div className="border-b border-slate-300 pb-4 mb-5">
@@ -147,41 +147,41 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                     {RESUME_DATA.title}
                   </div>
 
-                  <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600 font-mono">
+                  <div className="mt-2.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600 font-mono break-all [overflow-wrap:anywhere]">
                     <a href={`mailto:${RESUME_DATA.email}`} className="hover:text-orange-600 transition-colors inline-flex items-center gap-1">
-                      <Mail className="w-3 h-3 text-slate-400" />
-                      {RESUME_DATA.email}
+                      <Mail className="w-3 h-3 text-slate-400 shrink-0" />
+                      <span>{RESUME_DATA.email}</span>
                     </a>
                     <span>•</span>
                     <a href={RESUME_DATA.telegram} target="_blank" rel="noreferrer" className="text-sky-600 hover:underline transition-colors inline-flex items-center gap-1 font-semibold">
-                      <Send className="w-3 h-3 text-sky-500" />
-                      {RESUME_DATA.telegramHandle}
+                      <Send className="w-3 h-3 text-sky-500 shrink-0" />
+                      <span>{RESUME_DATA.telegramHandle}</span>
                     </a>
                     <span>•</span>
                     <span className="inline-flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-slate-400" />
-                      {RESUME_DATA.location}
+                      <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
+                      <span>{RESUME_DATA.location}</span>
                     </span>
                   </div>
 
-                  <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-700 font-mono">
+                  <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-700 font-mono break-all [overflow-wrap:anywhere]">
                     <span>
                       GitHub:{' '}
-                      <a href={RESUME_DATA.github} target="_blank" rel="noreferrer" className="text-sky-700 hover:underline font-semibold">
+                      <a href={RESUME_DATA.github} target="_blank" rel="noreferrer" className="text-sky-700 hover:underline font-semibold break-all">
                         {RESUME_DATA.githubDisplay}
                       </a>
                     </span>
                     <span>•</span>
                     <span>
                       itch.io:{' '}
-                      <a href={RESUME_DATA.itch} target="_blank" rel="noreferrer" className="text-sky-700 hover:underline font-semibold">
+                      <a href={RESUME_DATA.itch} target="_blank" rel="noreferrer" className="text-sky-700 hover:underline font-semibold break-all">
                         {RESUME_DATA.itchDisplay}
                       </a>
                     </span>
                     <span>•</span>
                     <span>
                       Website:{' '}
-                      <a href={RESUME_DATA.website} target="_blank" rel="noreferrer" className="text-sky-700 hover:underline font-semibold">
+                      <a href={RESUME_DATA.website} target="_blank" rel="noreferrer" className="text-sky-700 hover:underline font-semibold break-all">
                         {RESUME_DATA.websiteDisplay}
                       </a>
                     </span>
@@ -193,7 +193,7 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <h2 className="text-xs font-bold tracking-wider uppercase text-slate-900 border-b border-slate-300 pb-1 mb-2">
                     CAREER OBJECTIVE
                   </h2>
-                  <p className="text-xs sm:text-[13px] text-slate-700 leading-normal">
+                  <p className="text-xs sm:text-[13px] text-slate-700 leading-normal break-words">
                     {RESUME_DATA.careerObjective}
                   </p>
                 </div>
@@ -247,13 +247,13 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                           Procedural physics reactions trigger when an enemy enters the creature&apos;s detection radius.
                         </li>
                       </ul>
-                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-center gap-x-2">
-                        <span className="font-semibold text-slate-700">More:</span>
-                        <a href="https://github.com/akhmedovfakhriyor/Procedural_animation_4legs" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline">
+                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 break-all [overflow-wrap:anywhere]">
+                        <span className="font-semibold text-slate-700 shrink-0">More:</span>
+                        <a href="https://github.com/akhmedovfakhriyor/Procedural_animation_4legs" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
                           github.com/akhmedovfakhriyor/Procedural_animation_4legs
                         </a>
                         <span>,</span>
-                        <a href="https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline">
+                        <a href="https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
                           github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm
                         </a>
                       </div>
@@ -280,9 +280,9 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                           Implemented with custom shaders. Standalone tech demo, not tied to a specific game.
                         </li>
                       </ul>
-                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-center gap-x-2">
-                        <span className="font-semibold text-slate-700">More:</span>
-                        <a href="https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline">
+                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 break-all [overflow-wrap:anywhere]">
+                        <span className="font-semibold text-slate-700 shrink-0">More:</span>
+                        <a href="https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
                           github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera
                         </a>
                       </div>
@@ -306,9 +306,9 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                           Shadows cast by the 3D objects double as platform geometry on the 2D side.
                         </li>
                       </ul>
-                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-center gap-x-2">
-                        <span className="font-semibold text-slate-700">Play:</span>
-                        <a href="https://s0far.itch.io/vae-mond" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline">
+                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 break-all [overflow-wrap:anywhere]">
+                        <span className="font-semibold text-slate-700 shrink-0">Play:</span>
+                        <a href="https://s0far.itch.io/vae-mond" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
                           s0far.itch.io/vae-mond
                         </a>
                       </div>
@@ -346,9 +346,9 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                           Search returns results in under 0.1 ms across a local test set of roughly 7 million files — built in Rust to replace Windows&apos; slow native file search.
                         </li>
                       </ul>
-                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-center gap-x-2">
-                        <span className="font-semibold text-slate-700">Code:</span>
-                        <a href="https://github.com/akhmedovfakhriyor/file-explorer" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline">
+                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 break-all [overflow-wrap:anywhere]">
+                        <span className="font-semibold text-slate-700 shrink-0">Code:</span>
+                        <a href="https://github.com/akhmedovfakhriyor/file-explorer" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
                           github.com/akhmedovfakhriyor/file-explorer
                         </a>
                       </div>
@@ -364,16 +364,16 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                           Sep 2026
                         </span>
                       </div>
-                      <div className="mt-1 text-xs text-slate-600">
+                      <div className="mt-1 text-xs text-slate-600 break-all [overflow-wrap:anywhere]">
                         Website:{' '}
-                        <a href="https://akhmedovfakhriyor-aboutme.vercel.app" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline">
+                        <a href="https://akhmedovfakhriyor-aboutme.vercel.app" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
                           akhmedovfakhriyor-aboutme.vercel.app
                         </a>
                       </div>
                     </div>
 
                     {/* Game Jams */}
-                    <div className="pt-1 text-xs text-slate-700">
+                    <div className="pt-1 text-xs text-slate-700 break-words">
                       <span className="font-bold text-slate-900">Game Jams:</span>{' '}
                       1st place (solo), Astana IT University internal game jam — against ~8 teams of 1–4 people. Participant, GMTK Game Jam.
                     </div>
