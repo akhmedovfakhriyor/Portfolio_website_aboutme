@@ -138,17 +138,17 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
           </h1>
 
           {/* Typewriter / Cycling Role Display */}
-          <div className="flex flex-wrap items-center gap-2 text-lg sm:text-xl lg:text-2xl font-bold mb-6 h-9 sm:h-10">
-            <span className="theme-text-muted font-normal">Systems I build as a</span>
-            <div className="inline-flex items-center">
-              <span className={`font-mono border-b-2 border-current pb-0.5 inline-flex items-center ${
+          <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1.5 text-base sm:text-xl lg:text-2xl font-bold mb-6 min-h-[3.25rem] sm:min-h-[2.5rem]">
+            <span className="theme-text-muted font-normal shrink-0">Systems I build as a</span>
+            <div className="inline-flex items-center max-w-full">
+              <span className={`font-mono border-b-2 border-current pb-0.5 inline-flex items-center break-words ${
                 roleIndex === 0 ? 'text-orange-500' :
                 roleIndex === 1 ? 'text-purple-500' :
                 roleIndex === 2 ? 'text-teal-500' :
                 'text-sky-500'
               }`}>
                 <span>{typedText}</span>
-                <span className={`animate-pulse inline-block ml-[2px] w-[3px] h-[1em] ${
+                <span className={`animate-pulse inline-block ml-[2px] w-[3px] h-[1em] shrink-0 ${
                   roleIndex === 0 ? 'bg-orange-500' :
                   roleIndex === 1 ? 'bg-purple-500' :
                   roleIndex === 2 ? 'bg-teal-500' :

@@ -65,17 +65,17 @@ export function ContactSection() {
         {/* Primary Contact Cards Grid */}
         <motion.div style={{ y: cardsY }} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Direct Email Card */}
-          <div className="p-6 rounded-3xl border theme-border theme-card shadow-sm flex flex-col justify-between">
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center">
-                  <Mail className="w-6 h-6" />
+          <div className="p-4 sm:p-6 rounded-3xl border theme-border theme-card shadow-sm flex flex-col justify-between">
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <div className="flex items-center gap-3 min-w-0 w-full">
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-orange-500/10 text-orange-500 flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="text-xs font-mono theme-text-muted">Direct Email</div>
                   <a
                     href={`mailto:${PERSONAL_INFO.email}`}
-                    className="text-base font-bold theme-text-primary font-mono hover:text-orange-500 transition-colors break-all"
+                    className="text-sm sm:text-base font-bold theme-text-primary font-mono hover:text-orange-500 transition-colors break-words block leading-snug mt-0.5"
                   >
                     {PERSONAL_INFO.email}
                   </a>
@@ -86,15 +86,15 @@ export function ContactSection() {
             <div className="flex items-center gap-2 pt-4 border-t theme-border">
               <a
                 href={`mailto:${PERSONAL_INFO.email}`}
-                className="flex-1 py-2.5 px-4 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs font-mono flex items-center justify-center gap-2 transition-all shadow-md shadow-orange-600/20"
+                className="flex-1 py-2.5 px-3 sm:px-4 rounded-xl bg-orange-600 hover:bg-orange-500 text-white font-bold text-xs font-mono flex items-center justify-center gap-2 transition-all shadow-md shadow-orange-600/20"
               >
-                <Mail className="w-3.5 h-3.5" />
+                <Mail className="w-3.5 h-3.5 shrink-0" />
                 <span>Send Email</span>
               </a>
               <button
                 id="copy-email-btn"
                 onClick={handleCopyEmail}
-                className="py-2.5 px-4 rounded-xl border theme-border hover:bg-black/5 dark:hover:bg-white/5 transition-all text-xs font-mono flex items-center gap-1.5 cursor-pointer theme-text-secondary"
+                className="py-2.5 px-3 sm:px-4 rounded-xl border theme-border hover:bg-black/5 dark:hover:bg-white/5 transition-all text-xs font-mono flex items-center gap-1.5 cursor-pointer theme-text-secondary shrink-0"
                 title="Copy email to clipboard"
               >
                 {copiedEmail ? <Check className="w-4 h-4 text-emerald-500" /> : <Copy className="w-4 h-4" />}
@@ -104,15 +104,15 @@ export function ContactSection() {
           </div>
 
           {/* Location & Timezone Card */}
-          <div className="p-6 rounded-3xl border theme-border theme-card shadow-sm flex flex-col justify-between">
-            <div className="flex items-start gap-4 mb-4">
-              <div className="w-12 h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
-                <MapPin className="w-6 h-6" />
+          <div className="p-4 sm:p-6 rounded-3xl border theme-border theme-card shadow-sm flex flex-col justify-between">
+            <div className="flex items-start gap-3 mb-4">
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                <MapPin className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <div className="text-xs font-mono theme-text-muted">Location & Timezone</div>
-                <div className="text-base font-bold theme-text-primary mt-0.5">{PERSONAL_INFO.location}</div>
-                <p className="text-xs theme-text-secondary mt-1">Available for remote contracts, full-time roles & global collaborations.</p>
+                <div className="text-sm sm:text-base font-bold theme-text-primary mt-0.5 leading-snug">{PERSONAL_INFO.location}</div>
+                <p className="text-xs theme-text-secondary mt-1 leading-relaxed">Available for remote contracts, full-time roles & global collaborations.</p>
               </div>
             </div>
 
