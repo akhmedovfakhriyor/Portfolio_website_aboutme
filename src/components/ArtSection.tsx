@@ -82,7 +82,7 @@ export function ArtSection() {
               Form, Lighting & Hard-Surface Aesthetics
             </h2>
             <p className="mt-3 text-sm sm:text-base theme-text-secondary max-w-2xl leading-relaxed">
-              Exploring the harmony between industrial engineering ergonomics and evocative visual storytelling. Rendered in clean minimalist framing so organic pigments and lighting values take center stage.
+              3D modeling, hard-surface assets, and digital artwork created with Blender.
             </p>
           </div>
 

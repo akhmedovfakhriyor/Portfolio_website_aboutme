@@ -76,7 +76,7 @@ export function GameSection() {
               Real-Time Worlds & ECS Simulations
             </h2>
             <p className="mt-3 text-sm sm:text-base theme-text-secondary max-w-2xl leading-relaxed">
-              Crafting bespoke gameplay systems, responsive character controllers, custom HLSL/WGSL shaders, and procedural world generators across modern engines.
+              Gameplay mechanics, character controllers, and procedural animation built in Unity.
             </p>
           </div>
 

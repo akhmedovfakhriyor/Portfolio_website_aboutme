@@ -101,7 +101,7 @@ export function RustCodeExplorer() {
     }, 1200);
   };
 
-  const categories = ['All', 'Systems', 'Frontend/Web', 'Game Dev', 'Graphics', 'Databases'];
+  const categories = ['All', ...Array.from(new Set(TECH_STACK.map((t) => t.category)))];
   const filteredTech = selectedTechCategory === 'All' 
     ? TECH_STACK 
     : TECH_STACK.filter((t) => t.category === selectedTechCategory);
@@ -129,7 +129,7 @@ export function RustCodeExplorer() {
               High-Concurrency Systems & Compilers
             </h2>
             <p className="mt-3 text-sm sm:text-base theme-text-secondary max-w-2xl leading-relaxed">
-              Writing memory-safe, lock-free, zero-cost abstractions in Rust and C++. Architected for microsecond latencies, SIMD parallelization, and predictable hardware cache locality.
+              Writing memory-safe, lock-free, zero-cost abstractions in Rust. Architected for microsecond latencies and predictable hardware cache locality.
             </p>
           </div>
 
@@ -317,7 +317,6 @@ export function RustCodeExplorer() {
                       Web Simulation
                     </span>
                   </div>
-                  <span className="text-slate-500">Click &quot;Simulate Tauri Build&quot; above to run</span>
                 </div>
 
                 <div className="bg-slate-950 p-2.5 rounded-lg border border-slate-800/80 font-mono text-xs text-slate-300 min-h-[90px] space-y-1">
@@ -344,7 +343,6 @@ export function RustCodeExplorer() {
                     <div className="text-slate-500 italic flex items-center gap-2">
                       <span>$ cargo tauri build</span>
                       <span className="w-2 h-4 bg-orange-500 animate-pulse inline-block" />
-                      <span className="text-slate-600 font-sans text-[11px]">Click &quot;Simulate Tauri Build&quot; to test IPC & database engine sequence</span>
                     </div>
                   )}
                 </div>

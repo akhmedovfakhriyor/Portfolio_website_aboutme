@@ -1,18 +1,22 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { RotateCw, ZoomIn, ZoomOut } from 'lucide-react';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { RotateCw, ZoomIn, ZoomOut, Loader2, Sparkles } from 'lucide-react';
 
 export function Art3DViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [modelType, setModelType] = useState<'mecha' | 'relic' | 'knot' | 'crystal'>('mecha');
+  const [modelType, setModelType] = useState<'custom' | 'mecha' | 'relic' | 'knot' | 'crystal'>('custom');
   const [autoRotate, setAutoRotate] = useState(true);
   const [shaderStyle, setShaderStyle] = useState<'pbr' | 'clay' | 'wireframe'>('pbr');
+  const [isLoadingModel, setIsLoadingModel] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
 
   const sceneRef = useRef<THREE.Scene | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const currentMeshRef = useRef<THREE.Group | null>(null);
   const cameraRef = useRef<THREE.PerspectiveCamera | null>(null);
   const autoRotateRef = useRef(autoRotate);
+  const loadedGltfRef = useRef<THREE.Group | null>(null);
 
   // Keep live autoRotate ref in sync with state for continuous animation loop
   useEffect(() => {
@@ -57,6 +61,10 @@ export function Art3DViewer() {
     const rimLight = new THREE.PointLight(0xffffff, 2, 20);
     rimLight.position.set(0, 4, -4);
     scene.add(rimLight);
+
+    const frontLight = new THREE.DirectionalLight(0xffffff, 1.4);
+    frontLight.position.set(0, 2, 6);
+    scene.add(frontLight);
 
     // Group to hold meshes
     const group = new THREE.Group();
@@ -180,10 +188,99 @@ export function Art3DViewer() {
   }, [modelType, shaderStyle]);
 
   function buildModel(
-    type: 'mecha' | 'relic' | 'knot' | 'crystal',
+    type: 'custom' | 'mecha' | 'relic' | 'knot' | 'crystal',
     targetGroup: THREE.Group,
     style: 'pbr' | 'clay' | 'wireframe'
   ) {
+    if (type === 'custom') {
+      setIsLoadingModel(true);
+      setLoadError(null);
+
+      const applyCustomModel = (modelGroup: THREE.Group) => {
+        while (targetGroup.children.length > 0) {
+          targetGroup.remove(targetGroup.children[0]);
+        }
+
+        const clone = modelGroup.clone(true);
+
+        if (style === 'wireframe') {
+          const wireMat = new THREE.MeshBasicMaterial({
+            color: 0x2dd4bf,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.85,
+          });
+          clone.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+              (child as THREE.Mesh).material = wireMat;
+            }
+          });
+        } else if (style === 'clay') {
+          const clayMat = new THREE.MeshStandardMaterial({
+            color: 0xf3f6f5,
+            roughness: 0.75,
+            metalness: 0.05,
+          });
+          clone.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+              (child as THREE.Mesh).material = clayMat;
+            }
+          });
+        }
+
+        targetGroup.add(clone);
+        setIsLoadingModel(false);
+      };
+
+      if (loadedGltfRef.current) {
+        applyCustomModel(loadedGltfRef.current);
+      } else {
+        const loader = new GLTFLoader();
+        loader.load(
+          '/assets/media/untitled.glb',
+          (gltf) => {
+            const root = gltf.scene;
+
+            // Compute bounds and re-center
+            const box = new THREE.Box3().setFromObject(root);
+            const center = box.getCenter(new THREE.Vector3());
+            const size = box.getSize(new THREE.Vector3());
+
+            root.position.sub(center);
+
+            // Normalize scale to standard view fit (~3.6 units)
+            const maxDim = Math.max(size.x, size.y, size.z);
+            if (maxDim > 0) {
+              const scale = 3.6 / maxDim;
+              root.scale.setScalar(scale);
+            }
+
+            root.traverse((child) => {
+              if ((child as THREE.Mesh).isMesh) {
+                const mesh = child as THREE.Mesh;
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+              }
+            });
+
+            const wrapper = new THREE.Group();
+            wrapper.add(root);
+            loadedGltfRef.current = wrapper;
+
+            applyCustomModel(wrapper);
+          },
+          undefined,
+          (err) => {
+            console.error('Error loading 3D GLB model:', err);
+            setIsLoadingModel(false);
+            setLoadError('Failed to load untitled.glb');
+            buildModel('mecha', targetGroup, style);
+          }
+        );
+      }
+      return;
+    }
+
     // Clear previous children
     while (targetGroup.children.length > 0) {
       const obj = targetGroup.children[0] as THREE.Mesh;
@@ -280,12 +377,24 @@ export function Art3DViewer() {
         </div>
 
         {/* Geometry Switcher */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <button
+            id="model-blender-btn"
+            onClick={() => setModelType('custom')}
+            className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
+              modelType === 'custom'
+                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm ring-1 ring-teal-300'
+                : 'border theme-border theme-text-secondary hover:theme-text-primary'
+            }`}
+          >
+            <Sparkles className="w-3 h-3" />
+            <span>Blender Asset</span>
+          </button>
           <button
             onClick={() => setModelType('mecha')}
             className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
               modelType === 'mecha'
-                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm'
+                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm ring-1 ring-teal-300'
                 : 'border theme-border theme-text-secondary hover:theme-text-primary'
             }`}
           >
@@ -295,7 +404,7 @@ export function Art3DViewer() {
             onClick={() => setModelType('relic')}
             className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
               modelType === 'relic'
-                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm'
+                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm ring-1 ring-teal-300'
                 : 'border theme-border theme-text-secondary hover:theme-text-primary'
             }`}
           >
@@ -305,7 +414,7 @@ export function Art3DViewer() {
             onClick={() => setModelType('knot')}
             className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
               modelType === 'knot'
-                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm'
+                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm ring-1 ring-teal-300'
                 : 'border theme-border theme-text-secondary hover:theme-text-primary'
             }`}
           >
@@ -315,7 +424,7 @@ export function Art3DViewer() {
             onClick={() => setModelType('crystal')}
             className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
               modelType === 'crystal'
-                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm'
+                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm ring-1 ring-teal-300'
                 : 'border theme-border theme-text-secondary hover:theme-text-primary'
             }`}
           >
@@ -324,11 +433,27 @@ export function Art3DViewer() {
         </div>
       </div>
 
-      {/* 3D Canvas Canvas Mount */}
-      <div
-        ref={containerRef}
-        className="w-full h-[260px] sm:h-[420px] bg-gradient-to-b from-[#e8ebea] via-[#e0e8e6] to-[#d2dedb] dark:from-slate-950 dark:to-teal-950/40 cursor-grab active:cursor-grabbing"
-      />
+      {/* 3D Canvas Mount with Overlays */}
+      <div className="relative w-full">
+        <div
+          ref={containerRef}
+          className="w-full h-[260px] sm:h-[420px] bg-gradient-to-b from-[#e8ebea] via-[#e0e8e6] to-[#d2dedb] dark:from-slate-950 dark:to-teal-950/40 cursor-grab active:cursor-grabbing"
+        />
+
+        {/* Loading Overlay */}
+        {isLoadingModel && (
+          <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-slate-950/50 backdrop-blur-xs text-white pointer-events-none">
+            <Loader2 className="w-8 h-8 text-[#2dd4bf] animate-spin mb-2" />
+            <span className="text-xs font-mono text-slate-200">Loading Blender Asset (untitled.glb)...</span>
+          </div>
+        )}
+
+        {loadError && (
+          <div className="absolute top-3 left-3 z-20 px-3 py-1.5 rounded-lg bg-red-900/80 border border-red-500/50 text-red-200 text-xs font-mono">
+            {loadError}
+          </div>
+        )}
+      </div>
 
       {/* Floating Control Toolbar */}
       <div className="absolute bottom-4 left-4 right-4 flex flex-wrap items-center justify-between gap-3 pointer-events-none">

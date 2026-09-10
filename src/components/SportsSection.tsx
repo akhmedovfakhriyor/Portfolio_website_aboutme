@@ -69,7 +69,7 @@ export function SportsSection() {
               Biomechanical Discipline & Mental Fortitude
             </h2>
             <p className="mt-3 text-sm sm:text-base theme-text-secondary max-w-2xl leading-relaxed">
-              Physical conditioning feeds cognitive clarity. Whether pacing distance runs with AITU running club, executing tactical pitch transitions in football, or drilling Rubik&apos;s cube algorithms, athletics forms the bedrock of my engineering stamina.
+              Distance running with the AITU running club, competitive sports, and speedcubing.
             </p>
           </div>
 

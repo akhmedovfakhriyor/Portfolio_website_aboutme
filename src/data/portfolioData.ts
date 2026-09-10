@@ -34,7 +34,7 @@ export const TECH_STACK = [
   { name: 'Unreal Engine 5', category: 'Game Dev', level: 'Intermediate', icon: 'Gamepad2' },
   { name: 'Unity', category: 'Game Dev', level: 'Advanced', icon: 'Sparkles' },
   { name: 'Blender', category: '3D Art', level: 'Proficient', icon: 'Palette' },
-  { name: 'PostgreSQL', category: 'Databases', level: 'Proficient', icon: 'Database' },
+  { name: 'C#', category: 'Languages', level: 'Proficient', icon: 'Code' },
   { name: 'Git', category: 'DevOps', level: 'Advanced', icon: 'Terminal' },
 ];
 
