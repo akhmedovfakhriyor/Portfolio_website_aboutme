@@ -96,7 +96,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
     {
       id: 'sports' as SectionId,
       title: 'Athletics & Endurance',
-      subtitle: 'AITU Running Club, Competitive Sports & Speedcubing',
+      subtitle: 'Distance Running, Competitive Sports & Speedcubing',
       tag: 'Endurance / CFOP',
       icon: Activity,
       color: '#0284c7',
@@ -124,7 +124,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
       >
         {/* Dynamic Headline */}
         <motion.div style={{ y: headlineY }} className="max-w-4xl">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight theme-text-primary leading-[1.08] mb-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight theme-text-primary leading-[1.1] mb-6">
             Designing systems at the nexus of{' '}
             <span className="relative inline-block text-orange-600 dark:text-orange-400">
               rigor
@@ -138,17 +138,17 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
           </h1>
 
           {/* Typewriter / Cycling Role Display */}
-          <div className="flex flex-wrap items-center gap-2 text-xl sm:text-2xl lg:text-3xl font-bold mb-8 h-10 sm:h-12">
+          <div className="flex flex-wrap items-center gap-2 text-lg sm:text-xl lg:text-2xl font-bold mb-6 h-9 sm:h-10">
             <span className="theme-text-muted font-normal">Systems I build as a</span>
             <div className="inline-flex items-center">
-              <span className={`font-mono ${
+              <span className={`font-mono border-b-2 border-current pb-0.5 inline-flex items-center ${
                 roleIndex === 0 ? 'text-orange-500' :
                 roleIndex === 1 ? 'text-purple-500' :
                 roleIndex === 2 ? 'text-teal-500' :
                 'text-sky-500'
               }`}>
-                {typedText}
-                <span className={`animate-pulse inline-block ml-[2px] w-[3px] h-[1em] align-middle -mt-1 ${
+                <span>{typedText}</span>
+                <span className={`animate-pulse inline-block ml-[2px] w-[3px] h-[1em] ${
                   roleIndex === 0 ? 'bg-orange-500' :
                   roleIndex === 1 ? 'bg-purple-500' :
                   roleIndex === 2 ? 'bg-teal-500' :
@@ -158,7 +158,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
             </div>
           </div>
 
-          <p className="text-base sm:text-lg lg:text-xl theme-text-secondary leading-relaxed max-w-3xl mb-10">
+          <p className="text-[18px] theme-text-secondary leading-relaxed max-w-3xl mb-10">
             {PERSONAL_INFO.bio}
           </p>
 

@@ -124,7 +124,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white font-bold text-sm shadow-lg shadow-purple-600/30 transition-all hover:scale-105 active:scale-95 cursor-pointer"
                   >
                     <ExternalLink className="w-4 h-4 fill-white" />
-                    <span>View Project</span>
+                    <span>{game.demoUrl.includes('itch.io') ? 'Play on Itch.io' : 'View Project'}</span>
                   </a>
                 )}
               </div>

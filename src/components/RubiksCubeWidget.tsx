@@ -67,8 +67,8 @@ export function RubiksCubeWidget() {
               <p className="text-xs font-mono theme-text-muted">{SPORTS_DATA.speedcubing.method}</p>
             </div>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
-            PB: {SPORTS_DATA.speedcubing.singlePB}
+          <span className="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 whitespace-nowrap">
+            Personal record for 3x3: {SPORTS_DATA.speedcubing.singlePB}
           </span>
         </div>
 

@@ -132,16 +132,6 @@ export function RustCodeExplorer() {
               Writing memory-safe, lock-free, zero-cost abstractions in Rust. Architected for microsecond latencies and predictable hardware cache locality.
             </p>
           </div>
-
-          {/* LeetCode Highlight */}
-          {PERSONAL_INFO.stats.leetcodeRating && PERSONAL_INFO.stats.leetcodeRating !== '0' && (
-            <div className="flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 rounded-xl border theme-border theme-card text-xs font-mono font-medium">
-                <Award className="w-4 h-4 text-orange-500" />
-                <span>{PERSONAL_INFO.stats.leetcodeRating}</span>
-              </div>
-            </div>
-          )}
         </motion.div>
 
         {/* Featured Project Component: Interactive Code Editor / File Explorer */}

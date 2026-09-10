@@ -86,7 +86,7 @@ export function CommandPalette({ colorMode, onToggleColorMode }: CommandPaletteP
         }
         break;
       case 'about':
-        response = <div className="text-slate-300">Systems Engineer, Game Developer, and Sub-3 Marathon Runner based in Tokyo. Building high-performance software.</div>;
+        response = <div className="text-slate-300">{PERSONAL_INFO.bio} Located in {PERSONAL_INFO.location}.</div>;
         break;
       case 'contact':
         response = (
@@ -99,7 +99,7 @@ export function CommandPalette({ colorMode, onToggleColorMode }: CommandPaletteP
         break;
       case 'resume':
       case 'run resume.exe':
-        response = <div className="text-emerald-400">Downloading resume... [SUCCESS]. Note: Resume feature is currently a mock simulation.</div>;
+        response = <div className="text-amber-400">Resume link will be updated upon portfolio launch. Contact directly at {PERSONAL_INFO.email}.</div>;
         break;
       case 'clear':
         setHistory([]);

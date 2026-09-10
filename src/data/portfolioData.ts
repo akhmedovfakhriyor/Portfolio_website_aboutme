@@ -14,10 +14,10 @@ export const PERSONAL_INFO = {
   socials: {
     github: 'https://github.com/akhmedovfakhriyor',
     linkedin: 'https://www.linkedin.com/in/fakhriyor-akhmedov-457181362',
-    artstation: 'https://artstation.com',
-    twitter: 'https://x.com',
-    leetcode: 'https://leetcode.com',
-    strava: 'https://strava.com',
+    cara: 'https://cara.app/sofar',
+    instagram: 'https://www.instagram.com/3_sofar_3?stkn=MTdvc2ZwMW5ia3J4dw==',
+    leetcode: 'https://leetcode.com/u/s0Far/',
+    strava: 'https://strava.app.link/NLloluISj6b',
   },
   stats: {
     githubCommits: '0',
@@ -163,7 +163,7 @@ export const GAME_PROJECTS: GameProject[] = [
     genre: ['Procedural Animation', 'IK Gait', 'Physics'],
     engine: 'Unity 2023',
     year: '2024',
-    status: 'In Development',
+    status: 'Finished Diploma work',
     description: 'A deep exploration of procedural animation for complex multi-legged creatures, featuring dynamic inverse kinematics foot-stepping algorithms, spine ripple propagation for centipedes, and adaptive stance calculation over non-planar rocky terrain.',
     myRole: 'Lead Programmer & Technical Artist',
     technicalChallenges: [
@@ -186,7 +186,7 @@ export const GAME_PROJECTS: GameProject[] = [
       '/assets/media/game-1-procedural/5211081428400020508.jpg',
     ],
     webglPlayable: false,
-    repoUrl: 'https://github.com/akhmedovfakhriyor',
+    repoUrl: 'https://github.com/akhmedovfakhriyor/Procedural_animation_4legs',
   },
   {
     id: 'pixel-perfect-weather',
@@ -195,7 +195,7 @@ export const GAME_PROJECTS: GameProject[] = [
     genre: ['Pixel Art', 'Shaders', 'Environment'],
     engine: 'Unity 2023',
     year: '2024',
-    status: 'In Development',
+    status: 'Mechanic prototype',
     description: 'An advanced 2D rendering pipeline focusing on true pixel-perfect camera tracking without jitter or sub-pixel artifacting, coupled with an interactive multi-layered weather engine generating rain, fog volumetric lighting, and wind-blown atmospheric particles.',
     myRole: 'Graphics & Engine Programmer',
     technicalChallenges: [
@@ -217,6 +217,7 @@ export const GAME_PROJECTS: GameProject[] = [
       '/assets/media/game-2-camera/pixel_camera_scene_1788980124214.jpg',
     ],
     webglPlayable: false,
+    repoUrl: 'https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera',
   },
   {
     id: 'umbra-arm',
@@ -250,6 +251,7 @@ export const GAME_PROJECTS: GameProject[] = [
       '/assets/media/game-3-umbra/{D2DB01CA-D2D6-4374-9CB1-D7733E0E3135}.png',
     ],
     webglPlayable: false,
+    repoUrl: 'https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm',
   },
   {
     id: 'vae-mond',
@@ -281,6 +283,7 @@ export const GAME_PROJECTS: GameProject[] = [
       '/assets/media/game-4-vaemond/{CA74AFF1-86ED-4EF4-9D05-47ABB2795E68}.png',
     ],
     webglPlayable: false,
+    demoUrl: 'https://s0far.itch.io/vae-mond',
   }
 ];
 
@@ -291,9 +294,10 @@ export const ARTWORKS: Artwork[] = [
     category: '3D Models',
     year: 'March 2026',
     tools: [
-      'PNG Image'
+      'Blender',
+      'Cycles'
     ],
-    description: 'Personal artwork exploration.',
+    description: '3D geometry and shader study created in Blender.',
     imageUrl: '/assets/media/Art Gallery/Donut rendered4.png',
     featured: true
   },
@@ -319,7 +323,8 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: '2025 - 2026',
     tools: [
-      'JPG Image'
+      'Pencil & Paper',
+      'Traditional Media'
     ],
     description: 'A collection of expressive free-hand sketches and traditional character illustrations.',
     imageUrl: '/assets/media/Art Gallery/sad woman.jpg',
@@ -337,33 +342,33 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Dec 2025',
     tools: [
-      'JPG Image'
+      'Pencil & Paper'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Fabric drapery and shadow study.',
     imageUrl: '/assets/media/Art Gallery/cloth.jpg',
     featured: false
   },
   {
     id: 'art-generated-23',
-    title: 'Woman In A Hood',
+    title: 'Hooded Study',
     category: 'Traditional Art',
     year: 'Dec 2025',
     tools: [
-      'JPG Image'
+      'Pencil & Paper'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Expressive portrait study with directional light.',
     imageUrl: '/assets/media/Art Gallery/woman in a hood.jpg',
     featured: false
   },
   {
     id: 'art-generated-25',
-    title: 'Woman Looking Away',
+    title: 'Profile Study',
     category: 'Traditional Art',
     year: 'Dec 2025',
     tools: [
-      'JPG Image'
+      'Pencil & Paper'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Profile portrait and shading practice.',
     imageUrl: '/assets/media/Art Gallery/woman looking away.jpg',
     featured: false
   },
@@ -373,9 +378,9 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Nov 2025',
     tools: [
-      'JPG Image'
+      'Traditional Sketching'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Character portrait and anatomy study.',
     imageUrl: '/assets/media/Art Gallery/oriana.jpg',
     featured: false
   },
@@ -385,9 +390,9 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Oct 2025',
     tools: [
-      'JPG Image'
+      'Traditional Sketching'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Concept sketch focusing on gesture and composition.',
     imageUrl: '/assets/media/Art Gallery/magic.jpg',
     featured: false
   },
@@ -397,33 +402,33 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Apr 2025',
     tools: [
-      'JPG Image'
+      'Pencil & Paper'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Emotional portrait study exploring deep contrast.',
     imageUrl: '/assets/media/Art Gallery/despair.jpg',
     featured: false
   },
   {
     id: 'art-generated-22',
-    title: 'Woman In A Cap',
+    title: 'Street Portrait',
     category: 'Traditional Art',
     year: 'Apr 2025',
     tools: [
-      'JPG Image'
+      'Pencil & Paper'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Casual character portrait sketch.',
     imageUrl: '/assets/media/Art Gallery/woman in a cap.jpg',
     featured: false
   },
   {
     id: 'art-generated-24',
-    title: 'Woman In Headphones',
+    title: 'Listening',
     category: 'Traditional Art',
     year: 'Apr 2025',
     tools: [
-      'JPG Image'
+      'Pencil & Paper'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Candid portrait capture with delicate pencil shading.',
     imageUrl: '/assets/media/Art Gallery/woman in headphones.jpg',
     featured: false
   },
@@ -433,9 +438,9 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Feb 2025',
     tools: [
-      'JPG Image'
+      'Traditional Sketching'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Character sketch and expressive line work.',
     imageUrl: '/assets/media/Art Gallery/isha.jpg',
     featured: false
   },
@@ -445,9 +450,9 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Feb 2025',
     tools: [
-      'JPG Image'
+      'Traditional Sketching'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Stylized character illustration.',
     imageUrl: '/assets/media/Art Gallery/jinx.jpg',
     featured: false
   },
@@ -457,7 +462,7 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Jan 2025',
     tools: [
-      'JPG Image'
+      'Pencil & Paper'
     ],
     description: 'A collection of anatomical hand studies exploring different poses and lighting.',
     imageUrl: '/assets/media/Art Gallery/hands 2.jpg',
@@ -474,9 +479,9 @@ export const ARTWORKS: Artwork[] = [
     category: 'Traditional Art',
     year: 'Jan 2025',
     tools: [
-      'JPG Image'
+      'Traditional Sketching'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Historical portrait study of King Baldwin IV.',
     imageUrl: '/assets/media/Art Gallery/king baldwin.jpg',
     featured: false
   },
@@ -486,7 +491,8 @@ export const ARTWORKS: Artwork[] = [
     category: 'Digital Art',
     year: '2025',
     tools: [
-      'PNG Image'
+      'Digital Painting',
+      'Concept Art'
     ],
     description: 'Initial concept exploration and dynamic poses for the Umbra project.',
     imageUrl: '/assets/media/Art Gallery/umbra sketches 1.png',
@@ -504,9 +510,10 @@ export const ARTWORKS: Artwork[] = [
     category: 'Digital Art',
     year: '2024',
     tools: [
-      'PNG Image'
+      'Pixel Art',
+      'Digital Art'
     ],
-    description: 'Personal artwork exploration.',
+    description: 'Environment and mood concept design for SandScappers.',
     imageUrl: '/assets/media/Art Gallery/Screenshot 2023-09-11 175237-Photoroom.png',
     featured: false
   },

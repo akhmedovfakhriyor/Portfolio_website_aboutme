@@ -5,7 +5,7 @@ import { RotateCw, ZoomIn, ZoomOut, Loader2, Sparkles } from 'lucide-react';
 
 export function Art3DViewer() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [modelType, setModelType] = useState<'custom' | 'mecha' | 'relic' | 'knot' | 'crystal'>('custom');
+  const [modelType, setModelType] = useState<'custom' | 'mecha' | 'knot' | 'crystal'>('custom');
   const [autoRotate, setAutoRotate] = useState(true);
   const [shaderStyle, setShaderStyle] = useState<'pbr' | 'clay' | 'wireframe'>('pbr');
   const [isLoadingModel, setIsLoadingModel] = useState(false);
@@ -188,7 +188,7 @@ export function Art3DViewer() {
   }, [modelType, shaderStyle]);
 
   function buildModel(
-    type: 'custom' | 'mecha' | 'relic' | 'knot' | 'crystal',
+    type: 'custom' | 'mecha' | 'knot' | 'crystal',
     targetGroup: THREE.Group,
     style: 'pbr' | 'clay' | 'wireframe'
   ) {
@@ -316,10 +316,6 @@ export function Art3DViewer() {
       const geom = new THREE.TorusKnotGeometry(1.6, 0.5, 128, 32);
       const mesh = new THREE.Mesh(geom, material);
       targetGroup.add(mesh);
-    } else if (type === 'relic') {
-      const geom = new THREE.IcosahedronGeometry(2.0, 1);
-      const mesh = new THREE.Mesh(geom, material);
-      targetGroup.add(mesh);
     } else if (type === 'crystal') {
       const geom = new THREE.OctahedronGeometry(2.2, 0);
       const mesh = new THREE.Mesh(geom, material);
@@ -399,16 +395,6 @@ export function Art3DViewer() {
             }`}
           >
             Mech Core
-          </button>
-          <button
-            onClick={() => setModelType('relic')}
-            className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer ${
-              modelType === 'relic'
-                ? 'bg-[#2dd4bf] text-slate-950 font-bold shadow-sm ring-1 ring-teal-300'
-                : 'border theme-border theme-text-secondary hover:theme-text-primary'
-            }`}
-          >
-            Relic
           </button>
           <button
             onClick={() => setModelType('knot')}

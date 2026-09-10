@@ -103,7 +103,7 @@ export function GameCard({ game, onSelect }: GameCardProps) {
               )}
               {game.demoUrl && (
                 <a href={game.demoUrl} target="_blank" rel="noreferrer" className="hover:text-purple-400 theme-text-secondary transition-colors font-bold z-10 hover:underline">
-                  Link
+                  {game.demoUrl.includes('itch.io') ? 'Itch.io ↗' : 'Play / Demo'}
                 </a>
               )}
             </div>

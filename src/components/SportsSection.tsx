@@ -66,10 +66,10 @@ export function SportsSection() {
               <span>Discipline 04 // Athletics, Endurance & Rhythm</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight theme-text-primary">
-              Biomechanical Discipline & Mental Fortitude
+              Discipline & Mental Fortitude
             </h2>
             <p className="mt-3 text-sm sm:text-base theme-text-secondary max-w-2xl leading-relaxed">
-              Distance running with the AITU running club, competitive sports, and speedcubing.
+              Distance running, competitive sports, and speedcubing.
             </p>
           </div>
 

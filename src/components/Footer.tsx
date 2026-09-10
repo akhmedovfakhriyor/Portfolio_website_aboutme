@@ -62,20 +62,20 @@ export function Footer({ activeSection }: FooterProps) {
               LinkedIn
             </a>
             <a
-              href={PERSONAL_INFO.socials.artstation}
+              href={PERSONAL_INFO.socials.cara}
               target="_blank"
               rel="noreferrer"
               className="theme-text-secondary hover:text-[var(--accent-primary)] transition-colors"
             >
-              ArtStation
+              Cara
             </a>
             <a
-              href={PERSONAL_INFO.socials.twitter}
+              href={PERSONAL_INFO.socials.instagram}
               target="_blank"
               rel="noreferrer"
               className="theme-text-secondary hover:text-[var(--accent-primary)] transition-colors"
             >
-              X (Twitter)
+              Instagram
             </a>
             {PERSONAL_INFO.socials.strava && (
               <a
