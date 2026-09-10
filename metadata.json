@@ -1,0 +1,6 @@
+{
+  "name": "Polymath Portfolio",
+  "description": "Multi-disciplinary portfolio of Fakhriyor Akhmedov showcasing Systems Engineering, Game Development, 3D Art, and Athletics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

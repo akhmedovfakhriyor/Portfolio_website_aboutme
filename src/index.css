@@ -1,0 +1,344 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 
+  =============================================================================
+  MULTI-DISCIPLINARY TINT ENGINE (LIGHT & DARK MODE)
+  Each discipline possesses its own distinctive atmospheric tint in BOTH modes.
+  =============================================================================
+*/
+
+/* --- 1. LIGHT MODE BASE DEFAULTS --- */
+:root,
+html:not(.dark),
+html.light {
+  --bg-canvas: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --surface-card: #ffffff;
+  --surface-card-hover: #f8fafc;
+  --surface-elevated: #ffffff;
+  --border-subtle: #e2e8f0;
+  --border-highlight: #ea580c;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --accent-primary: #ea580c;
+  --accent-secondary: #c2410c;
+  --accent-glow: rgba(234, 88, 12, 0.16);
+  --nav-bg: rgba(248, 250, 252, 0.88);
+  --badge-bg: #feebe3;
+  --badge-text: #9a3412;
+  --theme-name: "Global";
+}
+
+/* Light Mode: Hero (Architectural Terracotta accent) */
+:root.theme-hero:not(.dark),
+body.theme-hero:not(.dark),
+html:not(.dark) .theme-hero {
+  --border-highlight: #ea580c;
+  --accent-primary: #ea580c;
+  --accent-secondary: #c2410c;
+  --accent-glow: rgba(234, 88, 12, 0.16);
+  --badge-bg: #feebe3;
+  --badge-text: #9a3412;
+  --theme-name: "Overview";
+}
+
+/* Light Mode: Technical & Software (Rust / Copper accent) */
+:root.theme-tech:not(.dark),
+body.theme-tech:not(.dark),
+html:not(.dark) .theme-tech {
+  --border-highlight: #f97316;
+  --accent-primary: #f97316;
+  --accent-secondary: #ea580c;
+  --accent-glow: rgba(249, 115, 22, 0.16);
+  --badge-bg: #ffedd5;
+  --badge-text: #9a3412;
+  --theme-name: "Engineering";
+}
+
+/* Light Mode: Game Dev (Mystical Violet accent) */
+:root.theme-game:not(.dark),
+body.theme-game:not(.dark),
+html:not(.dark) .theme-game {
+  --border-highlight: #a855f7;
+  --accent-primary: #a855f7;
+  --accent-secondary: #9333ea;
+  --accent-glow: rgba(168, 85, 247, 0.18);
+  --badge-bg: #f3e8ff;
+  --badge-text: #6b21a8;
+  --theme-name: "Game Dev";
+}
+
+/* Light Mode: Art Gallery (Modern Gallery Teal / Aquamarine accent) */
+:root.theme-art:not(.dark),
+body.theme-art:not(.dark),
+html:not(.dark) .theme-art {
+  --border-highlight: #0d9488;
+  --accent-primary: #0d9488;
+  --accent-secondary: #0f766e;
+  --accent-glow: rgba(13, 148, 136, 0.16);
+  --badge-bg: #ccfbf1;
+  --badge-text: #0f766e;
+  --theme-name: "Art Gallery";
+}
+
+/* Light Mode: Sports & Athletics (Refined Calm Sky Blue accent - not overly bright) */
+:root.theme-sports:not(.dark),
+body.theme-sports:not(.dark),
+html:not(.dark) .theme-sports {
+  --border-highlight: #0284c7;
+  --accent-primary: #0284c7;
+  --accent-secondary: #0369a1;
+  --accent-glow: rgba(2, 132, 199, 0.16);
+  --badge-bg: #e0f2fe;
+  --badge-text: #0369a1;
+  --theme-name: "Athletics";
+}
+
+/* Light Mode: Contact (Warm Apricot / Sunset Coral accent) */
+:root.theme-contact:not(.dark),
+body.theme-contact:not(.dark),
+html:not(.dark) .theme-contact {
+  --border-highlight: #ea580c;
+  --accent-primary: #ea580c;
+  --accent-secondary: #c2410c;
+  --accent-glow: rgba(234, 88, 12, 0.16);
+  --badge-bg: #feebe3;
+  --badge-text: #9a3412;
+  --theme-name: "Connect";
+}
+
+/* --- 2. DARK MODE BASE DEFAULTS (Single uniform dark canvas for entire page) --- */
+.dark,
+html.dark {
+  --bg-canvas: #090d16;
+  --bg-secondary: #0f1523;
+  --surface-card: #131b2e;
+  --surface-card-hover: #19243d;
+  --surface-elevated: #1e2b48;
+  --border-subtle: #1e293b;
+  --border-highlight: #f97316;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-primary: #f97316;
+  --accent-secondary: #fb923c;
+  --accent-glow: rgba(249, 115, 22, 0.22);
+  --nav-bg: rgba(9, 13, 22, 0.88);
+  --badge-bg: rgba(249, 115, 22, 0.16);
+  --badge-text: #fdba74;
+  --theme-name: "Global Dark";
+}
+
+/* Dark Mode: Hero (Warm Amber / Orange accent) */
+:root.dark.theme-hero,
+body.dark.theme-hero,
+html.dark .theme-hero {
+  --border-highlight: #f97316;
+  --accent-primary: #f97316;
+  --accent-secondary: #fb923c;
+  --accent-glow: rgba(249, 115, 22, 0.22);
+  --badge-bg: rgba(249, 115, 22, 0.16);
+  --badge-text: #fdba74;
+  --theme-name: "Overview";
+}
+
+/* Dark Mode: Engineering / Rust (Industrial Rust / Copper accent) */
+:root.dark.theme-tech,
+body.dark.theme-tech,
+html.dark .theme-tech {
+  --border-highlight: #ea580c;
+  --accent-primary: #ea580c;
+  --accent-secondary: #f97316;
+  --accent-glow: rgba(234, 88, 12, 0.24);
+  --badge-bg: rgba(234, 88, 12, 0.18);
+  --badge-text: #fdba74;
+  --theme-name: "Engineering";
+}
+
+/* Dark Mode: Game Dev (Cyber-Violet / Neon Purple accent) */
+:root.dark.theme-game,
+body.dark.theme-game,
+html.dark .theme-game {
+  --border-highlight: #c084fc;
+  --accent-primary: #a855f7;
+  --accent-secondary: #c084fc;
+  --accent-glow: rgba(168, 85, 247, 0.28);
+  --badge-bg: rgba(168, 85, 247, 0.2);
+  --badge-text: #e9d5ff;
+  --theme-name: "Game Dev";
+}
+
+/* Dark Mode: Art Gallery (Luminous Jade / Aquamarine accent) */
+:root.dark.theme-art,
+body.dark.theme-art,
+html.dark .theme-art {
+  --border-highlight: #2dd4bf;
+  --accent-primary: #2dd4bf;
+  --accent-secondary: #14b8a6;
+  --accent-glow: rgba(45, 212, 191, 0.26);
+  --badge-bg: rgba(45, 212, 191, 0.18);
+  --badge-text: #5eead4;
+  --theme-name: "Art Gallery";
+}
+
+/* Dark Mode: Sports & Athletics (Refined Calm Sky Blue - toned down from glaring blue) */
+:root.dark.theme-sports,
+body.dark.theme-sports,
+html.dark .theme-sports {
+  --border-highlight: #38bdf8;
+  --accent-primary: #38bdf8;
+  --accent-secondary: #0ea5e9;
+  --accent-glow: rgba(56, 189, 248, 0.24);
+  --badge-bg: rgba(14, 165, 233, 0.16);
+  --badge-text: #7dd3fc;
+  --theme-name: "Athletics";
+}
+
+/* Dark Mode: Contact (Glowing Sunset Ember accent) */
+:root.dark.theme-contact,
+body.dark.theme-contact,
+html.dark .theme-contact {
+  --border-highlight: #ff5722;
+  --accent-primary: #ff5722;
+  --accent-secondary: #f97316;
+  --accent-glow: rgba(255, 87, 34, 0.26);
+  --badge-bg: rgba(255, 87, 34, 0.18);
+  --badge-text: #fdba74;
+  --theme-name: "Connect";
+}
+
+/* Universal Smooth Transitions for Theme Engine - Cinematic Cross-Fade */
+:root {
+  --theme-transition-duration: 0.8s;
+  --theme-transition-timing: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Global root & container transitions */
+html,
+body,
+#root,
+#app-root,
+main,
+section,
+header,
+nav,
+footer {
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+              border-color var(--theme-transition-duration) var(--theme-transition-timing),
+              color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+html,
+body,
+#root {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  min-height: 100%;
+}
+
+.theme-canvas {
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+              color var(--theme-transition-duration) var(--theme-transition-timing);
+  will-change: background-color, color;
+}
+
+section.theme-canvas {
+  background-color: transparent;
+}
+
+.theme-card {
+  background-color: var(--surface-card);
+  border-color: var(--border-subtle);
+  color: var(--text-primary);
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+              border-color var(--theme-transition-duration) var(--theme-transition-timing),
+              color var(--theme-transition-duration) var(--theme-transition-timing),
+              box-shadow var(--theme-transition-duration) var(--theme-transition-timing),
+              transform 0.2s ease;
+}
+
+.theme-card:hover {
+  background-color: var(--surface-card-hover);
+}
+
+.theme-text-primary {
+  color: var(--text-primary);
+  transition: color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-text-secondary {
+  color: var(--text-secondary);
+  transition: color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-text-muted {
+  color: var(--text-muted);
+  transition: color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-accent-text {
+  color: var(--accent-primary);
+  transition: color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-accent-bg {
+  background-color: var(--accent-primary);
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-border {
+  border-color: var(--border-subtle);
+  transition: border-color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-border-highlight {
+  border-color: var(--border-highlight);
+  transition: border-color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+.theme-badge {
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
+              color var(--theme-transition-duration) var(--theme-transition-timing);
+}
+
+/* Ensure all dark: utility elements cross-fade synchronously */
+[class*="dark:"] {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: var(--theme-transition-duration);
+  transition-timing-function: var(--theme-transition-timing);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-highlight);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* Transparent section containers to preserve seamless global canvas background */
+.section-tint-hero,
+.section-tint-tech,
+.section-tint-game,
+.section-tint-art,
+.section-tint-sports,
+.section-tint-contact {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+
