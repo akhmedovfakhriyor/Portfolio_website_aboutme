@@ -21,12 +21,16 @@ import { GlobalConstellationCanvas } from './components/GlobalConstellationCanva
 import { ArrowUp } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { CommandPalette } from './components/CommandPalette';
+import { startBackgroundAssetPreloading } from './utils/assetPreloader';
 
 export default function App() {
   const { activeSection, scrollToSection, colorMode, toggleColorMode } = useThemeObserver();
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
+    // Start idle preloading for all media assets so they load seamlessly as user scrolls
+    startBackgroundAssetPreloading(600);
+
     const handleScroll = () => {
       setShowScrollTop(window.scrollY > 350);
     };

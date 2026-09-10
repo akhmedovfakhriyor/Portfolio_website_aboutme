@@ -121,7 +121,7 @@ export function ArtworkLightbox({ artwork, artworks, onClose, onSelect }: Artwor
                     galleryIndex === idx ? 'border-teal-400 scale-110 shadow-lg' : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} className="w-full h-full object-cover" alt="Thumbnail" referrerPolicy="no-referrer" />
+                  <img src={img} className="w-full h-full object-cover" alt="Thumbnail" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                 </button>
               ))}
             </div>

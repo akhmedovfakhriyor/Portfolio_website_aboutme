@@ -177,13 +177,13 @@ export const GAME_PROJECTS: GameProject[] = [
       'Spider adaptive stance and multi-limb coordination algorithms',
       'High-performance 60fps execution on dense physics colliders',
     ],
-    thumbnail: '/assets/media/game-1-procedural/5208829628586336426.jpg',
-    previewGif: '/assets/media/game-1-procedural/5211081428400020515.jpg',
-    banner: '/assets/media/game-1-procedural/5208829628586336426.jpg',
+    thumbnail: '/assets/media/game-1-procedural/5208829628586336426.webp',
+    previewGif: '/assets/media/game-1-procedural/5211081428400020515.webp',
+    banner: '/assets/media/game-1-procedural/5208829628586336426.webp',
     screenshots: [
-      '/assets/media/game-1-procedural/5208829628586336426.jpg',
-      '/assets/media/game-1-procedural/5211081428400020515.jpg',
-      '/assets/media/game-1-procedural/5211081428400020508.jpg',
+      '/assets/media/game-1-procedural/5208829628586336426.webp',
+      '/assets/media/game-1-procedural/5211081428400020515.webp',
+      '/assets/media/game-1-procedural/5211081428400020508.webp',
     ],
     webglPlayable: false,
     repoUrl: 'https://github.com/akhmedovfakhriyor/Procedural_animation_4legs',
@@ -209,14 +209,15 @@ export const GAME_PROJECTS: GameProject[] = [
       'Dynamic wetness shaders with surface ripple distortion buffers',
       'Dynamic day/night and atmospheric storm lighting system',
     ],
-    thumbnail: '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.png',
-    previewGif: '/assets/media/game-2-camera/sandscappers_preview.gif',
-    previewVideo: '/assets/media/game-2-camera/2_1sandscapper.mov',
-    banner: '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.png',
+    thumbnail: '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.webp',
+    previewGif: '/assets/media/game-2-camera/sandscappers_preview.webp',
+    previewVideo: '/assets/media/game-2-camera/2_1sandscapper.mp4',
+    banner: '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.webp',
     screenshots: [
-      '/assets/media/game-2-camera/sandscappers_preview.gif',
-      '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.png',
-      '/assets/media/game-2-camera/{0DEDFE0A-F61C-42C8-AFB2-A2C33E6CC57C}.png',
+      '/assets/media/game-2-camera/sandscappers_preview.webp',
+      '/assets/media/game-2-camera/{973DE20A-6867-402C-9196-D98E7BA33C6C}.webp',
+      '/assets/media/game-2-camera/{0DEDFE0A-F61C-42C8-AFB2-A2C33E6CC57C}.webp',
+      '/assets/media/game-2-camera/{2398519E-2F81-436C-8D5B-F8F7BD2FAC1C}.webp',
     ],
     webglPlayable: false,
     repoUrl: 'https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera',
@@ -246,11 +247,11 @@ export const GAME_PROJECTS: GameProject[] = [
     previewGif: '/assets/media/game-3-umbra/{148FDED4-7DA1-450F-9C21-7DFA7E84606C}.png',
     banner: '/assets/media/game-3-umbra/{DE1453C2-2DCD-40DA-B64D-701C5AEFEF60}.png',
     screenshots: [
-      '/assets/media/game-3-umbra/UmbraRun_GIF.gif',
+      '/assets/media/game-3-umbra/UmbraRun_GIF.webp',
       '/assets/media/game-3-umbra/{11D1195D-4D77-40E0-A8E7-D93C0D3EF592}.png',
       '/assets/media/game-3-umbra/{148FDED4-7DA1-450F-9C21-7DFA7E84606C}.png',
       '/assets/media/game-3-umbra/{DE1453C2-2DCD-40DA-B64D-701C5AEFEF60}.png',
-      '/assets/media/game-3-umbra/{D2DB01CA-D2D6-4374-9CB1-D7733E0E3135}.png',
+      '/assets/media/game-3-umbra/{D2DB01CA-D2D6-4374-9CB1-D7733E0E3135}.webp',
     ],
     webglPlayable: false,
     repoUrl: 'https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm',
@@ -277,12 +278,12 @@ export const GAME_PROJECTS: GameProject[] = [
       'Crisp pixel-art aesthetic paired with ambient reactive lighting',
     ],
     thumbnail: '/assets/media/game-4-vaemond/vae-mond_clean.png',
-    previewGif: '/assets/media/game-4-vaemond/{CA74AFF1-86ED-4EF4-9D05-47ABB2795E68}.png',
-    previewVideo: '/assets/media/game-4-vaemond/vae-mond.mov',
+    previewGif: '/assets/media/game-4-vaemond/{CA74AFF1-86ED-4EF4-9D05-47ABB2795E68}.webp',
+    previewVideo: '/assets/media/game-4-vaemond/vae-mond.mp4',
     banner: '/assets/media/game-4-vaemond/vae-mond_clean.png',
     screenshots: [
       '/assets/media/game-4-vaemond/vae-mond_lvl.png',
-      '/assets/media/game-4-vaemond/{CA74AFF1-86ED-4EF4-9D05-47ABB2795E68}.png',
+      '/assets/media/game-4-vaemond/{CA74AFF1-86ED-4EF4-9D05-47ABB2795E68}.webp',
     ],
     webglPlayable: false,
     demoUrl: 'https://s0far.itch.io/vae-mond',
@@ -300,7 +301,7 @@ export const ARTWORKS: Artwork[] = [
       'Cycles'
     ],
     description: '3D geometry and shader study created in Blender.',
-    imageUrl: '/assets/media/Art Gallery/Donut rendered4.png',
+    imageUrl: '/assets/media/Art Gallery/3D Models/Donut rendered4.webp',
     featured: true
   },
   {
@@ -312,10 +313,10 @@ export const ARTWORKS: Artwork[] = [
       'Digital Art'
     ],
     description: 'Dark fantasy concept art and thematic mood pieces for the Umbra project.',
-    imageUrl: '/assets/media/Art Gallery/{11D1195D-4D77-40E0-A8E7-D93C0D3EF592}.png',
+    imageUrl: '/assets/media/Art Gallery/Digital Art/{11D1195D-4D77-40E0-A8E7-D93C0D3EF592}.png',
     gallery: [
-      '/assets/media/Art Gallery/{11D1195D-4D77-40E0-A8E7-D93C0D3EF592}.png',
-      '/assets/media/Art Gallery/{148FDED4-7DA1-450F-9C21-7DFA7E84606C}.png'
+      '/assets/media/Art Gallery/Digital Art/{11D1195D-4D77-40E0-A8E7-D93C0D3EF592}.png',
+      '/assets/media/Art Gallery/Digital Art/{148FDED4-7DA1-450F-9C21-7DFA7E84606C}.png'
     ],
     featured: true
   },
@@ -329,13 +330,13 @@ export const ARTWORKS: Artwork[] = [
       'Traditional Media'
     ],
     description: 'A collection of expressive free-hand sketches, fabric drapery studies, and traditional character illustrations.',
-    imageUrl: '/assets/media/Art Gallery/sad woman.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/sad woman.webp',
     gallery: [
-      '/assets/media/Art Gallery/sad woman.jpg',
-      '/assets/media/Art Gallery/woman looking up.jpg',
-      '/assets/media/Art Gallery/samurai oni.jpg',
-      '/assets/media/Art Gallery/anime girl.jpg',
-      '/assets/media/Art Gallery/cloth.jpg'
+      '/assets/media/Art Gallery/Traditional Art/sad woman.webp',
+      '/assets/media/Art Gallery/Traditional Art/woman looking up.webp',
+      '/assets/media/Art Gallery/Traditional Art/samurai oni.webp',
+      '/assets/media/Art Gallery/Traditional Art/anime girl.webp',
+      '/assets/media/Art Gallery/Traditional Art/cloth.webp'
     ],
     featured: false
   },
@@ -348,10 +349,10 @@ export const ARTWORKS: Artwork[] = [
       'Pencil & Paper'
     ],
     description: 'Portrait studies capturing deep and introspective expressions.',
-    imageUrl: '/assets/media/Art Gallery/woman in a cap.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/woman in a cap.webp',
     gallery: [
-      '/assets/media/Art Gallery/woman in a cap.jpg',
-      '/assets/media/Art Gallery/woman looking away.jpg'
+      '/assets/media/Art Gallery/Traditional Art/woman in a cap.webp',
+      '/assets/media/Art Gallery/Traditional Art/woman looking away.webp'
     ],
     featured: false
   },
@@ -365,11 +366,11 @@ export const ARTWORKS: Artwork[] = [
       'Traditional Sketching'
     ],
     description: 'A dedicated group of portrait and concept sketches emphasizing advanced pencil shading, directional contrast, and form.',
-    imageUrl: '/assets/media/Art Gallery/woman in a hood.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/woman in a hood.webp',
     gallery: [
-      '/assets/media/Art Gallery/woman in a hood.jpg',
-      '/assets/media/Art Gallery/magic.jpg',
-      '/assets/media/Art Gallery/king baldwin.jpg'
+      '/assets/media/Art Gallery/Traditional Art/woman in a hood.webp',
+      '/assets/media/Art Gallery/Traditional Art/magic.webp',
+      '/assets/media/Art Gallery/Traditional Art/king baldwin.webp'
     ],
     featured: false
   },
@@ -382,7 +383,7 @@ export const ARTWORKS: Artwork[] = [
       'Traditional Sketching'
     ],
     description: 'Character portrait and anatomy study.',
-    imageUrl: '/assets/media/Art Gallery/oriana.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/oriana.webp',
     featured: false
   },
   {
@@ -394,7 +395,7 @@ export const ARTWORKS: Artwork[] = [
       'Pencil & Paper'
     ],
     description: 'Emotional portrait study exploring deep contrast.',
-    imageUrl: '/assets/media/Art Gallery/despair.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/despair.webp',
     featured: false
   },
   {
@@ -406,7 +407,7 @@ export const ARTWORKS: Artwork[] = [
       'Pencil & Paper'
     ],
     description: 'Candid portrait capture with delicate pencil shading.',
-    imageUrl: '/assets/media/Art Gallery/woman in headphones.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/woman in headphones.webp',
     featured: false
   },
   {
@@ -418,7 +419,7 @@ export const ARTWORKS: Artwork[] = [
       'Traditional Sketching'
     ],
     description: 'Character sketch and expressive line work.',
-    imageUrl: '/assets/media/Art Gallery/isha.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/isha.webp',
     featured: false
   },
   {
@@ -430,7 +431,7 @@ export const ARTWORKS: Artwork[] = [
       'Traditional Sketching'
     ],
     description: 'Stylized character illustration.',
-    imageUrl: '/assets/media/Art Gallery/jinx.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/jinx.webp',
     featured: false
   },
   {
@@ -442,11 +443,11 @@ export const ARTWORKS: Artwork[] = [
       'Pencil & Paper'
     ],
     description: 'A collection of anatomical hand studies exploring different poses and lighting.',
-    imageUrl: '/assets/media/Art Gallery/hands 2.jpg',
+    imageUrl: '/assets/media/Art Gallery/Traditional Art/hands 2.webp',
     gallery: [
-      '/assets/media/Art Gallery/hands 2.jpg',
-      '/assets/media/Art Gallery/hands 1.jpg',
-      '/assets/media/Art Gallery/hands 3.jpg'
+      '/assets/media/Art Gallery/Traditional Art/hands 2.webp',
+      '/assets/media/Art Gallery/Traditional Art/hands 1.webp',
+      '/assets/media/Art Gallery/Traditional Art/hands 3.webp'
     ],
     featured: true
   },
@@ -460,12 +461,12 @@ export const ARTWORKS: Artwork[] = [
       'Concept Art'
     ],
     description: 'Initial concept exploration and dynamic poses for the Umbra project.',
-    imageUrl: '/assets/media/Art Gallery/umbra sketches 1.png',
+    imageUrl: '/assets/media/Art Gallery/Digital Art/umbra sketches 1.webp',
     gallery: [
-      '/assets/media/Art Gallery/umbra sketches 1.png',
-      '/assets/media/Art Gallery/umbra sketches 2.png',
-      '/assets/media/Art Gallery/umbra sketches 3.png',
-      '/assets/media/Art Gallery/umbra sketches 4.png'
+      '/assets/media/Art Gallery/Digital Art/umbra sketches 1.webp',
+      '/assets/media/Art Gallery/Digital Art/umbra sketches 2.webp',
+      '/assets/media/Art Gallery/Digital Art/umbra sketches 3.webp',
+      '/assets/media/Art Gallery/Digital Art/umbra sketches 4.webp'
     ],
     featured: false
   },
@@ -479,7 +480,7 @@ export const ARTWORKS: Artwork[] = [
       'Digital Art'
     ],
     description: 'Environment and mood concept design for SandScappers.',
-    imageUrl: '/assets/media/Art Gallery/Screenshot 2023-09-11 175237-Photoroom.png',
+    imageUrl: '/assets/media/Art Gallery/Digital Art/Screenshot 2023-09-11 175237-Photoroom.webp',
     featured: false
   },
   {
@@ -492,7 +493,7 @@ export const ARTWORKS: Artwork[] = [
       'Digital Art'
     ],
     description: 'Atmospheric 2D environment study showcasing rain-slicked platforms, dynamic pixel lighting, and volumetric mist.',
-    imageUrl: '/assets/media/game-2-camera/{0DEDFE0A-F61C-42C8-AFB2-A2C33E6CC57C}.png',
+    imageUrl: '/assets/media/game-2-camera/{0DEDFE0A-F61C-42C8-AFB2-A2C33E6CC57C}.webp',
     featured: false
   },
   {
@@ -505,11 +506,11 @@ export const ARTWORKS: Artwork[] = [
       'Sprite Work'
     ],
     description: 'A collection of animated sprites and short visual loops.',
-    imageUrl: '/assets/media/Art Gallery/Voda_GIF.gif',
+    imageUrl: '/assets/media/Art Gallery/Digital Art/Voda_GIF.webp',
     gallery: [
-      '/assets/media/Art Gallery/Voda_GIF.gif',
-      '/assets/media/game-3-umbra/UmbraRun_GIF.gif',
-      '/assets/media/game-2-camera/sandscappers_preview.gif'
+      '/assets/media/Art Gallery/Digital Art/Voda_GIF.webp',
+      '/assets/media/game-3-umbra/UmbraRun_GIF.webp',
+      '/assets/media/game-2-camera/sandscappers_preview.webp'
     ],
     featured: false
   }

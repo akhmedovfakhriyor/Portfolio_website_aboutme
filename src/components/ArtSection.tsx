@@ -4,6 +4,7 @@ import { ARTWORKS } from '../data/portfolioData';
 import { Artwork } from '../types';
 import { Art3DViewer } from './Art3DViewer';
 import { ArtworkLightbox } from './ArtworkLightbox';
+import { SmartImage } from './SmartImage';
 import { Palette, Box, ZoomIn, Eye, Sparkles, Filter, Layers, LayoutGrid, Rows } from 'lucide-react';
 
 function parseYearToDate(yearStr: string): number {
@@ -217,13 +218,12 @@ export function ArtSection() {
               className="group cursor-pointer break-inside-avoid mb-3 sm:mb-6 block"
             >
               <div className="relative rounded-xl sm:rounded-2xl border theme-border theme-card overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-xl group-hover:-translate-y-1.5 flex flex-col justify-between">
-                {/* Image Container scaled down responsively */}
-              <div className="relative w-full overflow-hidden bg-stone-100 dark:bg-stone-900 flex justify-center aspect-[4/3] sm:aspect-auto max-h-48 sm:max-h-72 lg:max-h-none">
-                <img
+                {/* Static Image Frame (Aspect Ratio locked to prevent layout jump) */}
+              <div className="relative w-full overflow-hidden bg-stone-200/50 dark:bg-stone-900 flex justify-center aspect-[4/3]">
+                <SmartImage
                   src={art.imageUrl}
                   alt={art.title}
-                  className="w-full h-full sm:h-auto block object-cover transition-transform duration-500 group-hover:scale-105"
-                  referrerPolicy="no-referrer"
+                  className="w-full h-full block object-cover transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* Hover overlay with Inspect Icon */}

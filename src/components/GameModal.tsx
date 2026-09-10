@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { GameProject } from '../types';
+import { SmartImage } from './SmartImage';
 import { X, Layers, Sparkles, Shield, Flame, CheckCircle, ExternalLink, Github, Image as ImageIcon } from 'lucide-react';
 
 interface GameModalProps {
@@ -267,16 +268,15 @@ export function GameModal({ game, onClose }: GameModalProps) {
                   onClick={() => setExpandedImage(shot)}
                   className="group cursor-pointer break-inside-avoid"
                 >
-                  <div className="relative rounded-xl overflow-hidden bg-slate-800 border border-slate-700/50 shadow-sm transition-all duration-300 group-hover:shadow-purple-500/20 group-hover:-translate-y-1">
-                  <img
-                    src={shot}
-                    alt={`Gallery Image ${idx + 1}`}
-                    className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <ImageIcon className="w-8 h-8 text-white drop-shadow-md" />
-                  </div>
+                  <div className="relative rounded-xl overflow-hidden bg-slate-800 border border-slate-700/50 shadow-sm transition-all duration-300 group-hover:shadow-purple-500/20 group-hover:-translate-y-1 aspect-video">
+                    <SmartImage
+                      src={shot}
+                      alt={`Gallery Image ${idx + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
+                      <ImageIcon className="w-8 h-8 text-white drop-shadow-md" />
+                    </div>
                   </div>
                 </div>
               ))}

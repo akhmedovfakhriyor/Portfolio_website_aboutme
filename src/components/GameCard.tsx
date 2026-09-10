@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GameProject } from '../types';
+import { SmartImage } from './SmartImage';
 import { Maximize2, Sparkles, Layers, Cpu, ArrowUpRight } from 'lucide-react';
 
 interface GameCardProps {
@@ -22,19 +23,11 @@ export function GameCard({ game, onSelect }: GameCardProps) {
       <div className="relative rounded-2xl border theme-border theme-card overflow-hidden transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-1.5 flex flex-col justify-between h-full">
         {/* Media Preview Container */}
       <div className="relative h-44 sm:h-56 w-full overflow-hidden bg-slate-950 border-b theme-border">
-        {/* Background GIF (Always loaded, but invisible until hover) */}
-        <img
-          src={game.previewGif}
-          alt={`${game.title} preview`}
-          className={`absolute inset-0 w-full h-full object-cover block transition-all duration-700 group-hover:scale-105 ${isHovered ? 'opacity-100' : 'opacity-0'}`}
-          referrerPolicy="no-referrer"
-        />
-        {/* Foreground Thumbnail (Fades out on hover) */}
-        <img
+        {/* Single Static Thumbnail */}
+        <SmartImage
           src={game.thumbnail}
           alt={game.title}
-          className={`absolute inset-0 w-full h-full object-cover block transition-all duration-700 group-hover:scale-105 ${isHovered ? 'opacity-0' : 'opacity-100'}`}
-          referrerPolicy="no-referrer"
+          className="absolute inset-0 w-full h-full object-cover block transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Engine Badge Overlay */}
