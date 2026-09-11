@@ -161,24 +161,25 @@ export function RustCodeExplorer() {
             </div>
 
             {/* Quick Actions */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap sm:flex-nowrap">
               <button
                 id="run-cargo-bench-btn"
                 onClick={handleRunBenchmark}
                 disabled={isRunningBench}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-mono font-bold shadow transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 px-2.5 sm:px-3 rounded-lg bg-orange-600 hover:bg-orange-500 text-white text-xs font-mono font-bold shadow transition-all active:scale-95 disabled:opacity-50 cursor-pointer whitespace-nowrap shrink-0"
                 title="Simulates Tauri desktop build & IPC command binding in the web preview"
               >
-                <Play className={`w-3.5 h-3.5 ${isRunningBench ? 'animate-spin' : 'fill-white'}`} />
-                <span>{isRunningBench ? 'Simulating Build...' : 'Simulate Tauri Build'}</span>
+                <Play className={`w-3.5 h-3.5 shrink-0 ${isRunningBench ? 'animate-spin' : 'fill-white'}`} />
+                <span className="hidden sm:inline">{isRunningBench ? 'Simulating Build...' : 'Simulate Tauri Build'}</span>
+                <span className="sm:hidden">{isRunningBench ? 'Simulating...' : 'Simulate Build'}</span>
               </button>
 
               <button
                 id="copy-code-btn"
                 onClick={handleCopy}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 px-2.5 sm:px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-mono transition-all cursor-pointer whitespace-nowrap shrink-0 border border-slate-700/50"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" /> : <Copy className="w-3.5 h-3.5 shrink-0" />}
                 <span>{copied ? 'Copied' : 'Copy'}</span>
               </button>
 
@@ -186,12 +187,13 @@ export function RustCodeExplorer() {
                 href="https://github.com/akhmedovfakhriyor/file-explorer.git"
                 target="_blank"
                 rel="noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition-all border border-slate-700/80 hover:border-orange-500/50"
+                className="inline-flex items-center justify-center gap-1.5 h-8 sm:h-9 px-2.5 sm:px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-mono transition-all border border-slate-700/80 hover:border-orange-500/50 whitespace-nowrap shrink-0"
                 title="View GitHub Repository: https://github.com/akhmedovfakhriyor/file-explorer.git"
               >
-                <Github className="w-3.5 h-3.5 text-slate-300" />
-                <span>GitHub Repo</span>
-                <ExternalLink className="w-3 h-3 text-slate-400" />
+                <Github className="w-3.5 h-3.5 text-slate-300 shrink-0" />
+                <span className="hidden sm:inline">GitHub Repo</span>
+                <span className="sm:hidden">GitHub</span>
+                <ExternalLink className="w-3 h-3 text-slate-400 shrink-0" />
               </a>
             </div>
           </div>
@@ -367,7 +369,7 @@ export function RustCodeExplorer() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {filteredTech.map((item) => (
               <div
                 key={item.name}

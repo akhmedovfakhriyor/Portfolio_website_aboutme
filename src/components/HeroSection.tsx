@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { SectionId } from '../types';
 import { PERSONAL_INFO } from '../data/portfolioData';
-import { Terminal, Gamepad2, Palette, Activity, ArrowRight, Github, Linkedin, Award, Code, Sparkles, FileText } from 'lucide-react';
+import { Terminal, Gamepad2, Palette, Activity, ArrowRight, Github, Send, Award, Code, Sparkles, FileText } from 'lucide-react';
 
 interface HeroSectionProps {
   onNavigate: (section: SectionId) => void;
@@ -141,15 +141,18 @@ export function HeroSection({ onNavigate, onOpenResume }: HeroSectionProps) {
           {/* Typewriter / Cycling Role Display */}
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1.5 text-base sm:text-xl lg:text-2xl font-bold mb-6 min-h-[3.25rem] sm:min-h-[2.5rem]">
             <span className="theme-text-muted font-normal shrink-0">Systems I build as a</span>
-            <div className="inline-flex items-center max-w-full">
-              <span className={`font-mono border-b-2 border-current pb-0.5 inline-flex items-center break-words ${
+            <div className="inline-flex items-baseline max-w-full">
+              <span className={`font-mono border-b-2 border-current pb-0.5 inline-flex items-baseline break-words ${
                 roleIndex === 0 ? 'text-orange-500' :
                 roleIndex === 1 ? 'text-purple-500' :
                 roleIndex === 2 ? 'text-teal-500' :
                 'text-sky-500'
               }`}>
                 <span>{typedText}</span>
-                <span className={`animate-pulse inline-block ml-[2px] w-[3px] h-[1em] shrink-0 ${
+                <span className="inline-block w-0 select-none pointer-events-none text-transparent" aria-hidden="true">
+                  J
+                </span>
+                <span className={`animate-pulse inline-block ml-[2px] w-[3px] h-[0.85em] self-center shrink-0 ${
                   roleIndex === 0 ? 'bg-orange-500' :
                   roleIndex === 1 ? 'bg-purple-500' :
                   roleIndex === 2 ? 'bg-teal-500' :
@@ -163,58 +166,67 @@ export function HeroSection({ onNavigate, onOpenResume }: HeroSectionProps) {
             {PERSONAL_INFO.bio}
           </p>
 
-          {/* Primary Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-16">
+          {/* Primary Action Buttons:
+              - Mobile (< sm): 4-column structured grid (Full width -> 2 half width -> 2 quarter width)
+              - Laptop / Desktop (sm+): Unclamped natural horizontal bar
+          */}
+          <div className="w-full max-w-[360px] grid grid-cols-4 gap-2.5 mb-16 sm:max-w-none sm:flex sm:flex-wrap sm:items-center sm:gap-3.5">
+            {/* Explore Technical Work */}
             <button
               id="hero-explore-work-btn"
               onClick={() => onNavigate('engineering')}
-              className="inline-flex items-center gap-2.5 px-5 sm:px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-orange-600 hover:bg-orange-500 shadow-lg shadow-orange-600/25 transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
+              className="col-span-4 w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-5 sm:px-6 py-3.5 rounded-xl font-bold text-sm text-white bg-orange-600 hover:bg-orange-500 shadow-lg shadow-orange-600/25 transition-all hover:scale-[1.02] sm:hover:scale-105 active:scale-95 duration-200 cursor-pointer"
             >
               <Code className="w-4 h-4" />
               <span>Explore Technical Work</span>
               <ArrowRight className="w-4 h-4" />
             </button>
 
+            {/* Games */}
             <button
               id="hero-play-games-btn"
               onClick={() => onNavigate('gamedev')}
-              className="inline-flex items-center gap-2 px-5 sm:px-6 py-3.5 rounded-xl font-bold text-sm border theme-border theme-card hover:border-orange-500/50 shadow-sm transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
+              className="col-span-2 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3 sm:px-6 py-3 sm:py-3.5 rounded-xl font-bold text-sm border theme-border theme-card hover:border-orange-500/50 shadow-sm transition-all hover:scale-[1.02] sm:hover:scale-105 active:scale-95 duration-200 cursor-pointer"
             >
-              <Gamepad2 className="w-4 h-4 text-purple-500" />
-              <span>Play Games</span>
+              <Gamepad2 className="w-4 h-4 text-purple-500 shrink-0" />
+              <span>Games</span>
             </button>
 
+            {/* Resume / CV */}
             {onOpenResume && (
               <button
                 id="hero-view-resume-btn"
                 onClick={onOpenResume}
-                className="inline-flex items-center gap-2 px-5 py-3.5 rounded-xl font-bold text-sm font-mono border border-orange-500/30 theme-card text-orange-600 dark:text-orange-400 hover:border-orange-500 hover:bg-orange-500/10 shadow-sm transition-all hover:scale-105 active:scale-95 duration-200 cursor-pointer"
+                className="col-span-2 w-full sm:w-auto inline-flex items-center justify-center gap-2 px-3 sm:px-5 py-3 sm:py-3.5 rounded-xl font-bold text-sm font-mono border border-orange-500/30 theme-card text-orange-600 dark:text-orange-400 hover:border-orange-500 hover:bg-orange-500/10 shadow-sm transition-all hover:scale-[1.02] sm:hover:scale-105 active:scale-95 duration-200 cursor-pointer"
               >
-                <FileText className="w-4 h-4 text-orange-500" />
+                <FileText className="w-4 h-4 text-orange-500 shrink-0" />
                 <span>Resume / CV</span>
               </button>
             )}
 
-            <div className="flex items-center gap-2 ml-auto sm:ml-2">
-              <a
-                href={PERSONAL_INFO.socials.github}
-                target="_blank"
-                rel="noreferrer"
-                className="p-3 rounded-xl border theme-border theme-card hover:text-orange-500 hover:scale-110 transition-all duration-200"
-                aria-label="GitHub Profile"
-              >
-                <Github className="w-5 h-5" />
-              </a>
-              <a
-                href={PERSONAL_INFO.socials.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="p-3 rounded-xl border theme-border theme-card hover:text-sky-500 hover:scale-110 transition-all duration-200"
-                aria-label="LinkedIn Profile"
-              >
-                <Linkedin className="w-5 h-5" />
-              </a>
-            </div>
+            {/* GitHub */}
+            <a
+              href={PERSONAL_INFO.socials.github}
+              target="_blank"
+              rel="noreferrer"
+              className="col-span-1 w-full sm:w-auto p-3 sm:p-3.5 rounded-xl border theme-border theme-card hover:text-orange-500 hover:border-orange-500/50 hover:scale-[1.05] active:scale-95 transition-all duration-200 flex items-center justify-center"
+              aria-label="GitHub Profile"
+              title="GitHub Profile"
+            >
+              <Github className="w-4 h-4 sm:w-5 sm:h-5" />
+            </a>
+
+            {/* Telegram */}
+            <a
+              href={PERSONAL_INFO.socials.telegram}
+              target="_blank"
+              rel="noreferrer"
+              className="col-span-1 w-full sm:w-auto p-3 sm:p-3.5 rounded-xl border theme-border theme-card text-sky-500 hover:text-sky-400 hover:border-sky-500/50 hover:scale-[1.05] active:scale-95 transition-all duration-200 flex items-center justify-center"
+              aria-label="Telegram (@HardstuckIron)"
+              title="Telegram (@HardstuckIron)"
+            >
+              <Send className="w-4 h-4 sm:w-5 sm:h-5" />
+            </a>
           </div>
         </motion.div>
 

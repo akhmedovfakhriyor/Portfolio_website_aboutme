@@ -7,7 +7,7 @@ export const PERSONAL_INFO = {
   telegramHandle: '@HardstuckIron',
   location: 'Astana, Kazakhstan • Remote Worldwide',
   titles: [
-    'Junior Game Developer (C#/Unity)',
+    'Junior Game Developer',
     'Systems & Software Engineer',
     '3D & Concept Artist',
     'Life enjoyer',
@@ -157,11 +157,13 @@ export const RESUME_DATA = {
 };
 
 export const TECH_STACK = [
-  { name: 'Rust', category: 'Systems', level: 'Advanced', icon: 'Cpu' },
-  { name: 'Unreal Engine 5', category: 'Game Dev', level: 'Intermediate', icon: 'Gamepad2' },
-  { name: 'Unity', category: 'Game Dev', level: 'Advanced', icon: 'Sparkles' },
-  { name: 'Blender', category: '3D Art', level: 'Proficient', icon: 'Palette' },
+  { name: 'Rust', category: 'Languages', level: 'Advanced', icon: 'Cpu' },
   { name: 'C#', category: 'Languages', level: 'Proficient', icon: 'Code' },
+  { name: 'Unity', category: 'Game Dev', level: 'Advanced', icon: 'Sparkles' },
+  { name: 'UE5', category: 'Game Dev', level: 'Intermediate', icon: 'Gamepad2' },
+  { name: 'Blender', category: 'Art', level: 'Proficient', icon: 'Palette' },
+  { name: 'Aseprite', category: 'Art', level: 'Proficient', icon: 'Sparkles' },
+  { name: 'Pencil', category: 'Art', level: 'Proficient', icon: 'Palette' },
   { name: 'Git', category: 'DevOps', level: 'Advanced', icon: 'Terminal' },
 ];
 
