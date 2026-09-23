@@ -13,27 +13,38 @@ export function SportsSection() {
   });
   const { scrollYProgress: enterProgress } = useScroll({
     target: sectionRef,
-    offset: ["start 100%", "start 35%"]
+    offset: ["start 75%", "start 25%"]
   });
   const { scrollYProgress: exitProgress } = useScroll({
     target: sectionRef,
-    offset: ["end 55%", "end 10%"]
+    offset: ["end 75%", "end 20%"]
   });
 
-  // Distinct 3D depth emergence from behind (entrance) and receding upward fade (exit)
-  const sectionScale = useTransform(() => {
-    const enter = enterProgress.get();
-    const exit = exitProgress.get();
-    if (enter < 1) return 0.85 + (0.15 * enter);
-    if (exit > 0) return 1 - (0.15 * exit);
+  // Accelerated parallax translation: lifts up into view as upper section is scrolled halfway
+  const sectionY = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
+    if (enter < 1) {
+      const remaining = Math.max(0, 1 - enter);
+      return remaining * remaining * 150;
+    }
+    if (exit > 0) {
+      return -exit * 60;
+    }
+    return 0;
+  });
+
+  // Smooth 3D depth emergence & exit: starts deep at 0.84 and gets close to us (1.0)
+  const sectionScale = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
+    if (enter < 1) return 0.84 + 0.16 * Math.max(0, enter);
+    if (exit > 0) return 1 - 0.12 * exit;
     return 1;
   });
-  const sectionY = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [200, 0, 0, -200], { clamp: true });
-  const sectionOpacity = useTransform(() => {
-    const enter = enterProgress.get();
-    const exit = exitProgress.get();
-    if (enter < 1) return 0.1 + (0.9 * enter);
-    if (exit > 0) return 1 - (0.9 * exit);
+
+  // Strict unfading: 0 while looking at upper section, unfades to 1 once scrolled halfway
+  const sectionOpacity = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
+    if (enter < 1) {
+      return Math.max(0, Math.min(1, enter));
+    }
+    if (exit > 0) return Math.max(0, 1 - exit);
     return 1;
   });
 
@@ -47,7 +58,7 @@ export function SportsSection() {
   const running = SPORTS_DATA.running;
 
   return (
-    <section id="sports" className="relative pt-4 pb-14 sm:pt-6 sm:pb-20 theme-canvas overflow-x-clip" ref={sectionRef}>
+    <section id="sports" style={{ paddingTop: '0px', paddingLeft: '0px', paddingBottom: '66px' }} className="relative min-h-screen flex flex-col justify-center theme-canvas overflow-x-clip" ref={sectionRef}>
       {/* Background Soft Sky Blue Radial Glow */}
       <motion.div
         style={{ y: bgY }}
@@ -55,8 +66,8 @@ export function SportsSection() {
       />
 
       <motion.div
-        style={{ scale: sectionScale, opacity: sectionOpacity }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ scale: sectionScale, opacity: sectionOpacity, y: sectionY }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
       >
         {/* Section Header */}
         <motion.div style={{ y: headerY }} className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">

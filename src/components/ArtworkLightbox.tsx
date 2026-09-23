@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { motion } from 'motion/react';
 import { Artwork } from '../types';
 import { PERSONAL_INFO } from '../data/portfolioData';
+import { preloadArtworkGallery } from '../utils/assetPreloader';
 import { X, ChevronLeft, ChevronRight, ZoomIn, Palette, Layers, Calendar, ExternalLink } from 'lucide-react';
 
 interface ArtworkLightboxProps {
@@ -13,10 +15,24 @@ interface ArtworkLightboxProps {
 
 export function ArtworkLightbox({ artwork, artworks, onClose, onSelect }: ArtworkLightboxProps) {
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = () => {
+    if (isClosing) return;
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false);
+    }, 380);
+  };
 
   useEffect(() => {
     setGalleryIndex(0);
-  }, [artwork?.id]);
+    setIsClosing(false);
+    if (artwork) {
+      preloadArtworkGallery(artwork);
+    }
+  }, [artwork]);
 
   useEffect(() => {
     if (artwork) {
@@ -32,13 +48,13 @@ export function ArtworkLightbox({ artwork, artworks, onClose, onSelect }: Artwor
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (!artwork) return;
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'Escape') handleClose();
       if (e.key === 'ArrowRight') handleNext();
       if (e.key === 'ArrowLeft') handlePrev();
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [artwork, galleryIndex, onClose, artworks, onSelect]);
+  }, [artwork, galleryIndex, isClosing, artworks, onSelect]);
 
   if (!artwork) return null;
 
@@ -65,18 +81,29 @@ export function ArtworkLightbox({ artwork, artworks, onClose, onSelect }: Artwor
   return createPortal(
     <div
       id="artwork-lightbox-modal"
-      className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md overflow-y-auto animate-fadeIn"
-      onClick={onClose}
+      className={`fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6 bg-black/90 backdrop-blur-md overflow-y-auto transition-opacity duration-300 ${
+        isClosing ? 'opacity-0 pointer-events-none' : 'opacity-100'
+      }`}
+      style={{ perspective: '1400px' }}
+      onClick={handleClose}
     >
-      {/* Lightbox Container */}
-      <div
-        className="relative w-full max-w-5xl max-h-[92vh] sm:max-h-[88vh] bg-stone-900 border border-stone-800 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto"
+      {/* Lightbox Container with 3D flip spin */}
+      <motion.div
+        initial={{ rotateY: -180, scale: 0.65, opacity: 0 }}
+        animate={
+          isClosing
+            ? { rotateY: -180, scale: 0.65, opacity: 0 }
+            : { rotateY: 0, scale: 1, opacity: 1 }
+        }
+        transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+        style={{ transformStyle: 'preserve-3d' }}
+        className="relative w-full max-w-5xl max-h-[92vh] sm:max-h-[88vh] bg-stone-900 border border-teal-500/30 rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           id="close-lightbox-btn"
-          onClick={onClose}
+          onClick={handleClose}
           className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 p-2 sm:p-2.5 rounded-full bg-black/70 hover:bg-black/90 text-white border border-white/20 transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-lg"
           aria-label="Close Lightbox"
         >
@@ -121,7 +148,7 @@ export function ArtworkLightbox({ artwork, artworks, onClose, onSelect }: Artwor
                     galleryIndex === idx ? 'border-teal-400 scale-105 shadow-lg' : 'border-transparent opacity-60 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} className="w-full h-full object-cover" alt="Thumbnail" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                  <img src={img} className="w-full h-full object-cover" alt="Thumbnail" loading="eager" decoding="async" referrerPolicy="no-referrer" />
                 </button>
               ))}
             </div>
@@ -173,7 +200,7 @@ export function ArtworkLightbox({ artwork, artworks, onClose, onSelect }: Artwor
             <span className="text-teal-300 font-semibold">High-Resolution Render</span>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>,
     document.body
   );

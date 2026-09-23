@@ -1,5 +1,6 @@
 export type SectionId = 'hero' | 'engineering' | 'gamedev' | 'art' | 'sports' | 'contact';
 export type ColorMode = 'dark' | 'light';
+export type CollectibleRarity = 'silver' | 'gold' | 'diamond' | 'epic' | 'prismatic';
 
 export interface ThemeConfig {
   id: SectionId;
@@ -18,6 +19,7 @@ export interface GameProject {
   engine: string;
   year: string;
   status: string;
+  rarity?: CollectibleRarity;
   description: string;
   myRole: string;
   technicalChallenges: string[];
@@ -45,6 +47,7 @@ export interface Artwork {
   model3d?: boolean;
   colorPalette?: string[];
   featured?: boolean;
+  rarity?: CollectibleRarity;
 }
 
 export interface SportHighlight {

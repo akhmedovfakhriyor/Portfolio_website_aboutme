@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, ImgHTMLAttributes } from 'react';
 interface SmartImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   alt: string;
+  loading?: 'lazy' | 'eager';
   className?: string;
   skeletonClassName?: string;
   containerClassName?: string;
@@ -12,6 +13,7 @@ interface SmartImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 export function SmartImage({
   src,
   alt,
+  loading = 'lazy',
   className = '',
   skeletonClassName = '',
   containerClassName = '',
@@ -49,7 +51,7 @@ export function SmartImage({
         ref={imgRef}
         src={src}
         alt={alt}
-        loading="lazy"
+        loading={loading}
         decoding="async"
         referrerPolicy="no-referrer"
         onLoad={() => setIsLoaded(true)}

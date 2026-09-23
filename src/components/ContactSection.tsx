@@ -15,12 +15,29 @@ export function ContactSection({ onOpenResume }: ContactSectionProps) {
   });
   const { scrollYProgress: enterProgress } = useScroll({
     target: sectionRef,
-    offset: ["start 100%", "start 35%"]
+    offset: ["start 75%", "start 25%"]
   });
 
-  // Distinct 3D depth emergence from behind (entrance), staying 100% solid at page bottom
-  const sectionScale = useTransform(enterProgress, [0, 1], [0.85, 1]);
-  const sectionOpacity = useTransform(enterProgress, [0, 1], [0.1, 1]);
+  // Accelerated parallax translation: lifts up into view as upper section is scrolled halfway
+  const sectionY = useTransform(enterProgress, (enter: number) => {
+    if (enter < 1) {
+      const remaining = Math.max(0, 1 - enter);
+      return remaining * remaining * 150;
+    }
+    return 0;
+  });
+
+  // Distinct 3D depth emergence: starts deep at 0.84 and gets close to us (1.0)
+  const sectionScale = useTransform(enterProgress, (enter: number) => {
+    if (enter < 1) return 0.84 + 0.16 * Math.max(0, enter);
+    return 1;
+  });
+
+  // Strict unfading: 0 while looking at upper section, unfades to 1 once scrolled halfway
+  const sectionOpacity = useTransform(enterProgress, (enter: number) => {
+    if (enter < 1) return Math.max(0, Math.min(1, enter));
+    return 1;
+  });
 
   // Floating ambient parallax constrained to avoid vertical document overflow
   const bgY = useTransform(scrollYProgress, [0, 1], [-50, 0]);
@@ -43,7 +60,7 @@ export function ContactSection({ onOpenResume }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="relative pt-14 pb-8 sm:pt-20 sm:pb-12 theme-canvas overflow-x-clip" ref={sectionRef}>
+    <section id="contact" className="relative py-16 sm:py-20 lg:py-24 min-h-screen flex flex-col justify-center theme-canvas overflow-x-clip" ref={sectionRef}>
       {/* Seamless Ambient Radial Glow without edge clipping */}
       <div
         className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_35%,rgba(234,88,12,0.12),transparent_70%)] pointer-events-none -z-10"
@@ -56,8 +73,8 @@ export function ContactSection({ onOpenResume }: ContactSectionProps) {
       />
 
       <motion.div
-        style={{ scale: sectionScale, opacity: sectionOpacity }}
-        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8"
+        style={{ scale: sectionScale, opacity: sectionOpacity, y: sectionY }}
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
       >
         <motion.div style={{ y: headerY }} className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold theme-badge mb-4">

@@ -15,19 +15,10 @@ const SECTIONS: SectionId[] = ['hero', 'engineering', 'gamedev', 'art', 'sports'
 // Focus trigger line: ~40% down the viewport for natural reading-flow alignment
 const TRIGGER_PERCENT = 0.40;
 
-const getInitialColorMode = (): ColorMode => {
-  if (typeof window !== 'undefined') {
-    const saved = localStorage.getItem('portfolio_color_mode') as ColorMode | null;
-    if (saved === 'dark' || saved === 'light') return saved;
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-  }
-  return 'dark';
-};
+const getInitialColorMode = (): ColorMode => 'dark';
 
-// Synchronously apply theme class, dark/light mode class, and meta theme-color to document
-export const applyThemeClasses = (sectionId: SectionId, colorMode: ColorMode) => {
+// Synchronously apply theme class, dark mode class, and meta theme-color to document
+export const applyThemeClasses = (sectionId: SectionId, _colorMode?: ColorMode) => {
   const themeConfig = SECTION_THEMES[sectionId] || SECTION_THEMES.hero;
 
   Object.values(SECTION_THEMES).forEach((t) => {
@@ -38,19 +29,12 @@ export const applyThemeClasses = (sectionId: SectionId, colorMode: ColorMode) =>
   document.body.classList.add(themeConfig.class);
   document.documentElement.classList.add(themeConfig.class);
 
-  if (colorMode === 'dark') {
-    document.documentElement.classList.add('dark');
-    document.documentElement.classList.remove('light');
-    document.body.classList.add('dark');
-    document.body.classList.remove('light');
-  } else {
-    document.documentElement.classList.remove('dark');
-    document.documentElement.classList.add('light');
-    document.body.classList.remove('dark');
-    document.body.classList.add('light');
-  }
-
-  document.documentElement.setAttribute('data-color-mode', colorMode);
+  // Exclusively dark mode
+  document.documentElement.classList.add('dark');
+  document.documentElement.classList.remove('light');
+  document.body.classList.add('dark');
+  document.body.classList.remove('light');
+  document.documentElement.setAttribute('data-color-mode', 'dark');
 
   const metaThemeColor = document.querySelector("meta[name='theme-color']");
   if (metaThemeColor) {
@@ -116,28 +100,25 @@ export function useThemeObserver() {
   }, [activeSection, colorMode]);
 
   const toggleColorMode = useCallback(() => {
-    setColorModeState((prev) => {
-      const next: ColorMode = prev === 'dark' ? 'light' : 'dark';
-      colorModeRef.current = next;
-      try {
-        localStorage.setItem('portfolio_color_mode', next);
-      } catch (e) {
-        // LocalStorage fallback
-      }
-      applyThemeClasses(activeSectionRef.current, next);
-      return next;
-    });
-  }, []);
-
-  const setColorMode = useCallback((mode: ColorMode) => {
-    colorModeRef.current = mode;
+    // Exclusively dark mode
+    colorModeRef.current = 'dark';
     try {
-      localStorage.setItem('portfolio_color_mode', mode);
+      localStorage.setItem('portfolio_color_mode', 'dark');
     } catch (e) {
       // LocalStorage fallback
     }
-    setColorModeState(mode);
-    applyThemeClasses(activeSectionRef.current, mode);
+    applyThemeClasses(activeSectionRef.current, 'dark');
+  }, []);
+
+  const setColorMode = useCallback((_mode: ColorMode) => {
+    colorModeRef.current = 'dark';
+    try {
+      localStorage.setItem('portfolio_color_mode', 'dark');
+    } catch (e) {
+      // LocalStorage fallback
+    }
+    setColorModeState('dark');
+    applyThemeClasses(activeSectionRef.current, 'dark');
   }, []);
 
   const runUpdate = useCallback(() => {

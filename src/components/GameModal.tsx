@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { motion } from 'motion/react';
 import { GameProject } from '../types';
 import { SmartImage } from './SmartImage';
 import { X, Layers, Sparkles, Shield, Flame, CheckCircle, ExternalLink, Github, Image as ImageIcon } from 'lucide-react';
@@ -12,6 +13,16 @@ interface GameModalProps {
 export function GameModal({ game, onClose }: GameModalProps) {
   const [activeTab, setActiveTab] = useState<'overview' | 'process' | 'gallery'>('overview');
   const [expandedImage, setExpandedImage] = useState<string | null>(null);
+  const [isClosing, setIsClosing] = useState(false);
+
+  const handleClose = () => {
+    if (isClosing) return;
+    setIsClosing(true);
+    setTimeout(() => {
+      onClose();
+      setIsClosing(false);
+    }, 380);
+  };
 
   // Close on Escape & Body Scroll Lock
   useEffect(() => {
@@ -19,6 +30,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
       document.body.style.overflow = 'hidden';
       setActiveTab('overview');
       setExpandedImage(null);
+      setIsClosing(false);
     } else {
       document.body.style.overflow = '';
     }
@@ -34,7 +46,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
         if (expandedImage) {
           setExpandedImage(null);
         } else {
-          onClose();
+          handleClose();
         }
       }
     };
@@ -46,9 +58,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [game, expandedImage, onClose]);
-
-
+  }, [game, expandedImage, isClosing]);
 
   if (!game) return null;
 
@@ -56,37 +66,48 @@ export function GameModal({ game, onClose }: GameModalProps) {
     <>
       <div
         id="game-detail-modal-backdrop"
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/85 backdrop-blur-md overflow-hidden animate-fadeIn"
-      onClick={onClose}
-    >
-      <div
-        id="game-detail-modal-container"
-        className="relative w-full max-w-4xl h-full max-h-[calc(100vh-6rem)] flex flex-col bg-slate-900 border border-purple-500/30 rounded-3xl text-slate-100 shadow-2xl overflow-hidden"
-        onClick={(e) => e.stopPropagation()}
+        className={`fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-8 bg-black/85 backdrop-blur-md overflow-hidden transition-opacity duration-300 ${
+          isClosing ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        }`}
+        style={{ perspective: '1400px' }}
+        onClick={handleClose}
       >
-        {/* Full Modal Blurred Background */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <img
-            src={game.thumbnail}
-            alt=""
-            className="w-full h-full object-cover opacity-80 blur-sm scale-105"
-            referrerPolicy="no-referrer"
-          />
-          <div className="absolute inset-0 bg-slate-900/40" />
-        </div>
+        <motion.div
+          id="game-detail-modal-container"
+          initial={{ rotateY: -180, scale: 0.65, opacity: 0 }}
+          animate={
+            isClosing
+              ? { rotateY: -180, scale: 0.65, opacity: 0 }
+              : { rotateY: 0, scale: 1, opacity: 1 }
+          }
+          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+          style={{ transformStyle: 'preserve-3d' }}
+          className="relative w-full max-w-4xl h-full max-h-[calc(100vh-6rem)] flex flex-col bg-slate-900 border border-purple-500/30 rounded-3xl text-slate-100 shadow-2xl overflow-hidden"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Full Modal Blurred Main Image Background */}
+          <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+            <img
+              src={game.thumbnail}
+              alt=""
+              className="w-full h-full object-cover scale-110 blur-md opacity-70 brightness-90"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-slate-950/65" />
+          </div>
 
-        {/* Content Container (z-index above background) */}
-        <div className="relative z-10 flex flex-col h-full">
-          {/* Header Banner */}
-          <div className="relative pt-8 pb-6 px-6 sm:px-8 w-full shrink-0 border-b border-white/10">
-            {/* Close Button */}
-            <button
-              id="close-game-modal-btn"
-              onClick={onClose}
-              className="absolute top-4 right-4 p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all hover:scale-105 active:scale-95 cursor-pointer z-20"
-            >
-              <X className="w-5 h-5" />
-            </button>
+          {/* Content Container (z-index above background) */}
+          <div className="relative z-10 flex flex-col h-full">
+            {/* Header Banner */}
+            <div className="relative pt-8 pb-6 px-6 sm:px-8 w-full shrink-0 border-b border-white/10">
+              {/* Close Button */}
+              <button
+                id="close-game-modal-btn"
+                onClick={handleClose}
+                className="absolute top-4 right-4 p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all hover:scale-105 active:scale-95 cursor-pointer z-20"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
             {/* Game Title & Badges */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 relative z-10">
@@ -170,91 +191,89 @@ export function GameModal({ game, onClose }: GameModalProps) {
         {/* Tab Content */}
         <div className="p-6 overflow-y-auto flex-1 min-h-0 no-scrollbar">
           {/* Tab 1: Overview */}
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              {/* Featured Video Player */}
-              {game.previewVideo && game.id !== 'pixel-perfect-weather' && game.id !== 'vae-mond' && (
-                <div className="rounded-2xl overflow-hidden border border-purple-500/30 bg-black/60 shadow-lg">
-                  <video
-                    src={game.previewVideo}
-                    controls
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="w-full max-h-80 object-contain mx-auto"
-                  />
-                  <div className="px-4 py-2 bg-slate-950/80 border-t border-white/10 text-[11px] font-mono text-purple-300 flex items-center justify-between">
-                    <span>Active Gameplay Footage</span>
-                    <span className="text-slate-400">Recorded Gameplay Clip</span>
-                  </div>
-                </div>
-              )}
-
-              <div>
-                <h4 className="text-base font-bold text-white mb-2">Narrative & Core Concept</h4>
-                <p className="text-slate-300 text-sm leading-relaxed">{game.description}</p>
-              </div>
-
-              <div>
-                <h4 className="text-base font-bold text-white mb-3 flex items-center gap-2">
-                  <Shield className="w-4 h-4 text-purple-400" />
-                  <span>Technical & Engine Milestones</span>
-                </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {game.features.map((feat, idx) => (
-                    <div
-                      key={idx}
-                      className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs text-slate-200 flex items-start gap-2.5"
-                    >
-                      <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
+          <div className={`space-y-6 ${activeTab === 'overview' ? 'block' : 'hidden'}`}>
+            {/* Featured Video Player */}
+            {game.previewVideo && (
+              <div className="rounded-2xl overflow-hidden border border-purple-500/30 bg-black/60 shadow-lg">
+                <video
+                  src={game.previewVideo}
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  preload="auto"
+                  className="w-full max-h-80 object-contain mx-auto"
+                />
+                <div className="px-4 py-2 bg-slate-950/80 border-t border-white/10 text-[11px] font-mono text-purple-300 flex items-center justify-between">
+                  <span>Active Gameplay Footage</span>
+                  <span className="text-slate-400">Recorded Gameplay Clip</span>
                 </div>
               </div>
+            )}
 
-              <div className="pt-2 flex flex-wrap gap-2">
-                {game.genre.map((g) => (
-                  <span
-                    key={g}
-                    className="px-3 py-1 rounded-full text-xs font-mono bg-purple-950/70 border border-purple-800 text-purple-300"
+            <div>
+              <h4 className="text-base font-bold text-white mb-2">Narrative & Core Concept</h4>
+              <p className="text-slate-300 text-sm leading-relaxed">{game.description}</p>
+            </div>
+
+            <div>
+              <h4 className="text-base font-bold text-white mb-3 flex items-center gap-2">
+                <Shield className="w-4 h-4 text-purple-400" />
+                <span>Technical & Engine Milestones</span>
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {game.features.map((feat, idx) => (
+                  <div
+                    key={idx}
+                    className="p-3.5 rounded-xl bg-slate-800/60 border border-slate-700/60 text-xs text-slate-200 flex items-start gap-2.5"
                   >
-                    #{g}
-                  </span>
+                    <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                    <span>{feat}</span>
+                  </div>
                 ))}
               </div>
             </div>
-          )}
+
+            <div className="pt-2 flex flex-wrap gap-2">
+              {game.genre.map((g) => (
+                <span
+                  key={g}
+                  className="px-3 py-1 rounded-full text-xs font-mono bg-purple-950/70 border border-purple-800 text-purple-300"
+                >
+                  #{g}
+                </span>
+              ))}
+            </div>
+          </div>
 
           {/* Tab 2: Process */}
-          {activeTab === 'process' && (
-            <div className="space-y-6 max-w-2xl">
-              <div>
-                <h4 className="text-sm font-bold text-white mb-3">Key Technical Challenges</h4>
-                <div className="space-y-3">
-                  {game.technicalChallenges.map((challenge, i) => (
-                    <div
-                      key={i}
-                      className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex gap-3"
-                    >
-                      <Sparkles className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
-                      <p className="text-sm text-slate-300 leading-relaxed">{challenge}</p>
-                    </div>
-                  ))}
-                </div>
+          <div className={`space-y-6 max-w-2xl ${activeTab === 'process' ? 'block' : 'hidden'}`}>
+            <div>
+              <h4 className="text-sm font-bold text-white mb-3">Key Technical Challenges</h4>
+              <div className="space-y-3">
+                {game.technicalChallenges.map((challenge, i) => (
+                  <div
+                    key={i}
+                    className="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60 flex gap-3"
+                  >
+                    <Sparkles className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
+                    <p className="text-sm text-slate-300 leading-relaxed">{challenge}</p>
+                  </div>
+                ))}
               </div>
             </div>
-          )}
+          </div>
 
           {/* Tab 3: Media Gallery */}
-          {activeTab === 'gallery' && (
+          <div className={activeTab === 'gallery' ? 'block' : 'hidden'}>
             <div className="columns-1 sm:columns-2 gap-4 space-y-4 pb-4">
               {game.previewVideo && (
                 <div className="relative rounded-xl overflow-hidden bg-slate-800 border border-purple-500/40 break-inside-avoid shadow-sm">
                   <video
                     src={game.previewVideo}
                     controls
+                    preload="auto"
                     className="w-full h-auto object-cover"
                   />
                   <div className="p-2.5 bg-slate-900/90 text-xs font-mono text-purple-300 border-t border-white/5">
@@ -272,6 +291,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
                     <SmartImage
                       src={shot}
                       alt={`Gallery Image ${idx + 1}`}
+                      loading="eager"
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10">
@@ -281,7 +301,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
                 </div>
               ))}
             </div>
-          )}
+          </div>
         </div>
 
         {/* Footer info */}
@@ -289,7 +309,7 @@ export function GameModal({ game, onClose }: GameModalProps) {
           <span>Engine: {game.engine}</span>
         </div>
         </div> {/* End of Content Container */}
-      </div>
+      </motion.div>
     </div>
 
       {/* Expanded Lightbox */}

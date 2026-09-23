@@ -67,7 +67,6 @@ export function CommandPalette({ colorMode, onToggleColorMode, onOpenResume }: C
           <div className="grid grid-cols-1 gap-2 mt-1">
             <div className="flex gap-4"><span className="text-purple-400 w-20">help</span> <span className="text-slate-400">Show this menu</span></div>
             <div className="flex gap-4"><span className="text-purple-400 w-20">about</span> <span className="text-slate-400">Who am I?</span></div>
-            <div className="flex gap-4"><span className="text-purple-400 w-20">theme</span> <span className="text-slate-400">Toggle dark / light atmospheric tint mode</span></div>
             <div className="flex gap-4"><span className="text-purple-400 w-20">contact</span> <span className="text-slate-400">Get my email & social links</span></div>
             <div className="flex gap-4"><span className="text-purple-400 w-20">resume</span> <span className="text-slate-400">View resume status</span></div>
             <div className="flex gap-4"><span className="text-purple-400 w-20">clear</span> <span className="text-slate-400">Clear terminal history</span></div>
@@ -78,13 +77,7 @@ export function CommandPalette({ colorMode, onToggleColorMode, onOpenResume }: C
       case 'theme':
       case 'mode':
       case 'toggle':
-        if (onToggleColorMode) {
-          onToggleColorMode();
-          const next = colorMode === 'dark' ? 'light' : 'dark';
-          response = <div className="text-amber-400">Atmospheric mode switched to: <strong className="uppercase">{next}</strong>. Section-specific tints re-rendered.</div>;
-        } else {
-          response = <div className="text-slate-400">Current mode: <strong className="uppercase">{colorMode}</strong>.</div>;
-        }
+        response = <div className="text-slate-300">Theme mode: <strong className="text-orange-400 uppercase">DARK (PERMANENT)</strong>. The portfolio is exclusively designed in dark mode.</div>;
         break;
       case 'about':
         response = <div className="text-slate-300">{PERSONAL_INFO.bio} Located in {PERSONAL_INFO.location}.</div>;

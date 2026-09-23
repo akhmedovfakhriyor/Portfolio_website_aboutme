@@ -11,6 +11,7 @@
 import { useThemeObserver } from './hooks/useThemeObserver';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
+import { DisciplineShowcaseSection } from './components/DisciplineShowcaseSection';
 import { RustCodeExplorer } from './components/RustCodeExplorer';
 import { GameSection } from './components/GameSection';
 import { ArtSection } from './components/ArtSection';
@@ -25,7 +26,7 @@ import { CommandPalette } from './components/CommandPalette';
 import { startBackgroundAssetPreloading } from './utils/assetPreloader';
 
 export default function App() {
-  const { activeSection, scrollToSection, colorMode, toggleColorMode } = useThemeObserver();
+  const { activeSection, scrollToSection } = useThemeObserver();
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isResumeOpen, setIsResumeOpen] = useState(false);
 
@@ -50,8 +51,6 @@ export default function App() {
       <Navbar
         activeSection={activeSection}
         onNavigate={scrollToSection}
-        colorMode={colorMode}
-        onToggleColorMode={toggleColorMode}
         onOpenResume={() => setIsResumeOpen(true)}
       />
 
@@ -61,6 +60,11 @@ export default function App() {
         <HeroSection
           onNavigate={scrollToSection}
           onOpenResume={() => setIsResumeOpen(true)}
+        />
+
+        {/* 1.5. Interactive 3D Discipline Showcase Section */}
+        <DisciplineShowcaseSection
+          onNavigate={scrollToSection}
         />
 
         {/* 2. Technical & Software Engineering Section */}
@@ -108,8 +112,6 @@ export default function App() {
       </div>
 
       <CommandPalette
-        colorMode={colorMode}
-        onToggleColorMode={toggleColorMode}
         onOpenResume={() => setIsResumeOpen(true)}
       />
 

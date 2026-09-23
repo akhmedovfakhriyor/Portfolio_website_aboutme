@@ -293,6 +293,7 @@ export const GAME_PROJECTS: GameProject[] = [
     engine: 'Unity 2023',
     year: '2024',
     status: 'Finished Diploma work',
+    rarity: 'silver',
     description: 'A deep exploration of procedural animation for complex multi-legged creatures, featuring dynamic inverse kinematics foot-stepping algorithms, spine ripple propagation for centipedes, and adaptive stance calculation over non-planar rocky terrain.',
     myRole: 'Lead Programmer & Technical Artist',
     technicalChallenges: [
@@ -308,6 +309,7 @@ export const GAME_PROJECTS: GameProject[] = [
     ],
     thumbnail: '/assets/media/game-1-procedural/5208829628586336426.webp',
     previewGif: '/assets/media/game-1-procedural/5211081428400020515.webp',
+    previewVideo: '/assets/media/game-1-procedural/procedural_creatures.mp4',
     banner: '/assets/media/game-1-procedural/5208829628586336426.webp',
     screenshots: [
       '/assets/media/game-1-procedural/5208829628586336426.webp',
@@ -325,6 +327,7 @@ export const GAME_PROJECTS: GameProject[] = [
     engine: 'Unity 2023',
     year: '2024',
     status: 'Mechanic prototype',
+    rarity: 'epic',
     description: 'An advanced 2D rendering pipeline focusing on true pixel-perfect camera tracking without jitter or sub-pixel artifacting, coupled with an interactive multi-layered weather engine generating rain, fog volumetric lighting, and wind-blown atmospheric particles.',
     myRole: 'Graphics & Engine Programmer',
     technicalChallenges: [
@@ -359,6 +362,7 @@ export const GAME_PROJECTS: GameProject[] = [
     engine: 'Unity 2023',
     year: '2024',
     status: 'In Development',
+    rarity: 'prismatic',
     description: 'Umbra centers on a biomechanical dark entity wielding a dynamically articulated procedural limb. The multi-jointed appendage realistically computes inverse kinematics and surface contacts in real-time, responding fluidly to player momentum, terrain elevation, and combat weight.',
     myRole: 'Gameplay & Procedural Animation Programmer',
     technicalChallenges: [
@@ -393,6 +397,7 @@ export const GAME_PROJECTS: GameProject[] = [
     engine: 'Unity 6',
     year: '2024',
     status: 'Playable Prototype',
+    rarity: 'gold',
     description: 'A mind-bending spatial puzzle game where you control a solitary protagonist and their shadow reflection. By casting light sources and utilizing an instant quantum transposition mechanic, players solve dual-plane environmental enigmas by exchanging positions with their shadow clone.',
     myRole: 'Lead Designer & Systems Developer',
     technicalChallenges: [
@@ -425,6 +430,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Donut Rendered4',
     category: '3D Models',
     year: 'March 2026',
+    rarity: 'diamond',
     tools: [
       'Blender',
       'Cycles'
@@ -438,6 +444,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Umbra Thematic',
     category: 'Digital Art',
     year: 'Dec 2025 - Jan 2026',
+    rarity: 'prismatic',
     tools: [
       'Digital Art'
     ],
@@ -454,6 +461,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Free Hand Drawings',
     category: 'Traditional Art',
     year: '2025 - 2026',
+    rarity: 'diamond',
     tools: [
       'Pencil & Paper',
       'Traditional Media'
@@ -474,6 +482,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Gaze into the Nothingness',
     category: 'Traditional Art',
     year: 'Apr 2025',
+    rarity: 'gold',
     tools: [
       'Pencil & Paper'
     ],
@@ -490,6 +499,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Added More Shading',
     category: 'Traditional Art',
     year: 'Dec 2025',
+    rarity: 'silver',
     tools: [
       'Pencil & Paper',
       'Traditional Sketching'
@@ -508,6 +518,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Oriana',
     category: 'Traditional Art',
     year: 'Nov 2025',
+    rarity: 'prismatic',
     tools: [
       'Traditional Sketching'
     ],
@@ -520,6 +531,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Despair',
     category: 'Traditional Art',
     year: 'Apr 2025',
+    rarity: 'epic',
     tools: [
       'Pencil & Paper'
     ],
@@ -529,9 +541,10 @@ export const ARTWORKS: Artwork[] = [
   },
   {
     id: 'art-generated-24',
-    title: 'Listening',
+    title: 'Listening to music',
     category: 'Traditional Art',
     year: 'Apr 2025',
+    rarity: 'silver',
     tools: [
       'Pencil & Paper'
     ],
@@ -544,6 +557,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Isha',
     category: 'Traditional Art',
     year: 'Feb 2025',
+    rarity: 'prismatic',
     tools: [
       'Traditional Sketching'
     ],
@@ -556,6 +570,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Jinx',
     category: 'Traditional Art',
     year: 'Feb 2025',
+    rarity: 'gold',
     tools: [
       'Traditional Sketching'
     ],
@@ -568,6 +583,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Hand Sketches',
     category: 'Traditional Art',
     year: 'Jan 2025',
+    rarity: 'diamond',
     tools: [
       'Pencil & Paper'
     ],
@@ -585,6 +601,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Umbra Character Concept Sketches',
     category: 'Digital Art',
     year: '2025',
+    rarity: 'silver',
     tools: [
       'Digital Painting',
       'Concept Art'
@@ -604,6 +621,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Sand-Scappers',
     category: 'Digital Art',
     year: '2024',
+    rarity: 'diamond',
     tools: [
       'Pixel Art',
       'Digital Art'
@@ -617,6 +635,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Sand-Scappers Atmospheric Study',
     category: 'Digital Art',
     year: '2024',
+    rarity: 'gold',
     tools: [
       'Pixel Art',
       'Digital Art'
@@ -630,6 +649,7 @@ export const ARTWORKS: Artwork[] = [
     title: 'Animations & GIFs',
     category: 'Digital Art',
     year: '2022-2024',
+    rarity: 'gold',
     tools: [
       'GIF Animation',
       'Sprite Work'

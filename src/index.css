@@ -3,113 +3,15 @@
 
 /* 
   =============================================================================
-  MULTI-DISCIPLINARY TINT ENGINE (LIGHT & DARK MODE)
-  Each discipline possesses its own distinctive atmospheric tint in BOTH modes.
+  MULTI-DISCIPLINARY TINT ENGINE (EXCLUSIVELY DARK MODE)
+  Each discipline possesses its own distinctive atmospheric cybernetic tint.
   =============================================================================
 */
 
-/* --- 1. LIGHT MODE BASE DEFAULTS --- */
+/* --- DARK MODE BASE DEFAULTS (Uniform obsidian canvas for entire page) --- */
 :root,
-html:not(.dark),
-html.light {
-  --bg-canvas: #f8fafc;
-  --bg-secondary: #f1f5f9;
-  --surface-card: #ffffff;
-  --surface-card-hover: #f8fafc;
-  --surface-elevated: #ffffff;
-  --border-subtle: #e2e8f0;
-  --border-highlight: #ea580c;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
-  --accent-primary: #ea580c;
-  --accent-secondary: #c2410c;
-  --accent-glow: rgba(234, 88, 12, 0.16);
-  --nav-bg: rgba(248, 250, 252, 0.88);
-  --badge-bg: #feebe3;
-  --badge-text: #9a3412;
-  --theme-name: "Global";
-}
-
-/* Light Mode: Hero (Architectural Terracotta accent) */
-:root.theme-hero:not(.dark),
-body.theme-hero:not(.dark),
-html:not(.dark) .theme-hero {
-  --border-highlight: #ea580c;
-  --accent-primary: #ea580c;
-  --accent-secondary: #c2410c;
-  --accent-glow: rgba(234, 88, 12, 0.16);
-  --badge-bg: #feebe3;
-  --badge-text: #9a3412;
-  --theme-name: "Overview";
-}
-
-/* Light Mode: Technical & Software (Rust / Copper accent) */
-:root.theme-tech:not(.dark),
-body.theme-tech:not(.dark),
-html:not(.dark) .theme-tech {
-  --border-highlight: #f97316;
-  --accent-primary: #f97316;
-  --accent-secondary: #ea580c;
-  --accent-glow: rgba(249, 115, 22, 0.16);
-  --badge-bg: #ffedd5;
-  --badge-text: #9a3412;
-  --theme-name: "Engineering";
-}
-
-/* Light Mode: Game Dev (Mystical Violet accent) */
-:root.theme-game:not(.dark),
-body.theme-game:not(.dark),
-html:not(.dark) .theme-game {
-  --border-highlight: #a855f7;
-  --accent-primary: #a855f7;
-  --accent-secondary: #9333ea;
-  --accent-glow: rgba(168, 85, 247, 0.18);
-  --badge-bg: #f3e8ff;
-  --badge-text: #6b21a8;
-  --theme-name: "Game Dev";
-}
-
-/* Light Mode: Art Gallery (Modern Gallery Teal / Aquamarine accent) */
-:root.theme-art:not(.dark),
-body.theme-art:not(.dark),
-html:not(.dark) .theme-art {
-  --border-highlight: #0d9488;
-  --accent-primary: #0d9488;
-  --accent-secondary: #0f766e;
-  --accent-glow: rgba(13, 148, 136, 0.16);
-  --badge-bg: #ccfbf1;
-  --badge-text: #0f766e;
-  --theme-name: "Art Gallery";
-}
-
-/* Light Mode: Sports & Athletics (Refined Calm Sky Blue accent - not overly bright) */
-:root.theme-sports:not(.dark),
-body.theme-sports:not(.dark),
-html:not(.dark) .theme-sports {
-  --border-highlight: #0284c7;
-  --accent-primary: #0284c7;
-  --accent-secondary: #0369a1;
-  --accent-glow: rgba(2, 132, 199, 0.16);
-  --badge-bg: #e0f2fe;
-  --badge-text: #0369a1;
-  --theme-name: "Athletics";
-}
-
-/* Light Mode: Contact (Warm Apricot / Sunset Coral accent) */
-:root.theme-contact:not(.dark),
-body.theme-contact:not(.dark),
-html:not(.dark) .theme-contact {
-  --border-highlight: #ea580c;
-  --accent-primary: #ea580c;
-  --accent-secondary: #c2410c;
-  --accent-glow: rgba(234, 88, 12, 0.16);
-  --badge-bg: #feebe3;
-  --badge-text: #9a3412;
-  --theme-name: "Connect";
-}
-
-/* --- 2. DARK MODE BASE DEFAULTS (Single uniform dark canvas for entire page) --- */
+html,
+body,
 .dark,
 html.dark {
   --bg-canvas: #090d16;
@@ -209,9 +111,9 @@ html.dark .theme-contact {
   --theme-name: "Connect";
 }
 
-/* Universal Smooth Transitions for Theme Engine - Cinematic Cross-Fade */
+/* Universal Smooth Transitions for Theme Engine - Snappy, Synchronized Cross-Fade */
 :root {
-  --theme-transition-duration: 0.8s;
+  --theme-transition-duration: 0.35s;
   --theme-transition-timing: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
@@ -252,13 +154,17 @@ section.theme-canvas {
 
 .theme-card {
   background-color: var(--surface-card);
-  border-color: var(--border-subtle);
   color: var(--text-primary);
   transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
               border-color var(--theme-transition-duration) var(--theme-transition-timing),
               color var(--theme-transition-duration) var(--theme-transition-timing),
               box-shadow var(--theme-transition-duration) var(--theme-transition-timing),
-              transform 0.2s ease;
+              transform 0.2s ease !important;
+}
+
+.theme-card:not([class*="border-"]),
+.theme-card.theme-border {
+  border-color: var(--border-subtle);
 }
 
 .theme-card:hover {
@@ -292,6 +198,9 @@ section.theme-canvas {
 
 .theme-border {
   border-color: var(--border-subtle);
+}
+
+.theme-border:not(.theme-card) {
   transition: border-color var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
@@ -374,6 +283,34 @@ section.theme-canvas {
     box-shadow: none !important;
     border: none !important;
   }
+}
+
+/* Slow Metallic & Foil Collectible Card Shine Sweep (Triggered on Card Hover) */
+@keyframes card-shine-sweep {
+  0% {
+    transform: translateX(-160%) skewX(-24deg);
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  76% {
+    transform: translateX(280%) skewX(-24deg);
+    opacity: 1;
+  }
+  84% {
+    opacity: 0;
+    transform: translateX(280%) skewX(-24deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(280%) skewX(-24deg);
+  }
+}
+
+.animate-card-shine {
+  animation: card-shine-sweep 5.4s cubic-bezier(0.3, 0, 0.25, 1) infinite;
+  will-change: transform, opacity;
 }
 
 
