@@ -252,10 +252,6 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                         <a href="https://github.com/akhmedovfakhriyor/Procedural_animation_4legs" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
                           github.com/akhmedovfakhriyor/Procedural_animation_4legs
                         </a>
-                        <span>,</span>
-                        <a href="https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
-                          github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm
-                        </a>
                       </div>
                     </div>
 
@@ -280,12 +276,6 @@ export function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                           Implemented with custom shaders. Standalone tech demo, not tied to a specific game.
                         </li>
                       </ul>
-                      <div className="mt-1.5 text-xs text-slate-600 flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 break-all [overflow-wrap:anywhere]">
-                        <span className="font-semibold text-slate-700 shrink-0">More:</span>
-                        <a href="https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera" target="_blank" rel="noreferrer" className="text-sky-700 hover:underline break-all">
-                          github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera
-                        </a>
-                      </div>
                     </div>
 
                     {/* Project 3 */}

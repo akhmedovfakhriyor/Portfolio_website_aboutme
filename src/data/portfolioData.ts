@@ -65,8 +65,7 @@ export const RESUME_DATA = {
         'Procedural physics reactions trigger when an enemy enters the creature\'s detection radius.'
       ],
       links: [
-        { label: 'Procedural_animation_4legs', url: 'https://github.com/akhmedovfakhriyor/Procedural_animation_4legs' },
-        { label: 'Umbra_proceduraly_generated_arm', url: 'https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm' }
+        { label: 'Procedural_animation_4legs', url: 'https://github.com/akhmedovfakhriyor/Procedural_animation_4legs' }
       ]
     },
     {
@@ -78,9 +77,7 @@ export const RESUME_DATA = {
         'Camera renders at a lower resolution and upscales for the pixelated look; trigonometry snaps movement to pixel boundaries to prevent shimmer.',
         'Implemented with custom shaders. Standalone tech demo, not tied to a specific game.'
       ],
-      links: [
-        { label: 'SandScappers_pixelPerfect_camera', url: 'https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera' }
-      ]
+      links: []
     },
     {
       title: 'Vae-mond — Shadow & Reality Puzzle',
@@ -352,7 +349,6 @@ export const GAME_PROJECTS: GameProject[] = [
       '/assets/media/game-2-camera/{2398519E-2F81-436C-8D5B-F8F7BD2FAC1C}.webp',
     ],
     webglPlayable: false,
-    repoUrl: 'https://github.com/akhmedovfakhriyor/SandScappers_pixelPerfect_camera',
   },
   {
     id: 'umbra-arm',
@@ -387,7 +383,6 @@ export const GAME_PROJECTS: GameProject[] = [
       '/assets/media/game-3-umbra/{D2DB01CA-D2D6-4374-9CB1-D7733E0E3135}.webp',
     ],
     webglPlayable: false,
-    repoUrl: 'https://github.com/akhmedovfakhriyor/Umbra_proceduraly_generated_arm',
   },
   {
     id: 'vae-mond',
