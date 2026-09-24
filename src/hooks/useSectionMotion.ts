@@ -29,12 +29,12 @@ export function useSectionMotion(
     offset: ['start end', 'end start'],
   });
 
-  // Entry window: begins as the section name enters the lower portion of the viewport,
+  // Entry window: begins as the section name enters the bottom of the viewport (0%),
   // reaching full size (100% scale) ONLY when the section name has passed 65% of the screen
-  // (where 0 is bottom and 100% is top of the screen, which corresponds to 35% from the top of the viewport).
+  // (where 0 is bottom and 100% is top of the screen, corresponding to 35% from top of viewport).
   const { scrollYProgress: rawEnterProgress } = useScroll({
     target: motionTarget,
-    offset: ['start 98%', 'start 35%'],
+    offset: ['start 100%', 'start 35%'],
   });
 
   // Exit window: gently recedes into depth as the bottom of the section scrolls past
@@ -59,13 +59,13 @@ export function useSectionMotion(
     restDelta: 0.001,
   });
 
-  // Silky vertical float: gently lifts up 44px into place
+  // Silky vertical float: gently lifts up 50px into place
   const sectionY = useTransform([enterSpring, exitSpring], ([enter, exit]: number[]) => {
     const clampedEnter = Math.max(0, Math.min(1, enter));
     if (clampedEnter < 1) {
       // Smooth power curve so vertical float completes cleanly at full size
-      const factor = Math.pow(clampedEnter, 1.25);
-      return (1 - factor) * 44;
+      const factor = Math.pow(clampedEnter, 1.2);
+      return (1 - factor) * 50;
     }
     if (!isLastSection) {
       const clampedExit = Math.max(0, Math.min(1, exit));
@@ -76,30 +76,29 @@ export function useSectionMotion(
     return 0;
   });
 
-  // Organic 3D depth emergence: starts at depth scale (0.92) and smoothly rises,
-  // reaching full size (1.0) ONLY when the section name has passed 65% of the screen
+  // 3D depth emergence: starts distinctly smaller at 0.80 scale (20% reduced) when first
+  // coming onto the screen, and smoothly expands into full size (1.0) precisely when
+  // the section name crosses 65% of the screen
   const sectionScale = useTransform([enterSpring, exitSpring], ([enter, exit]: number[]) => {
     const clampedEnter = Math.max(0, Math.min(1, enter));
     if (clampedEnter < 1) {
-      // Visibly scales up as the title travels towards 65% of the screen,
-      // reaching full 1.0 scale precisely when the title crosses that threshold
-      const factor = Math.pow(clampedEnter, 1.25);
-      return 0.92 + 0.08 * factor;
+      const factor = Math.pow(clampedEnter, 1.2);
+      return 0.80 + 0.20 * factor;
     }
     if (!isLastSection) {
       const clampedExit = Math.max(0, Math.min(1, exit));
       if (clampedExit > 0) {
-        return 1 - 0.05 * clampedExit;
+        return 1 - 0.06 * clampedExit;
       }
     }
     return 1;
   });
 
-  // Smooth, natural opacity dissolve (avoids harsh cutoffs)
+  // Smooth, natural opacity dissolve starting from a subtle 0.20
   const sectionOpacity = useTransform([enterSpring, exitSpring], ([enter, exit]: number[]) => {
     const clampedEnter = Math.max(0, Math.min(1, enter));
     if (clampedEnter < 1) {
-      return 0.35 + 0.65 * Math.pow(clampedEnter, 1.15);
+      return 0.20 + 0.80 * Math.pow(clampedEnter, 1.15);
     }
     if (!isLastSection) {
       const clampedExit = Math.max(0, Math.min(1, exit));

@@ -259,8 +259,11 @@ export function CollectibleCardFrame({
   // Multi-card deck support: detect if this card holds a multi-item set
   const isWide = className.includes('w-full') || className.includes('artwork-row');
   const count = cardCount || (galleryPreviews ? galleryPreviews.length : 1);
-  const previewImg1 = galleryPreviews && galleryPreviews.length > 1 ? galleryPreviews[1] : undefined;
-  const previewImg2 = galleryPreviews && galleryPreviews.length > 2 ? galleryPreviews[2] : (galleryPreviews && galleryPreviews.length > 1 ? galleryPreviews[1] : undefined);
+  const previewImg1 = (galleryPreviews && galleryPreviews.length > 1) ? galleryPreviews[1] : backgroundImage;
+  const previewImg2 = (galleryPreviews && galleryPreviews.length > 2) ? galleryPreviews[2] : ((galleryPreviews && galleryPreviews.length > 1) ? galleryPreviews[1] : backgroundImage);
+
+  // Stacked underneath cards are ONLY visible when hovered and strictly NOT flipped/opened
+  const showStackedCards = isHovered && !isFlipped && count >= 2;
 
   return (
     <div
@@ -276,7 +279,7 @@ export function CollectibleCardFrame({
       }}
     >
       {/* ========================================================= */}
-      {/* UNDERNEATH STACKED CARDS (CASCADES TO RIGHT ON HOVER)     */}
+      {/* UNDERNEATH STACKED CARDS (SHOW ONLY ON HOVER, VANISH ON PRESS/UNHOVER) */}
       {/* ========================================================= */}
       {/* Layer 3: Deepest card (#03) behind everything, fanned right */}
       {count >= 3 && (
@@ -284,45 +287,51 @@ export function CollectibleCardFrame({
           className="absolute inset-0 rounded-2xl overflow-hidden border-2 pointer-events-none transition-colors duration-300 bg-gradient-to-br from-slate-900 via-stone-900 to-slate-950"
           initial={false}
           animate={{
-            rotateZ: isFlipped ? 0 : isHovered ? (isWide ? 4.8 : 10.5) : 2.2,
-            rotateX: isFlipped ? 0 : tilt.x * 0.3,
-            rotateY: isFlipped ? 0 : tilt.y * 0.3,
-            x: isFlipped ? 0 : isHovered ? (isWide ? 22 : 32) : 5,
-            y: isFlipped ? 0 : isHovered ? (isWide ? 14 : 22) : 3,
-            z: isFlipped ? -70 : isHovered ? -50 : -30,
-            scale: isFlipped ? 0.92 : isHovered ? 0.975 : 0.985,
-            opacity: isFlipped ? 0 : isHovered ? 0.95 : 0.65,
+            rotateZ: showStackedCards ? (isWide ? 4.8 : 10.5) : 0,
+            rotateX: showStackedCards ? tilt.x * 0.3 : 0,
+            rotateY: showStackedCards ? tilt.y * 0.3 : 0,
+            x: showStackedCards ? (isWide ? 22 : 32) : 0,
+            y: showStackedCards ? (isWide ? 14 : 22) : 0,
+            z: showStackedCards ? -50 : -20,
+            scale: showStackedCards ? 0.975 : 0.94,
+            opacity: showStackedCards ? 0.95 : 0,
           }}
           transition={
             isFlipped
-              ? { duration: 0.35 }
-              : { type: 'spring', stiffness: 320, damping: 24, mass: 0.8 }
+              ? { duration: 0.12, ease: 'easeOut' }
+              : isHovered
+              ? { type: 'spring', stiffness: 320, damping: 24, mass: 0.8 }
+              : { duration: 0.22, ease: 'easeOut' }
           }
           style={{
             transformStyle: 'preserve-3d',
             transformOrigin: 'top center',
-            borderColor: (isHovered || isFlipped) ? tierBorderHover : tierBorderColor,
+            borderColor: showStackedCards ? tierBorderHover : 'transparent',
             zIndex: 0,
-            boxShadow: isHovered ? '0 16px 32px -6px rgba(0, 0, 0, 0.75)' : '0 4px 8px -2px rgba(0, 0, 0, 0.4)',
+            boxShadow: showStackedCards ? '0 16px 32px -6px rgba(0, 0, 0, 0.75)' : 'none',
           }}
         >
-          {previewImg2 ? (
-            <div className="relative w-full h-full overflow-hidden">
-              <img
-                src={previewImg2}
-                alt=""
-                className="w-full h-full object-cover opacity-85 filter saturate-90 brightness-90"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-black/40" />
-              <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/85 text-[9px] font-mono font-bold text-white border border-white/20 shadow-md">
-                #03
+          {showStackedCards && (
+            (previewImg2 || backgroundImage) ? (
+              <div className="relative w-full h-full overflow-hidden">
+                <img
+                  src={previewImg2 || backgroundImage}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover blur-[2.5px] scale-105 opacity-85 filter saturate-90 brightness-90"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/25 to-black/40" />
+                <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/85 text-[9px] font-mono font-bold text-white border border-white/20 shadow-md">
+                  #03
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center p-3 opacity-30">
-              <Hexagon className="w-8 h-8 text-white/40" />
-            </div>
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center p-3 opacity-30">
+                <Hexagon className="w-8 h-8 text-white/40" />
+              </div>
+            )
           )}
         </motion.div>
       )}
@@ -333,45 +342,51 @@ export function CollectibleCardFrame({
           className="absolute inset-0 rounded-2xl overflow-hidden border-2 pointer-events-none transition-colors duration-300 bg-gradient-to-br from-slate-900 via-stone-900 to-slate-950"
           initial={false}
           animate={{
-            rotateZ: isFlipped ? 0 : isHovered ? (isWide ? 2.4 : 5.5) : 1.1,
-            rotateX: isFlipped ? 0 : tilt.x * 0.4,
-            rotateY: isFlipped ? 0 : tilt.y * 0.4,
-            x: isFlipped ? 0 : isHovered ? (isWide ? 11 : 16) : 2.5,
-            y: isFlipped ? 0 : isHovered ? (isWide ? 7 : 11) : 1.5,
-            z: isFlipped ? -40 : isHovered ? -25 : -15,
-            scale: isFlipped ? 0.94 : isHovered ? 0.99 : 0.992,
-            opacity: isFlipped ? 0 : isHovered ? 1 : 0.75,
+            rotateZ: showStackedCards ? (isWide ? 2.4 : 5.5) : 0,
+            rotateX: showStackedCards ? tilt.x * 0.4 : 0,
+            rotateY: showStackedCards ? tilt.y * 0.4 : 0,
+            x: showStackedCards ? (isWide ? 11 : 16) : 0,
+            y: showStackedCards ? (isWide ? 7 : 11) : 0,
+            z: showStackedCards ? -25 : -10,
+            scale: showStackedCards ? 0.99 : 0.96,
+            opacity: showStackedCards ? 1 : 0,
           }}
           transition={
             isFlipped
-              ? { duration: 0.35 }
-              : { type: 'spring', stiffness: 320, damping: 24, mass: 0.8 }
+              ? { duration: 0.12, ease: 'easeOut' }
+              : isHovered
+              ? { type: 'spring', stiffness: 320, damping: 24, mass: 0.8 }
+              : { duration: 0.22, ease: 'easeOut' }
           }
           style={{
             transformStyle: 'preserve-3d',
             transformOrigin: 'top center',
-            borderColor: (isHovered || isFlipped) ? tierBorderHover : tierBorderColor,
+            borderColor: showStackedCards ? tierBorderHover : 'transparent',
             zIndex: 1,
-            boxShadow: isHovered ? '0 18px 36px -6px rgba(0, 0, 0, 0.8)' : '0 4px 10px -2px rgba(0, 0, 0, 0.45)',
+            boxShadow: showStackedCards ? '0 18px 36px -6px rgba(0, 0, 0, 0.8)' : 'none',
           }}
         >
-          {previewImg1 ? (
-            <div className="relative w-full h-full overflow-hidden">
-              <img
-                src={previewImg1}
-                alt=""
-                className="w-full h-full object-cover opacity-85 filter saturate-95 brightness-90"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/20 to-black/30" />
-              <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/85 text-[9px] font-mono font-bold text-white border border-white/20 shadow-md">
-                #02
+          {showStackedCards && (
+            (previewImg1 || backgroundImage) ? (
+              <div className="relative w-full h-full overflow-hidden">
+                <img
+                  src={previewImg1 || backgroundImage}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover blur-[2.5px] scale-105 opacity-85 filter saturate-95 brightness-90"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/20 to-black/30" />
+                <div className="absolute bottom-3 right-3 px-2 py-0.5 rounded bg-black/85 text-[9px] font-mono font-bold text-white border border-white/20 shadow-md">
+                  #02
+                </div>
               </div>
-            </div>
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center p-3 opacity-40">
-              <Hexagon className="w-8 h-8 text-white/40" />
-            </div>
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center p-3 opacity-40">
+                <Hexagon className="w-8 h-8 text-white/40" />
+              </div>
+            )
           )}
         </motion.div>
       )}

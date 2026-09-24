@@ -32,6 +32,8 @@ export function GameCard({ game, index = 0, isOpen = false, onSelect }: GameCard
         title={game.title}
         subtitle={game.tagline}
         backgroundImage={game.thumbnail}
+        cardCount={game.screenshots && game.screenshots.length > 0 ? 3 : 1}
+        galleryPreviews={game.screenshots && game.screenshots.length > 0 ? [game.thumbnail, ...game.screenshots] : undefined}
         isOpen={isOpen}
         onOpen={() => onSelect(game)}
         className="h-full"
