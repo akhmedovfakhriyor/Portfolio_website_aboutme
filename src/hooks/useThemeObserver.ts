@@ -42,33 +42,35 @@ export const applyThemeClasses = (sectionId: SectionId, _colorMode?: ColorMode) 
   }
 };
 
+// Cached section elements to avoid repetitive getElementById lookups
+let cachedSectionElements: Record<string, HTMLElement | null> = {};
+
 // Authoritative, symmetric recompute — same result regardless of scroll direction.
 // Walks sections bottom-to-top; the lowest section on screen that crossed the trigger line wins.
 const evaluateActiveSection = (): SectionId => {
-  const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+  const vh = window.innerHeight || 800;
   const triggerY = vh * TRIGGER_PERCENT;
+  const scrollY = window.scrollY || window.pageYOffset || 0;
 
-  const scrollY = window.pageYOffset || window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-  const docHeight = Math.max(
-    document.documentElement.scrollHeight,
-    document.body.scrollHeight,
-    document.documentElement.offsetHeight,
-    document.body.offsetHeight
-  );
-
-  // Bottom-of-page snap: activate contact when scrolled near the end
-  if (docHeight > 0 && scrollY + vh >= docHeight - 60) {
-    return 'contact';
-  }
   // Top-of-page snap: activate hero when at the top
   if (scrollY < 40) {
     return 'hero';
   }
 
+  // Bottom-of-page snap: activate contact when scrolled near the end
+  const docHeight = document.documentElement.scrollHeight || 5000;
+  if (docHeight > 0 && scrollY + vh >= docHeight - 60) {
+    return 'contact';
+  }
+
   // Bounding client rect evaluation across all sections
   for (let i = SECTIONS.length - 1; i >= 0; i--) {
     const id = SECTIONS[i];
-    const el = document.getElementById(id);
+    let el = cachedSectionElements[id];
+    if (!el) {
+      el = document.getElementById(id);
+      cachedSectionElements[id] = el;
+    }
     if (!el) continue;
     const rect = el.getBoundingClientRect();
     if (rect.top <= triggerY && rect.bottom > 0) {
@@ -195,12 +197,11 @@ export function useThemeObserver() {
       scheduleTick();
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true, capture: true });
-    document.addEventListener('scroll', handleScroll, { passive: true, capture: true });
-    window.addEventListener('wheel', handleUserGesture, { passive: true, capture: true });
-    window.addEventListener('touchmove', handleUserGesture, { passive: true, capture: true });
-    window.addEventListener('touchstart', handleUserGesture, { passive: true, capture: true });
-    window.addEventListener('keydown', handleUserGesture, { passive: true, capture: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('wheel', handleUserGesture, { passive: true });
+    window.addEventListener('touchmove', handleUserGesture, { passive: true });
+    window.addEventListener('touchstart', handleUserGesture, { passive: true });
+    window.addEventListener('keydown', handleUserGesture, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
 
     // Initial check on mount
@@ -208,12 +209,11 @@ export function useThemeObserver() {
 
     return () => {
       if (observer) observer.disconnect();
-      window.removeEventListener('scroll', handleScroll, { capture: true } as any);
-      document.removeEventListener('scroll', handleScroll, { capture: true } as any);
-      window.removeEventListener('wheel', handleUserGesture, { capture: true } as any);
-      window.removeEventListener('touchmove', handleUserGesture, { capture: true } as any);
-      window.removeEventListener('touchstart', handleUserGesture, { capture: true } as any);
-      window.removeEventListener('keydown', handleUserGesture, { capture: true } as any);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('wheel', handleUserGesture);
+      window.removeEventListener('touchmove', handleUserGesture);
+      window.removeEventListener('touchstart', handleUserGesture);
+      window.removeEventListener('keydown', handleUserGesture);
       window.removeEventListener('resize', handleScroll);
       if (rafIdRef.current !== null) cancelAnimationFrame(rafIdRef.current);
       releaseLock();

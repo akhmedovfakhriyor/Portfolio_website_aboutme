@@ -22,6 +22,7 @@ import {
 
 interface Discipline3DSliderProps {
   onNavigate: (section: SectionId) => void;
+  headerRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 interface DisciplineItem {
@@ -83,7 +84,7 @@ const DISCIPLINE_ITEMS: DisciplineItem[] = [
   },
 ];
 
-export function Discipline3DSlider({ onNavigate }: Discipline3DSliderProps) {
+export function Discipline3DSlider({ onNavigate, headerRef }: Discipline3DSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const currentItem = DISCIPLINE_ITEMS[currentIndex];
@@ -206,9 +207,15 @@ export function Discipline3DSlider({ onNavigate }: Discipline3DSliderProps) {
     });
     resizeObserver.observe(container);
 
-    // Animation Loop
-    let animationFrameId: number;
+    // Animation Loop with Visibility Occlusion (pauses WebGL when scrolled offscreen)
+    let animationFrameId: number | null = null;
+    let isVisible = true;
+
     const animate = () => {
+      if (!isVisible) {
+        animationFrameId = null;
+        return;
+      }
       animationFrameId = requestAnimationFrame(animate);
 
       const isHover = isHoveredRef.current;
@@ -329,10 +336,32 @@ export function Discipline3DSlider({ onNavigate }: Discipline3DSliderProps) {
         rendererRef.current.render(sceneRef.current, cameraRef.current);
       }
     };
+
+    // IntersectionObserver to pause rendering when the section is not visible
+    const visibilityObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const inView = entry.isIntersecting;
+          isVisible = inView;
+          if (inView && animationFrameId === null) {
+            animate();
+          } else if (!inView && animationFrameId !== null) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+        }
+      },
+      { threshold: 0.05 }
+    );
+    visibilityObserver.observe(container);
+
     animate();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      visibilityObserver.disconnect();
       resizeObserver.disconnect();
       if (rendererRef.current) {
         rendererRef.current.dispose();
@@ -464,7 +493,7 @@ export function Discipline3DSlider({ onNavigate }: Discipline3DSliderProps) {
       className="relative w-full max-w-5xl mx-auto select-none flex flex-col items-center scroll-mt-24"
     >
       {/* Active Discipline Section Header - Prominently and conveniently positioned above the 3D stage */}
-      <div className="flex flex-col items-center justify-center text-center w-full mb-3 sm:mb-4 z-20 pointer-events-none px-4">
+      <div ref={headerRef} className="flex flex-col items-center justify-center text-center w-full mb-3 sm:mb-4 z-20 pointer-events-none px-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentItem.id}

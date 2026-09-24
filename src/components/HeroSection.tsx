@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import { SectionId } from '../types';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { ArrowRight, Github, Send, FileText, Code, Gamepad2 } from 'lucide-react';
@@ -20,10 +20,17 @@ export function HeroSection({ onNavigate, onOpenResume }: HeroSectionProps) {
     offset: ["start start", "end start"]
   });
 
-  // Exit transforms: as user scrolls down, hero holds focus and only recedes once halfway through
-  const heroScale = useTransform(scrollYProgress, [0, 0.45, 0.95], [1, 1, 0.85], { clamp: true });
-  const heroY = useTransform(scrollYProgress, [0, 0.45, 0.95], [0, 0, -60], { clamp: true });
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.45, 0.9], [1, 1, 0], { clamp: true });
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 85,
+    damping: 24,
+    mass: 0.16,
+    restDelta: 0.0005,
+  });
+
+  // Exit transforms: as user scrolls down, hero holds focus and smoothly recedes with organic spring physics
+  const heroScale = useTransform(smoothProgress, [0, 0.35, 0.95], [1, 1, 0.93], { clamp: true });
+  const heroY = useTransform(smoothProgress, [0, 0.35, 0.95], [0, 0, -40], { clamp: true });
+  const heroOpacity = useTransform(smoothProgress, [0, 0.35, 0.9], [1, 1, 0], { clamp: true });
 
   // Differential parallax depth
   const heroBgY = useTransform(scrollYProgress, [0, 1], [0, -40]);
@@ -65,19 +72,19 @@ export function HeroSection({ onNavigate, onOpenResume }: HeroSectionProps) {
       ref={sectionRef}
       className="relative pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-20 overflow-x-clip theme-canvas min-h-screen flex flex-col justify-center"
     >
-      {/* Subtle Ambient Radial Gradients with parallax */}
+      {/* Subtle Ambient Radial Gradients with parallax (hardware-accelerated, zero blur raster cost) */}
       <motion.div
         style={{ y: heroBgY }}
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[400px] bg-orange-500/10 dark:bg-orange-500/5 blur-[120px] rounded-full pointer-events-none -z-10"
+        className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[750px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(249,115,22,0.14)_0%,rgba(249,115,22,0.04)_50%,transparent_75%)] rounded-full pointer-events-none -z-10 will-change-transform transform-gpu"
       />
       <motion.div
         style={{ y: heroBgOrb2Y }}
-        className="absolute top-1/2 right-1/4 w-[400px] h-[300px] bg-purple-500/10 dark:bg-purple-500/5 blur-[100px] rounded-full pointer-events-none -z-10"
+        className="absolute top-1/2 right-1/4 w-[400px] h-[300px] bg-[radial-gradient(ellipse_at_center,rgba(168,85,247,0.14)_0%,rgba(168,85,247,0.04)_50%,transparent_75%)] rounded-full pointer-events-none -z-10 will-change-transform transform-gpu"
       />
 
       <motion.div
         style={{ scale: heroScale, opacity: heroOpacity }}
-        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
+        className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full will-change-transform transform-gpu"
       >
         {/* Dynamic Headline */}
         <motion.div style={{ y: headlineY }} className="max-w-4xl">

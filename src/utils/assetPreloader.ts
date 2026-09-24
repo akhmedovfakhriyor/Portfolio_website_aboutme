@@ -35,36 +35,17 @@ export function getPrioritizedPortfolioAssetUrls(): string[] {
     }
   };
 
-  // Phase 1A: Primary Game Card Assets (Visible on main shelf)
+  // Phase 1A: Primary Game Card Thumbnail Images ONLY (NO heavy videos!)
   GAME_PROJECTS.forEach((game) => {
     addUnique(primaryUrls, game.thumbnail);
-    addUnique(primaryUrls, game.previewGif);
-    if (game.previewVideo) {
-      addUnique(primaryUrls, game.previewVideo);
-    }
-    if (game.banner && game.banner !== game.thumbnail) {
-      addUnique(primaryUrls, game.banner);
-    }
   });
 
-  // Phase 1B: Primary Art Gallery Card Thumbnails & All Stacked Drawings
-  // Stacked drawings (e.g. Free Hand Drawings collection) are essential parts of the card
-  // and must be warmed into cache so opening or browsing them is instantaneous!
+  // Phase 1B: Primary Art Gallery Card Thumbnails
   ARTWORKS.forEach((art) => {
     addUnique(primaryUrls, art.imageUrl);
-    if (art.gallery) {
-      art.gallery.forEach((s) => addUnique(primaryUrls, s));
-    }
   });
 
-  // Phase 2: Deep Game Inspection Screenshots (Only viewed on modal inspect)
-  GAME_PROJECTS.forEach((game) => {
-    if (game.screenshots) {
-      game.screenshots.forEach((s) => addUnique(secondaryUrls, s));
-    }
-  });
-
-  return [...primaryUrls, ...secondaryUrls];
+  return primaryUrls;
 }
 
 /**
@@ -152,22 +133,31 @@ export function startBackgroundAssetPreloading(delayMs: number = 400) {
   const runPreload = () => {
     const assetUrls = getPrioritizedPortfolioAssetUrls();
     let currentIndex = 0;
-    const batchSize = 4; // Fetch 4 lightweight assets concurrently via HTTP/2
+    const batchSize = 2; // Lightweight batch
     let isProcessing = false;
 
+    // Track user scrolling so preloading NEVER runs during active scrolling
+    let isScrolling = false;
+    let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+    const onScroll = () => {
+      isScrolling = true;
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        isScrolling = false;
+      }, 400);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     function processNextBatch() {
-      if (currentIndex >= assetUrls.length) return;
+      if (currentIndex >= assetUrls.length) {
+        window.removeEventListener('scroll', onScroll);
+        return;
+      }
       if (isProcessing) return;
 
-      // If user switched tabs, pause until they return
-      if (typeof document !== 'undefined' && document.hidden) {
-        const onVisible = () => {
-          if (!document.hidden) {
-            document.removeEventListener('visibilitychange', onVisible);
-            scheduleNext(200);
-          }
-        };
-        document.addEventListener('visibilitychange', onVisible);
+      // Never process batches during active scrolling or when tab is hidden
+      if (isScrolling || (typeof document !== 'undefined' && document.hidden)) {
+        scheduleNext(600);
         return;
       }
 
@@ -179,7 +169,7 @@ export function startBackgroundAssetPreloading(delayMs: number = 400) {
         .catch(() => {})
         .finally(() => {
           isProcessing = false;
-          scheduleNext(150);
+          scheduleNext(300);
         });
     }
 

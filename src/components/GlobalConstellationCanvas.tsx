@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import { SectionId } from '../types';
 
 interface GlobalConstellationCanvasProps {
@@ -87,7 +87,7 @@ const THEME_VISUALS: Record<SectionId, ThemeVisualConfig> = {
   },
 };
 
-export function GlobalConstellationCanvas({ activeSection }: GlobalConstellationCanvasProps) {
+function GlobalConstellationCanvasComponent({ activeSection }: GlobalConstellationCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const activeSectionRef = useRef<SectionId>(activeSection);
 
@@ -193,6 +193,18 @@ export function GlobalConstellationCanvas({ activeSection }: GlobalConstellation
     };
     window.addEventListener('pointerdown', handlePointerDown, { passive: true });
 
+    // Scroll state tracking to optimize frame budget during active fast scrolling
+    let isScrolling = false;
+    let scrollTimeout: ReturnType<typeof setTimeout> | null = null;
+    const handleScroll = () => {
+      isScrolling = true;
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        isScrolling = false;
+      }, 120);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     let startTime = performance.now();
 
     const render = (now: number) => {
@@ -208,6 +220,7 @@ export function GlobalConstellationCanvas({ activeSection }: GlobalConstellation
       curCurvature += (targetConfig.curvature - curCurvature) * 0.04;
       curMaxDist += (targetConfig.maxDistance - curMaxDist) * 0.04;
 
+      const curMaxDistSq = curMaxDist * curMaxDist;
       const rInt = Math.round(curR);
       const gInt = Math.round(curG);
       const bInt = Math.round(curB);
@@ -261,11 +274,13 @@ export function GlobalConstellationCanvas({ activeSection }: GlobalConstellation
         // Interactive mouse interaction (gentle, subtle magnetic attraction)
         const dxMouse = mouse.x - p1.x;
         const dyMouse = mouse.y - p1.y;
-        const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+        const distMouseSq = dxMouse * dxMouse + dyMouse * dyMouse;
         const mouseRadius = 85;
-        const isNearMouse = isMouseInside && distMouse < mouseRadius;
+        const mouseRadiusSq = mouseRadius * mouseRadius;
+        const isNearMouse = isMouseInside && distMouseSq < mouseRadiusSq;
 
         if (isNearMouse) {
+          const distMouse = Math.sqrt(distMouseSq);
           // Extremely gentle, quadratic falloff pull so dots do not clump or get sucked into the cursor
           const pullStrength = Math.pow(1 - distMouse / mouseRadius, 2) * 0.12;
           p1.x += (dxMouse / distMouse) * pullStrength;
@@ -275,7 +290,7 @@ export function GlobalConstellationCanvas({ activeSection }: GlobalConstellation
           ctx.beginPath();
           ctx.moveTo(p1.x, p1.y);
 
-          if (curCurvature < 0.02) {
+          if (curCurvature < 0.02 || isScrolling) {
             ctx.lineTo(mouse.x, mouse.y);
           } else {
             const mx = (p1.x + mouse.x) / 2;
@@ -305,28 +320,28 @@ export function GlobalConstellationCanvas({ activeSection }: GlobalConstellation
         ctx.fillStyle = `rgba(${rInt}, ${gInt}, ${bInt}, ${isNearMouse ? 0.45 : 0.20})`;
         ctx.fill();
 
-        // Connect nearby points
+        // Connect nearby points using fast squared-distance culling
         for (let j = i + 1; j < points.length; j++) {
           const p2 = points[j];
           const dx = p2.x - p1.x;
           const dy = p2.y - p1.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const distSq = dx * dx + dy * dy;
 
-          if (dist < curMaxDist) {
+          if (distSq < curMaxDistSq) {
+            const dist = Math.sqrt(distSq);
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
 
-            if (curCurvature < 0.02) {
-              // Straight CAD/circuit precision line (Engineering)
+            if (curCurvature < 0.02 || isScrolling) {
+              // Straight line during fast scrolling or engineering theme
               ctx.lineTo(p2.x, p2.y);
             } else {
-              // Curvy organic/wave line (Art, GameDev, Sports, Hero)
+              // Curvy organic/wave line when rested/slow
               const mx = (p1.x + p2.x) / 2;
               const my = (p1.y + p2.y) / 2;
               const nx = -dy / dist;
               const ny = dx / dist;
 
-              // Harmonic oscillation based on coordinates and time
               const wave = Math.sin(time * 0.0022 + (p1.x + p2.y) * 0.008 + p1.phase);
               const curveOffset = dist * curCurvature * 0.42 * wave;
 
@@ -351,6 +366,8 @@ export function GlobalConstellationCanvas({ activeSection }: GlobalConstellation
 
     return () => {
       cancelAnimationFrame(animationFrameId);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseleave', handleMouseLeave);
@@ -367,3 +384,5 @@ export function GlobalConstellationCanvas({ activeSection }: GlobalConstellation
     />
   );
 }
+
+export const GlobalConstellationCanvas = memo(GlobalConstellationCanvasComponent);

@@ -461,13 +461,15 @@ export function CollectibleCardFrame({
             borderColor: (isHovered || isFlipped) ? tierBorderHover : tierBorderColor,
           }}
         >
-          {/* Main Picture Scaled Appropriately and Blurred */}
-          {backgroundImage && (
+          {/* Main Picture Scaled Appropriately and Blurred (only rendered when hovered or flipped) */}
+          {(isHovered || isFlipped) && backgroundImage && (
             <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none rounded-2xl">
               <img
                 src={backgroundImage}
                 alt=""
                 className="w-full h-full object-cover scale-110 blur-md opacity-60 brightness-90 saturate-110"
+                loading="lazy"
+                decoding="async"
                 referrerPolicy="no-referrer"
               />
               <div

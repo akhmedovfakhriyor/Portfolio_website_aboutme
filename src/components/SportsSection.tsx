@@ -1,55 +1,19 @@
 import { useRef } from 'react';
 import { SPORTS_DATA } from '../data/portfolioData';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useTransform } from 'motion/react';
+import { useSectionMotion } from '../hooks/useSectionMotion';
 import { RubiksCubeWidget } from './RubiksCubeWidget';
 import { Activity, Trophy, Timer } from 'lucide-react';
 
 export function SportsSection() {
   const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-  const { scrollYProgress: enterProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 75%", "start 25%"]
-  });
-  const { scrollYProgress: exitProgress } = useScroll({
-    target: sectionRef,
-    offset: ["end 75%", "end 20%"]
-  });
-
-  // Accelerated parallax translation: lifts up into view as upper section is scrolled halfway
-  const sectionY = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
-    if (enter < 1) {
-      const remaining = Math.max(0, 1 - enter);
-      return remaining * remaining * 150;
-    }
-    if (exit > 0) {
-      return -exit * 60;
-    }
-    return 0;
-  });
-
-  // Smooth 3D depth emergence & exit: starts deep at 0.84 and gets close to us (1.0)
-  const sectionScale = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
-    if (enter < 1) return 0.84 + 0.16 * Math.max(0, enter);
-    if (exit > 0) return 1 - 0.12 * exit;
-    return 1;
-  });
-
-  // Strict unfading: 0 while looking at upper section, unfades to 1 once scrolled halfway
-  const sectionOpacity = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
-    if (enter < 1) {
-      return Math.max(0, Math.min(1, enter));
-    }
-    if (exit > 0) return Math.max(0, 1 - exit);
-    return 1;
+  const titleRef = useRef<HTMLDivElement>(null);
+  const { sectionY, sectionScale, sectionOpacity, scrollYProgress } = useSectionMotion(sectionRef, {
+    titleRef,
   });
 
   // Differential parallax depth with solid visibility
-  const bgY = useTransform(scrollYProgress, [0, 1], [-120, 120]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [-90, 90]);
   const headerY = useTransform(scrollYProgress, [0, 1], [0, 0]);
   const runnerY = useTransform(scrollYProgress, [0, 1], [0, 0]);
   const sportsGridY = useTransform(scrollYProgress, [0, 1], [0, 0]);
@@ -59,18 +23,18 @@ export function SportsSection() {
 
   return (
     <section id="sports" style={{ paddingTop: '0px', paddingLeft: '0px', paddingBottom: '66px' }} className="relative min-h-screen flex flex-col justify-center theme-canvas overflow-x-clip" ref={sectionRef}>
-      {/* Background Soft Sky Blue Radial Glow */}
+      {/* Background Soft Sky Blue Radial Glow with Parallax (hardware-accelerated, zero blur raster cost) */}
       <motion.div
         style={{ y: bgY }}
-        className="absolute top-1/3 right-10 w-[550px] h-[550px] bg-sky-500/10 blur-[130px] rounded-full pointer-events-none -z-10"
+        className="absolute top-1/3 right-10 w-[550px] h-[550px] bg-[radial-gradient(circle_at_center,rgba(56,189,248,0.14)_0%,rgba(14,165,233,0.03)_50%,transparent_75%)] rounded-full pointer-events-none -z-10 will-change-transform transform-gpu"
       />
 
       <motion.div
         style={{ scale: sectionScale, opacity: sectionOpacity, y: sectionY }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full will-change-transform transform-gpu"
       >
         {/* Section Header */}
-        <motion.div style={{ y: headerY }} className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <motion.div ref={titleRef} style={{ y: headerY }} className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold theme-badge mb-3">
               <Activity className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />

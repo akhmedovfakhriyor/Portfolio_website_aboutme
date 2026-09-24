@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useTransform } from 'motion/react';
+import { useSectionMotion } from '../hooks/useSectionMotion';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import { Mail, MapPin, Sparkles, Copy, Check, Send, FileText, Download } from 'lucide-react';
 
@@ -9,34 +10,10 @@ interface ContactSectionProps {
 
 export function ContactSection({ onOpenResume }: ContactSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end end"]
-  });
-  const { scrollYProgress: enterProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 75%", "start 25%"]
-  });
-
-  // Accelerated parallax translation: lifts up into view as upper section is scrolled halfway
-  const sectionY = useTransform(enterProgress, (enter: number) => {
-    if (enter < 1) {
-      const remaining = Math.max(0, 1 - enter);
-      return remaining * remaining * 150;
-    }
-    return 0;
-  });
-
-  // Distinct 3D depth emergence: starts deep at 0.84 and gets close to us (1.0)
-  const sectionScale = useTransform(enterProgress, (enter: number) => {
-    if (enter < 1) return 0.84 + 0.16 * Math.max(0, enter);
-    return 1;
-  });
-
-  // Strict unfading: 0 while looking at upper section, unfades to 1 once scrolled halfway
-  const sectionOpacity = useTransform(enterProgress, (enter: number) => {
-    if (enter < 1) return Math.max(0, Math.min(1, enter));
-    return 1;
+  const titleRef = useRef<HTMLDivElement>(null);
+  const { sectionY, sectionScale, sectionOpacity, scrollYProgress } = useSectionMotion(sectionRef, {
+    titleRef,
+    isLastSection: true,
   });
 
   // Floating ambient parallax constrained to avoid vertical document overflow
@@ -68,15 +45,15 @@ export function ContactSection({ onOpenResume }: ContactSectionProps) {
       />
       <motion.div
         style={{ y: bgY }}
-        className="absolute top-16 left-1/2 -translate-x-1/2 w-[480px] h-[260px] bg-orange-600/10 blur-[110px] rounded-full pointer-events-none -z-10"
+        className="absolute top-16 left-1/2 -translate-x-1/2 w-[480px] h-[260px] bg-[radial-gradient(ellipse_at_center,rgba(234,88,12,0.14)_0%,rgba(234,88,12,0.03)_50%,transparent_75%)] rounded-full pointer-events-none -z-10 will-change-transform transform-gpu"
         aria-hidden="true"
       />
 
       <motion.div
         style={{ scale: sectionScale, opacity: sectionOpacity, y: sectionY }}
-        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
+        className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full will-change-transform transform-gpu"
       >
-        <motion.div style={{ y: headerY }} className="text-center mb-10">
+        <motion.div ref={titleRef} style={{ y: headerY }} className="text-center mb-10">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold theme-badge mb-4">
             <Sparkles className="w-3.5 h-3.5 text-orange-500" />
             <span>Phase 05 // Get In Touch</span>

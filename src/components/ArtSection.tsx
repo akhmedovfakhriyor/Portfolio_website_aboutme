@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion, useTransform } from 'motion/react';
+import { useSectionMotion } from '../hooks/useSectionMotion';
 import { ARTWORKS } from '../data/portfolioData';
 import { Artwork } from '../types';
 import { ArtworkLightbox } from './ArtworkLightbox';
@@ -47,49 +48,13 @@ function parseYearToDate(yearStr: string): number {
 
 export function ArtSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-  const { scrollYProgress: enterProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start 75%", "start 25%"]
-  });
-  const { scrollYProgress: exitProgress } = useScroll({
-    target: sectionRef,
-    offset: ["end 75%", "end 20%"]
-  });
-
-  // Accelerated parallax translation: lifts up into view as upper section is scrolled halfway
-  const sectionY = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
-    if (enter < 1) {
-      const remaining = Math.max(0, 1 - enter);
-      return remaining * remaining * 150;
-    }
-    if (exit > 0) {
-      return -exit * 60;
-    }
-    return 0;
-  });
-
-  // Smooth 3D depth emergence & exit: starts deep at 0.84 and gets close to us (1.0)
-  const sectionScale = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
-    if (enter < 1) return 0.84 + 0.16 * Math.max(0, enter);
-    if (exit > 0) return 1 - 0.12 * exit;
-    return 1;
-  });
-
-  // Strict unfading: 0 while looking at upper section, unfades to 1 once scrolled halfway
-  const sectionOpacity = useTransform([enterProgress, exitProgress], ([enter, exit]: number[]) => {
-    if (enter < 1) {
-      return Math.max(0, Math.min(1, enter));
-    }
-    if (exit > 0) return Math.max(0, 1 - exit);
-    return 1;
+  const titleRef = useRef<HTMLDivElement>(null);
+  const { sectionY, sectionScale, sectionOpacity, scrollYProgress } = useSectionMotion(sectionRef, {
+    titleRef,
   });
 
   // Differential parallax depth
-  const bgY = useTransform(scrollYProgress, [0, 1], [-120, 120]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [-90, 90]);
   const headerY = useTransform(scrollYProgress, [0, 1], [0, 0]);
   const galleryY = useTransform(scrollYProgress, [0, 1], [0, 0]);
   
@@ -128,18 +93,18 @@ export function ArtSection() {
 
   return (
     <section id="art" style={{ paddingTop: '0px', paddingBottom: '66px', paddingLeft: '0px' }} className="relative min-h-screen flex flex-col justify-center theme-canvas overflow-x-clip" ref={sectionRef}>
-      {/* Ambient Radial Glow with Aquamarine Seafoam */}
+      {/* Ambient Radial Glow with Aquamarine Seafoam and Parallax (hardware-accelerated, zero blur raster cost) */}
       <motion.div
         style={{ y: bgY }}
-        className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-gradient-to-br from-teal-400/20 via-emerald-400/10 to-teal-500/5 blur-[140px] rounded-full pointer-events-none -z-10"
+        className="absolute top-1/4 right-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle_at_center,rgba(45,212,191,0.16)_0%,rgba(20,184,166,0.04)_50%,transparent_75%)] rounded-full pointer-events-none -z-10 will-change-transform transform-gpu"
       />
 
       <motion.div
         style={{ scale: sectionScale, opacity: sectionOpacity, y: sectionY }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full will-change-transform transform-gpu"
       >
         {/* Section Header with In-Line Filter Pills */}
-        <motion.div style={{ y: headerY }} className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
+        <motion.div ref={titleRef} style={{ y: headerY }} className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold theme-badge mb-3">
               <Palette className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />

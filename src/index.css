@@ -145,7 +145,6 @@ body,
   color: var(--text-primary);
   transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
               color var(--theme-transition-duration) var(--theme-transition-timing);
-  will-change: background-color, color;
 }
 
 section.theme-canvas {
@@ -209,18 +208,12 @@ section.theme-canvas {
   transition: border-color var(--theme-transition-duration) var(--theme-transition-timing);
 }
 
+/* Theme transition for badge accents */
 .theme-badge {
   background-color: var(--badge-bg);
   color: var(--badge-text);
   transition: background-color var(--theme-transition-duration) var(--theme-transition-timing),
               color var(--theme-transition-duration) var(--theme-transition-timing);
-}
-
-/* Ensure all dark: utility elements cross-fade synchronously */
-[class*="dark:"] {
-  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
-  transition-duration: var(--theme-transition-duration);
-  transition-timing-function: var(--theme-transition-timing);
 }
 
 /* Hide scrollbar utility for clean game windows, modals, and tab bars */
